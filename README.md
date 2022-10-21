@@ -5,6 +5,7 @@ Group Project for CMPUT404
 ## Instructions
 
 ```
-viurtualenv venv --python=python3
+virtualenv venv --python=python3
+source venv/bin/activate
 pip install -r requirements.txt
 ```
