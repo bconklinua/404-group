@@ -1,9 +1,18 @@
 from rest_framework import serializers
-from .models import Post
+from .models import Category, Post
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name',)
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('type', 'title', 'id', 'source', 'origin', 'description', 
-    'contentType', 'content', 'author', 'categories', 'count', 'comments', 'published',
-    'visibility', 'unlisted')
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep["categories"] = [cat['name'] for cat in CategorySerializer(instance.categories.all(), many=True).data]
+        return rep
+
