@@ -20,7 +20,8 @@ from apps.Post import views
 
 router = routers.DefaultRouter()
 router.register(r'posts', views.PostView, 'posts')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('service/authors/authorID/', include(router.urls)),
+    path('authors/<int:author_id>/', include(router.urls)),
 ]

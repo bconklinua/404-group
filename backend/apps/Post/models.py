@@ -2,6 +2,7 @@ from imp import source_from_cache
 from tokenize import blank_re
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from apps.User.models import CustomUser
 
 CONTENT_TYPE_CHOICES = [
     ("text/markdown", "Common Mark"),
@@ -26,7 +27,7 @@ class Post(models.Model):
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
     content = models.TextField()
-    author = models.CharField(max_length=100, blank=True) #Switch to OneToOne field with User
+    author = models.OneToOneField(CustomUser, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.CharField(max_length=100, blank=True)
     count = models.IntegerField(default=0)
     comments = models.URLField(max_length=100, default="") 
