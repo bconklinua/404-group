@@ -22,8 +22,8 @@ VISIBILITY_CHOICES = [
 class Post(models.Model):
     type = models.CharField("post", editable=False, max_length=4)
     title = models.CharField(max_length=30, default="Untitled", unique=True)
-    source = models.URLField(max_length=100, default="")
-    origin = models.URLField(max_length=100, default="")
+    source = models.SlugField(max_length=100, editable=False)
+    origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
     content = models.TextField()
