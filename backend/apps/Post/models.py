@@ -17,20 +17,28 @@ VISIBILITY_CHOICES = [
     ("FRIENDS", "FRIENDS"),
 ]
 
+class Category(models.Model):
+    name=models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
 
 # Create your models here.
 class Post(models.Model):
-    type = models.CharField("post", editable=False, max_length=4)
+    type = models.CharField(default="post", editable=False, max_length=4)
     title = models.CharField(max_length=30, default="Untitled", unique=True)
     source = models.SlugField(max_length=100, editable=False)
     origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
     content = models.TextField()
-    author = models.OneToOneField(CustomUser, on_delete=models.CASCADE) #Switch to OneToOne field with User
-    categories = models.CharField(max_length=100, blank=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE) #Switch to OneToOne field with User
+    categories = models.ManyToManyField(Category)
     count = models.IntegerField(default=0, editable=False)
     comments = models.URLField(max_length=100, default="") 
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
+
+    def get_categories(self):
+        return "\n".join([str(c) for c in self.categories.all()])
