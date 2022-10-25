@@ -30,8 +30,12 @@ class Post(models.Model):
     content = models.TextField()
     author = models.OneToOneField(Author, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.CharField(max_length=100, blank=True)
+<<<<<<< HEAD
     likes = models.ManyToManyField(Like)
     count = models.IntegerField(default=0)
+=======
+    count = models.IntegerField(default=0, editable=False)
+>>>>>>> 17313eb (Make it so posts filter based on user ID)
     comments = models.URLField(max_length=100, default="") 
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
