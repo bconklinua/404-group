@@ -43,9 +43,12 @@ INSTALLED_APPS = [
     # Local apps
     'apps.User',
     'apps.Post',
+    'apps.Like',
+    'apps.FriendRequest',
+    'apps.Comment'
 ]
 
-AUTH_USER_MODEL = 'User.CustomUser'
+AUTH_USER_MODEL = 'User.Author'
 
 
 MIDDLEWARE = [
