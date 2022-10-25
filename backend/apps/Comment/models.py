@@ -1,9 +1,19 @@
 from django.db import models
 from ..User.models import Author
 
+CONTENT_TYPE_CHOICES = [
+    ("text/markdown", "Common Mark"),
+    ("text/plain", "UTF-8"),
+    ("application/base64", "Base 64"),
+    ("image/png;base64", "Base 64 Embedded PNG"),
+    ("image/jpeg;base64", "Base 64 Embedded JPEG"),
+]
+
 
 # a post will have a container of likes
 class Comment(models.Model):
-    date = models.DateTimeField(auto_now_add=True)                    # when the comment was made
+    type = models.CharField(default="comment", editable=False, max_length=7)
+    published = models.DateTimeField(auto_now_add=True)                    # when the comment was made
     author = models.ForeignKey(Author, on_delete=models.CASCADE)  # the author who made the comment
-    content = models.CharField(max_length=5000)
+    comment = models.CharField(max_length=5000)
+    contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)

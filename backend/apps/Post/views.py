@@ -11,4 +11,6 @@ class PostView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user_id = self.kwargs['author_id']
-        return Post.objects.filter(author_id=user_id)
+        if user_id:
+            return Post.objects.filter(author_id=user_id)
+        return super().get_queryset()

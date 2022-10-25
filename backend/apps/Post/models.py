@@ -33,9 +33,9 @@ class Post(models.Model):
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
     content = models.TextField()
-    likes = models.ManyToManyField(Like)
+    likes = models.ManyToManyField(Like, blank=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE) #Switch to OneToOne field with User
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, blank=True)
     count = models.IntegerField(default=0, editable=False)
     comments = models.URLField(max_length=100, default="") 
     published = models.DateTimeField(auto_now_add=True)
