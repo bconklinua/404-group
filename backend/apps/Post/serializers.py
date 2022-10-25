@@ -7,7 +7,6 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 class PostSerializer(serializers.ModelSerializer):
-    # categories = serializers.StringRelatedField(many=True)
     class Meta:
         model = Post
         fields = '__all__'
