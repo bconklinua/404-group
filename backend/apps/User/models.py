@@ -3,10 +3,10 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from .managers import CustomUserManager
+from .managers import AuthorManager
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class Author(AbstractBaseUser, PermissionsMixin):
     """
     Custom User Model
     """
@@ -34,7 +34,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ),
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-    objects = CustomUserManager()
+    objects = AuthorManager()
 
     class Meta:
         verbose_name = _("user")

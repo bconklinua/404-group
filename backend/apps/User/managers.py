@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
 
 
-class CustomUserManager(BaseUserManager):
+class AuthorManager(BaseUserManager):
     """
     Manager for Custom User model: User
     """
