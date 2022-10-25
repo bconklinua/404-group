@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import PostSerializer
 from .models import Post
-from apps.User.models import CustomUser
+from apps.User.models import Author
 
 # Create your views here.
 
