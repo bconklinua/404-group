@@ -1,6 +1,5 @@
 from imp import source_from_cache
 from tokenize import blank_re
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from ..User.models import Author
 from ..Like.models import Like
@@ -18,14 +17,18 @@ VISIBILITY_CHOICES = [
     ("FRIENDS", "FRIENDS"),
 ]
 
+
+
 class Category(models.Model):
     name=models.CharField(max_length=50)
 
     def __str__(self) -> str:
         return self.name
 
+
 # Create your models here.
 class Post(models.Model):
+
     type = models.CharField(default="post", editable=False, max_length=4)
     title = models.CharField(max_length=30, default="Untitled", unique=True)
     source = models.SlugField(max_length=100, editable=False)
@@ -33,14 +36,13 @@ class Post(models.Model):
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
     content = models.TextField()
-    likes = models.ManyToManyField(Like, blank=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.ManyToManyField(Category, blank=True)
-    count = models.IntegerField(default=0, editable=False)
     comments = models.URLField(max_length=100, default="") 
+    count = models.IntegerField(default=0, editable=False)
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
-
+        
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
