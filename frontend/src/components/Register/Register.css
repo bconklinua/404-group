@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+.page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: white;
+    width: 30em;
+    height: 35em;
+    position: relative;
+    border-radius: 1em;
+    box-shadow: 0 0.188em 1.550em rgb(198, 218, 235);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+input {
+    border: none;
+    background-color: rgb(198, 218, 235);
+    height: 4em;
+    width: 80%;
+    border-radius: 0.25em;
+    text-align: center;
+    padding: 2em;
+    outline-color: rgb(138, 144, 228);
+    border-radius: 1em;
+    
+}
+
+
+.register-button1 {
+    border: none;
+    width: 40%;
+    height: 3em;
+    background-color: rgb(141, 187, 228);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    border-radius: 1em;
+}
+
+.register-button1:hover {
+    transform: scale(1.25);
+    background-color: aqua;
+}
+
+.login-button1 {
+    position: relative;
+    bottom: 2em;
+}
+
