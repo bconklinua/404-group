@@ -9,7 +9,7 @@ const Login = () => {
         e.preventDefault();
         const data = new FormData(e.target)
         console.log(Object.fromEntries(data.entries()))
-    
+        window.location.href="/home"
     }
     return (
     // div styling taken from stackoverflow, can adjust later
