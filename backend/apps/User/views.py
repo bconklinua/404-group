@@ -40,3 +40,17 @@ class LoginView(APIView):
         user = serializer.validated_data['user']
         login(request, user)
         return Response(None, status=status.HTTP_202_ACCEPTED)
+
+
+class TestIfLoggedIn(APIView):
+    #authentication_classes = []  # Prevent requiring a valid token to login
+    # This view should be accessible also for unauthenticated users.
+    #permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            print("authenticated")
+            return Response("authenticated", status=status.HTTP_202_ACCEPTED)
+        else:
+            print("not authenticated")
+            return Response("not authenticated", status=status.HTTP_401_UNAUTHORIZED)
