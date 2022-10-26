@@ -35,9 +35,6 @@ class LoginSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
-        print("email: " + email)
-        print("password: " + password)
-
         if email and password:
             # Try to authenticate the user using Django auth framework.
             user = authenticate(request=self.context.get('request'),

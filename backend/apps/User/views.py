@@ -17,6 +17,7 @@ class AuthorView(viewsets.ModelViewSet):
 
 class RegisterAPIView(GenericAPIView):
     authentication_classes = []  # Prevent requiring a valid token to login
+    permission_classes = (permissions.AllowAny,)
     serializer_class = AuthorSerializer
 
     def post(self, request):
@@ -28,6 +29,7 @@ class RegisterAPIView(GenericAPIView):
 
 
 class LoginView(APIView):
+    authentication_classes = []  # Prevent requiring a valid token to login
     # This view should be accessible also for unauthenticated users.
     permission_classes = (permissions.AllowAny,)
 
