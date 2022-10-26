@@ -1,18 +1,19 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
-
 import "./Login.css"
+import { authenticate } from '../../api/Author';
 
 const Login = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         const data = new FormData(e.target)
-        console.log(Object.fromEntries(data.entries()))
-        window.location.href="/home"
+        const json = Object.fromEntries(data.entries())
+        authenticate(json)
+        //console.log(Object.fromEntries(data.entries()))
+        //window.location.href="/home"
     }
     return (
-    // div styling taken from stackoverflow, can adjust later
     
     <main className='page'>
         <form onSubmit={handleSubmit}>
