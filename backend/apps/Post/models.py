@@ -17,8 +17,6 @@ VISIBILITY_CHOICES = [
     ("FRIENDS", "FRIENDS"),
 ]
 
-
-
 class Category(models.Model):
     name=models.CharField(max_length=50)
 
