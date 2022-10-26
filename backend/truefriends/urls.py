@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.Like.views import LikeView
 from rest_framework import routers
 from apps.Post.views import PostView
 from apps.User.views import AuthorView
@@ -23,9 +24,13 @@ post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
 author_router = routers.DefaultRouter()
 author_router.register(r'authors', AuthorView, 'authors')
+like_router = routers.DefaultRouter()
+like_router.register(r'likes', LikeView, 'likes')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(author_router.urls)),
     path('authors/<int:author_id>/', include(post_router.urls)),
+    path('authors/<int:author_id>/posts/<int:post_id>/', include(like_router.urls)),
+    path('authors/<int:author_id>/posts/<int:post_id>/comments/<int:comment_id>/', include(like_router.urls))
 ]
