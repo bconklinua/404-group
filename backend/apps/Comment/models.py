@@ -1,5 +1,6 @@
 from django.db import models
 from ..User.models import Author
+from ..Post.models import Post
 
 CONTENT_TYPE_CHOICES = [
     ("text/markdown", "Common Mark"),
@@ -16,4 +17,5 @@ class Comment(models.Model):
     published = models.DateTimeField(auto_now_add=True)                    # when the comment was made
     author = models.ForeignKey(Author, on_delete=models.CASCADE)  # the author who made the comment
     comment = models.CharField(max_length=5000)
-    contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="")
