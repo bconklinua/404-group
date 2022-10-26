@@ -16,3 +16,8 @@ virtualenv venv --python=python3
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
+
+### Windows Issues
+```
+Set-ExecutionPolicy Unrestricted -Scope Process
+```
