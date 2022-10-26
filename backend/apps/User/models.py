@@ -15,6 +15,8 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=30, unique=True)  # , validators=[username_validator]
+    first_name = models.CharField(max_length=30, unique=False, default="")
+    last_name = models.CharField(max_length=30, unique=False, default="")
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'

@@ -30,6 +30,7 @@ like_router.register(r'likes', LikeView, 'likes')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(author_router.urls)),
+    path('api/auth/', include("apps.User.urls")),
     path('authors/<int:author_id>/', include(post_router.urls)),
     path('authors/<int:author_id>/posts/<int:post_id>/', include(like_router.urls)),
     path('authors/<int:author_id>/posts/<int:post_id>/comments/<int:comment_id>/', include(like_router.urls))
