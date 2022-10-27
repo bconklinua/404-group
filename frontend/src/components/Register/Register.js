@@ -10,7 +10,14 @@ const Register = () => {
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        postUser(json)
+        postUser(json).then((response) =>{
+            if (response.status === 400){
+                console.log("400")
+            }
+            else if (response.status === 201){
+                console.log("201")
+            }
+        })
         // console.log(json)
         // console.log(json.username)
 
