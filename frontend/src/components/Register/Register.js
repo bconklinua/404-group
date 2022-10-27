@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { NavLink } from "react-router-dom";
-
+import { postUser } from '../../api/User';
 import "./Register.css"
+
 
 const Register = () => {
 
@@ -9,8 +10,9 @@ const Register = () => {
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        console.log(json)
-        console.log(json.username)
+        postUser(json)
+        // console.log(json)
+        // console.log(json.username)
 
     
     }
@@ -26,7 +28,7 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
         <div className="box">
             <h1>Register</h1>
-            
+            <input type="email" placeholder="email" name='email'/>
             <input type="text" placeholder="username" name='username'/>
             <input type="password" placeholder="password" name='password' onChange={handleInputChange}/>
 
