@@ -41,7 +41,14 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-        return Response(None, status=status.HTTP_202_ACCEPTED)
+        return Response({'email': user.email,
+                         'username': user.username,
+                         'first_name': user.first_name,
+                         'last_name': user.last_name,
+                         'is_staff': user.is_staff,
+                         'is_superuser': user.is_superuser,
+                         'date_joined': user.date_joined,
+                         }, status=status.HTTP_202_ACCEPTED)
 
 
 class TestIfLoggedIn(APIView):
