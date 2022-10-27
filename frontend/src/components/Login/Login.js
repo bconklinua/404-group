@@ -9,7 +9,14 @@ const Login = () => {
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        authenticate(json)
+        authenticate(json).then((response) =>{
+            if (response.status === 400){
+                console.log("400")
+            }
+            else if (response.status === 202){
+                console.log(response.data)
+            }
+        })
         //console.log(Object.fromEntries(data.entries()))
         //window.location.href="/home"
     }
