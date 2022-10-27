@@ -11,6 +11,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     Custom User Model
     """
 
+
     username_validator = UnicodeUsernameValidator()
 
     email = models.EmailField(_('email address'), unique=True)

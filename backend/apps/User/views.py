@@ -8,7 +8,7 @@ from . import serializers
 from .serializers import AuthorSerializer
 from .models import Author
 from django.contrib.auth import authenticate, login
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class AuthorView(viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
@@ -52,9 +52,9 @@ class LoginView(APIView):
 
 
 class TestIfLoggedIn(APIView):
-    #authentication_classes = []  # Prevent requiring a valid token to login
+    authentication_classes = []  # Prevent requiring a valid token to login
     # This view should be accessible also for unauthenticated users.
-    #permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         if request.user.is_authenticated:
