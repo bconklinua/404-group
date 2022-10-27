@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class InboxConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Inbox'
+    name = 'apps.Inbox'

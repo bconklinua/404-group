@@ -8,4 +8,4 @@ from ..Post.models import Post
 class Inbox(models.Model):
     type = models.CharField(default="inbox", editable=False, max_length=4)
     author = models.OneToOneField(Author, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Post)
+    posts = models.ManyToManyField(Post)
