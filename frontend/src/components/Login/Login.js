@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import "./Login.css"
-import { authenticate } from '../../api/User';
+import { authenticate, test } from '../../api/User';
 
 const Login = () => {
 
@@ -14,7 +14,10 @@ const Login = () => {
                 console.log("400")
             }
             else if (response.status === 202){
-                console.log(response.data)
+                console.log(response.headers.get('set-cookies'))
+                console.log(document.cookie)
+                localStorage.setItem("token", document.cookie)
+                window.location.href="/home"
             }
         })
         //console.log(Object.fromEntries(data.entries()))

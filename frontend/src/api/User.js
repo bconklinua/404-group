@@ -10,10 +10,14 @@ export function authenticate(param = {}){
     console.log(param)
 
     return axios.post(url, body, {
+        withCredentials: true,
         headers:{
             "Content-Type": "application/json",
-        }
+        },
+
     }).then((response) =>{
+        console.log(response)
+
         return response;
     }).catch((error)=>{
         return error.response;
@@ -38,3 +42,4 @@ export function postUser(param = {}){
         return error.response;
     })
 }
+
