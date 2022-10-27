@@ -52,9 +52,9 @@ class LoginView(APIView):
 
 
 class TestIfLoggedIn(APIView):
-    authentication_classes = []  # Prevent requiring a valid token to login
+    # authentication_classes = []  # Prevent requiring a valid token to login
     # This view should be accessible also for unauthenticated users.
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         if request.user.is_authenticated:
