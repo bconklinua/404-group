@@ -3,7 +3,7 @@ from rest_framework import viewsets, response, status, permissions
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from django.contrib.auth.hashers import make_password
 from . import serializers
 from .serializers import AuthorSerializer
 from .models import Author
@@ -23,6 +23,8 @@ class RegisterAPIView(GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
+            password = serializer.validated_data.get('password')
+            serializer.validated_data['password'] = make_password(password)
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -50,6 +52,10 @@ class TestIfLoggedIn(APIView):
     def get(self, request):
         if request.user.is_authenticated:
             print("authenticated")
+            person = request.user
+            print("username: " + person.username)
+            print("email:" + person.email)
+
             return Response("authenticated", status=status.HTTP_202_ACCEPTED)
         else:
             print("not authenticated")
