@@ -24,6 +24,7 @@ export function test(param = {}){
 
     return axios.get(url, {
         headers:{
+            withCredentials: true,
             "Content-Type": "application/json",
             // authorization?
         }
