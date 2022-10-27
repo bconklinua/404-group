@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import "./Login.css"
-import { authenticate } from '../../api/Author';
+import { authenticate } from '../../api/User';
 
 const Login = () => {
 
@@ -20,7 +20,7 @@ const Login = () => {
         <div className="box">
             <h1>Login</h1>
             
-            <input type="text" placeholder="username" name='username'/>
+            <input type="email" placeholder="email" name='email'/>
             <input type="password" placeholder="password" name='password'/>
 
             <button className="login-button" onSubmit={handleSubmit}>Login</button>
