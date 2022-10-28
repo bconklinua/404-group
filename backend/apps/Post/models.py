@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from ..User.models import Author
 from ..Like.models import Like
 from ..Inbox.models import Inbox
-
+from django.core.exceptions import ObjectDoesNotExist
 
 CONTENT_TYPE_CHOICES = [
     ("text/markdown", "Common Mark"),
@@ -55,10 +55,12 @@ class Post(models.Model):
 
 @receiver(post_save, sender=Post)
 def add_post(instance, created, **kwargs):
-    if created:
+    try:
         user_inbox = Inbox.objects.get(author=instance.author)
-        if not user_inbox:
-            user_inbox = Inbox.objects.create(author=instance.author)
-            user_inbox.posts.create(instance)
-        elif instance not in user_inbox.posts.all():
-            user_inbox.posts.add(instance)
+    except ObjectDoesNotExist:
+        user_inbox = Inbox.objects.create(author=instance.author)
+    if not user_inbox:
+        user_inbox = Inbox.objects.create(author=instance.author)
+        user_inbox.posts.create(instance)
+    elif instance not in user_inbox.posts.all():
+        user_inbox.posts.add(instance)

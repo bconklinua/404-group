@@ -3,8 +3,12 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from .managers import AuthorManager
 
+from apps.Inbox.models import Inbox
+from .managers import AuthorManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
 
 class Author(AbstractBaseUser, PermissionsMixin):
     """
@@ -70,3 +74,9 @@ def get_user(id_):
         return None
 
 
+@receiver(post_save, sender=Author)
+def add_post(instance, created, **kwargs):
+    try:
+        user_inbox = Inbox.objects.get(author=instance)
+    except ObjectDoesNotExist:
+        user_inbox = Inbox.objects.create(author=instance)
