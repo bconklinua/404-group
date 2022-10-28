@@ -1,8 +1,13 @@
 from imp import source_from_cache
 from tokenize import blank_re
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from ..User.models import Author
 from ..Like.models import Like
+from ..Inbox.models import Inbox
+
 
 CONTENT_TYPE_CHOICES = [
     ("text/markdown", "Common Mark"),
@@ -47,3 +52,13 @@ class Post(models.Model):
     @property
     def count(self):
         return Like.objects.filter(post_id = self.id).count()
+
+@receiver(post_save, sender=Post)
+def add_post(instance, created, **kwargs):
+    if created:
+        user_inbox = Inbox.objects.get(author=instance.author)
+        if not user_inbox:
+            user_inbox = Inbox.objects.create(author=instance.author)
+            user_inbox.posts.create(instance)
+        elif instance not in user_inbox.posts.all():
+            user_inbox.posts.add(instance)
