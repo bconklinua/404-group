@@ -35,3 +35,20 @@ export function test(param = {}){
         return error.response;
     })
 }
+
+export function getPost(){
+    const url = 'http://127.0.0.1:8000/authors/7/posts'
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+            // authorization?
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}

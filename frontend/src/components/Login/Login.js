@@ -15,7 +15,7 @@ const Login = () => {
                 getToken(json).then((response)=>{
                     if (response.status === 200){
                         console.log(response)
-                        window.location.href="/home"
+                        //window.location.href="/home"
                     }else console.log(response.status);
                 })
 
