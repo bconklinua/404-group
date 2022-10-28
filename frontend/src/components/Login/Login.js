@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import "./Login.css"
-import { authenticate } from '../../api/Author';
+import { authenticate, getToken } from '../../api/User';
 
 const Login = () => {
 
@@ -9,9 +9,20 @@ const Login = () => {
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        authenticate(json)
+        authenticate(json).then((response) =>{
+            if (response.status === 202){
+                // if authentication is true
+                getToken(json).then((response)=>{
+                    if (response.status === 200){
+                        console.log(response)
+                        //window.location.href="/home"
+                    }else console.log(response.status);
+                })
+
+            }else console.log(response.status);
+        })
         //console.log(Object.fromEntries(data.entries()))
-        //window.location.href="/home"
+        //
     }
     return (
     
@@ -20,7 +31,7 @@ const Login = () => {
         <div className="box">
             <h1>Login</h1>
             
-            <input type="text" placeholder="username" name='username'/>
+            <input type="email" placeholder="email" name='email'/>
             <input type="password" placeholder="password" name='password'/>
 
             <button className="login-button" onSubmit={handleSubmit}>Login</button>
