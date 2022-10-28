@@ -18,6 +18,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
+    #friend_requests = models.ManyToOneRel()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
