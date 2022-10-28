@@ -2,14 +2,13 @@ import axios from 'axios'
 
 
 export function getInbox(){
-    const url = 'http://localhost:8000/api/auth/login/' // has to be userID
-
+    const url = `http://localhost:8000/authors/${localStorage.getItem("authorID")}/inbox/` // has to be userID
 
 
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
-            // authorization?
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
         return response;

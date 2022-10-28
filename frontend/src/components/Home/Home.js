@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { test } from '../../api/Post';
+import { test, getInbox } from '../../api/Post';
 import { refreshToken } from '../../api/User';
 import { NavLink } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const Home = () =>{
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        test(json).then((response) =>{
+        getInbox(json).then((response) =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
@@ -31,6 +31,8 @@ const Home = () =>{
                     console.log(error)
                 })
 
+            }else{
+                console.log(response)
             }
             console.log(response.status)
         })
