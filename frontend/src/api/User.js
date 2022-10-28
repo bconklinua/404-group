@@ -57,7 +57,6 @@ export function getToken(param = {}){
             "Content-Type": "application/json",
         }
     }).then((response) =>{
-        console.log(response)
         localStorage.setItem("access_token", response.data.access)
         localStorage.setItem("refresh_token", response.data.refresh)
         return response;

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { test, getInbox } from '../../api/Post';
+import { test, getInbox, getPost } from '../../api/Post';
 import { refreshToken } from '../../api/User';
 import { NavLink } from "react-router-dom";
 
