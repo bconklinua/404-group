@@ -34,13 +34,16 @@ class Post(models.Model):
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="UTF-8")
     content = models.TextField()
-    author = models.ForeignKey(Author, on_delete=models.CASCADE) #Switch to OneToOne field with User
+    count = models.IntegerField(default=0)
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE, editable=False) #Switch to OneToOne field with User
     categories = models.ManyToManyField(Category, blank=True)
-    comments = models.URLField(max_length=100, default="") 
-    count = models.IntegerField(default=0, editable=False)
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
+    
+    @property
+    def count(self):
+        return Like.objects.filter(post_id = self.id).count()

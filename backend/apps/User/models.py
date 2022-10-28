@@ -62,6 +62,11 @@ class Author(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-
+@staticmethod
+def get_user(id_):
+    try:
+        return Author.objects.get(pk=id_) # <-- tried to get by email here
+    except Author.DoesNotExist:
+        return None
 
 
