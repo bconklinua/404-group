@@ -32,6 +32,7 @@ like_router.register(r'likes', LikeView, 'likes')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(author_router.urls)),
+    path('', include(post_router.urls)),
     path('api/', include('apps.User.urls')),
     path('api/auth/', include("apps.User.urls")),
     path('friendrequest/', FRListView.as_view()),
