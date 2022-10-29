@@ -19,7 +19,8 @@ from apps.Like.views import LikeView
 from rest_framework import routers
 from apps.Post.views import PostView
 from apps.User.views import AuthorView
-from apps.FriendRequest.views import FRSendView, FRListView
+from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView
+from apps.Follow.views import FollowListView
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
@@ -34,8 +35,10 @@ urlpatterns = [
     path('api/', include('apps.User.urls')),
     path('api/auth/', include("apps.User.urls")),
     path('friendrequest/', FRListView.as_view()),
+    path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view()),
     path('friendrequest/<int:author_id>/', FRSendView.as_view()),
     path('authors/<int:author_id>/', include(post_router.urls)),
+    path('followers/', FollowListView.as_view()),
     path('authors/<int:author_id>/posts/<int:post_id>/', include(like_router.urls)),
     path('authors/<int:author_id>/posts/<int:post_id>/comments/<int:comment_id>/', include(like_router.urls)),
     path('authors/<int:author_id>/inbox/', include('apps.Inbox.urls')),

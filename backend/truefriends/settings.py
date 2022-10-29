@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'apps.Like',
     'apps.FriendRequest',
     'apps.Comment',
-    'apps.Inbox'
+    'apps.Inbox',
+    'apps.Follow',
 ]
 
 AUTH_USER_MODEL = 'User.Author'
