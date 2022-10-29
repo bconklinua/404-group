@@ -40,7 +40,7 @@ class Post(models.Model):
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="UTF-8")
     content = models.TextField()
     count = models.IntegerField(default=0)
-    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE, editable=False) #Switch to OneToOne field with User
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.ManyToManyField(Category, blank=True)
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
