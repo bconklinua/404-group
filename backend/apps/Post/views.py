@@ -12,10 +12,10 @@ from rest_framework import viewsets, status, permissions
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     def get_queryset(self):
-        user_id = self.kwargs['author_id']
+        user_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         if user_id:
             return Post.objects.filter(author_id=user_id)
-        return super().get_queryset()
+        return Post.objects.all()
     
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
