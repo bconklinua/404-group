@@ -2,7 +2,6 @@ from django.db import models
 from ..User.models import Author
 
 
-# a post will have a container of likes
 class FriendRequest(models.Model):
     objects = models.manager
     date = models.DateTimeField(auto_now_add=True)                    # when the request was sent
