@@ -17,8 +17,15 @@ export default function PostView() {
     function CommentForm() {
         const [comment, setComment] = useState("");
 
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            console.log(`Form submitted, ${comment}`);
+        }
+
+
+
         return (
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Comment:
                     <input
                         type="text"
@@ -26,9 +33,13 @@ export default function PostView() {
                         onChange={(e) => setComment(e.target.value)}
                     />
                 </label>
+                <button className='comment-submit-button'>Send Comment</button>
             </form>
+            
         )
     }
+
+    
 
 
 
@@ -41,7 +52,7 @@ export default function PostView() {
             <div className='postview-main'>
                 <img class="no-post-img" src={no_img} alt="No logo" />
                 <CommentForm />
-                <button className='comment-submit-button'>Send Comment</button>
+                
             </div>
         </div>
         
