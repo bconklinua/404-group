@@ -67,7 +67,6 @@ class FRListView(GenericAPIView):
 class FRAcceptView(GenericAPIView):
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
-        author = Author.objects.get(username=request.user.username).id
         f_req = FriendRequest.objects.get(id=fr_id)
         if f_req.recipient.id != request.user.id:
             return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
@@ -90,5 +89,19 @@ class FRAcceptView(GenericAPIView):
         followed_back = Follow.objects.filter(follower=followee_author, followee=follower_author)
         if len(followed_back) > 0:
             response_dict.update({"true_friend": "you and " + follower_author.username + " are officially true friends."})
+
+        return response.Response(response_dict, status=status.HTTP_200_OK)
+
+
+class FRRejectView(GenericAPIView):
+    def post(self, request, fr_id):
+        fr_id = self.kwargs['fr_id']
+        f_req = FriendRequest.objects.get(id=fr_id)
+        if f_req.recipient.id != request.user.id:
+            return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
+        follower_author = Author.objects.get(id=f_req.sender.id)
+        response_dict = {}
+        response_dict.update({"message": "you rejected " + follower_author.username + " as a follower"})
+        f_req.delete()
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
