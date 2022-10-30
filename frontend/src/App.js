@@ -18,7 +18,7 @@ function App() {
        <Route path="/login"element={<Login/>}/>
        <Route path="/register"element={<Register/>}/>
        <Route path="/home"element={<Home/>}/>
-       <Route path="/posts/:id"element={<PostView/>}/>
+       <Route path="/posts/:post_id"element={<PostView/>}/>
 
      </Routes>
      
