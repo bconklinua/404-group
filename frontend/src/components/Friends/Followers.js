@@ -2,6 +2,7 @@ import react, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import { getFollowers } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
+import FollowerCard from './FollowerCard'
 
 const Followers = () => {
     const [followers, setFollowers] = useState({
@@ -40,14 +41,11 @@ const Followers = () => {
     }, [])
 
     let content = null;
-    getFollowers().then((response)=>{
-        console.log(response)
-    })
     console.log(followers.data)
     if (followers.data){
         content = followers.data.map((follower, key)=>
             <div>
-                {follower.sender_username}
+                <FollowerCard follower={follower}/>
             </div>
         )
         
@@ -55,7 +53,7 @@ const Followers = () => {
 
     return (
         <div>
-            <h1>Friends</h1>
+            <h1>Followers</h1>
             {content}
         </div>
     )
