@@ -14,9 +14,10 @@ const Login = () => {
                 // if authentication is true
                 getToken(json).then((response)=>{
                     if (response.status === 200){
-                        console.log(response)
+                        console.log(response);
                         window.location.reload();
-                        navigate('/')
+                        window.location.href = '/home';
+
                     }else console.log(response.status);
                 })
 

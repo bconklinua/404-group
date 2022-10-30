@@ -4,6 +4,9 @@ import  { Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Home from './components/Home/Home';
+import PostPost from './components/Post/PostPost';
+import Friends from './components/Friends/Friends';
+import FriendRequestPage from './components/Friends/FriendRequestPage'
 import Welcome from './components/Home/Welcome';
 import { isAuthenticated } from './api/User';
 import { useState } from 'react';
@@ -17,12 +20,12 @@ function App() {
   // render={() => (isAuthenticated () ? (<Navigate to="/login"/>) : (<Home />))}
 
 
-  const goLogin = (e) =>{
-    window.location.href="/login"
-  }
-  const goRegister = (e) =>{
-      window.location.href="/register"
-  }
+  // const goLogin = (e) =>{
+  //   window.location.href="/login"
+  // }
+  // const goRegister = (e) =>{
+  //     window.location.href="/register"
+  // }
 
   let render = (info.login != null) ? (
     <Router>
@@ -35,9 +38,11 @@ function App() {
      </nav> */}
      <Navbar/>
      <Routes>
-      <Route path="/home" element={<Home/>}/>
-       <Route path="/login"element={<Login/>}/>
-       <Route path="/register"element={<Register/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/post" element={<PostPost/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register"element={<Register/>}/>
+        <Route path="/friends"element={<Friends/>}/>
 
      </Routes>
      
@@ -47,9 +52,9 @@ function App() {
     <Router>
 
      <Routes>
-      <Route path="/"element={<Login/>}/>
-       <Route path="/login"element={<Login/>}/>
-       <Route path="/register"element={<Register/>}/>
+        <Route path="/"element={<Login/>}/>
+        <Route path="/login"element={<Login/>}/>
+        <Route path="/register"element={<Register/>}/>
 
      </Routes>
      

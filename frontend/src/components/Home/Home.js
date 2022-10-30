@@ -10,9 +10,7 @@ const Home = () =>{
         data: null,
         error: false,
     })
-    const [login, setLogin] = useState({
-        authenticated: true
-    })
+
     // useEffect(()=>{
     //     setPost({
     //         loading: true,
@@ -29,9 +27,13 @@ const Home = () =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
-                    console.log("success")
-                }).catch((error)=>{
-                    console.log(error)
+                    if (response === true){
+                        console.log("success")
+                    }
+                    else{
+                        window.location.reload();
+                        window.location.href = '/login';
+                    }
                 })
 
             }else{
@@ -43,53 +45,22 @@ const Home = () =>{
         //window.location.href="/home"
     }
 
-    test().then((response) =>{
-        if (response.status === 401){
-            // if token expired
-            refreshToken().then((response)=>{
-                console.log("success")
-            }).catch((error)=>{
-                console.log(error)
-            })
+ 
 
-        }else{
-            console.log(response)
-        }
-        console.log(response.status)
-    })
-
-    const goLogin = (e) =>{
-        let path = '/login'; 
-
-        navigate(path);
-    }
-    const goRegister = (e) =>{
-        let path = '/register';
-        navigate(path);
-    }
-
-    let content = login.authenticated ? (        
+    return (    
     <main className='page'>
-    <form onSubmit={handleSubmit}>
-    <div>
-        <h1>Home</h1>
-        
+        <form onSubmit={handleSubmit}>
+        <div>
+            <h1>Home</h1>
+            
 
 
-        <button  onSubmit={handleSubmit}>test</button>
+            <button  onSubmit={handleSubmit}>test</button>
 
-    </div>
-    </form>
-    </main>) : (
-        <main>
-            <h1>Please login or register</h1>
-            <button color="primary" onClick={goLogin}>login</button>
-            <button color="primary" onClick={goRegister}>Register</button>
-        </main>
-
+        </div>
+        </form>
+    </main>
     )
-
-    return (content)
 }
 
 export default Home

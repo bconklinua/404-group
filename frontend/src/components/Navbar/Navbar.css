@@ -11,11 +11,14 @@ li {
 }
 
 .nav {
-    height: 10vh;
-    line-height: 10vh;
-    box-shadow: rgba(50, 50, 93, 0.23) 0 30px 30px -20px;
-    background-color: grey;
+    height: 5.5vh;
+    line-height: 5vh;
+    
+    box-shadow: rgba(127, 127, 201, 0.23) 0 30px 30px -20px;
+    background-color: rgb(153, 142, 173);
 }
+
+
 
 .TrueFriends {
     font-size: 30px;   
@@ -36,7 +39,7 @@ li {
 
 }
 
-.navLinks li{
+ .navLinks li{
     color: black;
     font-size: 20px;
     padding: 0 10px;
@@ -44,8 +47,47 @@ li {
     cursor: pointer;
     text-transform: capitalize;
     text-decoration: none;
+}  
+
+
+
+/* .navLinks Link a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 30px 25px;
+    text-decoration: none;
+    font-size: 25px;
+  }
+  
+  .navLinks Link a:hover {
+    background-color: rgb(109, 58, 110);
+    color: white;
+  } */
+
+.link{
+    font-size: 20px;
+    margin: 0 20px;
+    position: relative;
+    text-decoration: none;
+    opacity: 0.9;
+    text-transform: capitalize;
+}
+.link:hover {
+    opacity: 1;
+
 }
 
-.navLinks Link {
-    text-decoration: none;
+.link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: all .45s;
+}
+.link:hover::before{
+    width: 100%     
 }
