@@ -20,7 +20,7 @@ from rest_framework import routers
 from apps.Post.views import PostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
-from apps.Follow.views import FollowersListView, FollowingListView
+from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
@@ -48,5 +48,6 @@ urlpatterns = [
     path('authors/<int:author_id>/inbox/', include('apps.Inbox.urls')),
     path('followers/', FollowersListView.as_view()),
     path('following/', FollowingListView.as_view()),
+    path('truefriends/', TrueFriendsListView.as_view()),
 
 ]
