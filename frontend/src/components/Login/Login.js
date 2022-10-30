@@ -15,7 +15,8 @@ const Login = () => {
                 getToken(json).then((response)=>{
                     if (response.status === 200){
                         console.log(response)
-                        navigate('/home')
+                        window.location.reload();
+                        navigate('/')
                     }else console.log(response.status);
                 })
 

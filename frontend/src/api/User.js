@@ -3,12 +3,14 @@ import axios from 'axios'
 export function isAuthenticated(){
     let i = true;
     refreshToken().then((response)=>{
-        console.log(response)
-        return true;
-    }).catch((response) =>{
-        return false
+        if (response == null){
+            return true;
+        }
+        else{
+            return false;
+        }
     })
-    return true
+
 }
 
 export function authenticate(param = {}){

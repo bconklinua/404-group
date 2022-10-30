@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+li {
+
+    list-style: none;
+}
+
+.nav {
+    height: 10vh;
+    line-height: 10vh;
+    box-shadow: rgba(50, 50, 93, 0.23) 0 30px 30px -20px;
+    background-color: grey;
+}
+
+.TrueFriends {
+    font-size: 30px;   
+}
+
+.navLinks {
+    display: flex;
+    justify-content: flex-end;
+    width: 75%;
+}
+
+.container {
+    max-width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.navLinks li{
+    color: black;
+    font-size: 20px;
+    padding: 0 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.navLinks Link {
+    text-decoration: none;
+}
