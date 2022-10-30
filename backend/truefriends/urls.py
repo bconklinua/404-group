@@ -20,14 +20,11 @@ from rest_framework import routers
 from apps.Post.views import PostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
-<<<<<<< HEAD
 from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView
-=======
 from apps.Follow.views import FollowersListView, FollowingListView
 from apps.Comment.views import PostCommentView
 from apps.Comment.views import AuthorCommentView
 
->>>>>>> 43471e2 (Fix bug with LIkes, add in Comments)
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
