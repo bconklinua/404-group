@@ -66,8 +66,9 @@ export function getPostByID(post_id) {
     }).catch((error)=>{
         return error.response;
     })
+}
+ 
 
-    return 
 export function postPost(param = {}){
     const url = 'http://127.0.0.1:8000/posts'
 

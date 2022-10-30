@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, resolvePath, useNavigate, useParams } from "react-router-dom";
 import { test, getInbox, getPost } from '../../api/Post';
 import { getToken, validJWT } from '../../api/User';
 import './PostView.css'
@@ -20,25 +20,26 @@ export default function PostView() {
             <h1> post_id: { post_id } </h1>
         );
     };
+        var [post_content, set_post_content] = useState("")
 
-        // const PostContent = () => {
-        //     var [post_content, set_post_content] = useState("")
-        //     const {post_id} = useParams();
-    
-        //     set_post_content = getPostByID(post_id);
-        //     console.log(set_post_content)
-        //     console.log("PostContent");
-        //     console.log(post_content.data);
+        const PostContent = () => {
+            const {post_id} = useParams();
+            const [post_content, set_post_content] = useState("")
 
-        //     return (
-        //         <p>post_content: {post_content.data}</p>
-        //     );
-        // }
+            getPostByID(post_id).then((response) => {
+                console.log(response.data)
+                //set_post_content(response.data);
+            })
+            // set_post_content = getPostByID(post_id);
+            // console.log(set_post_content)
+            console.log("PostContent");
+            // console.log(post_content.data);
+
+            return (
+                <p>post_content: {post_content.data}</p>
+            );
+        }
     
-        // async PostContent() {
-        //     const { post_id } = useParams();
-        //     var result = await getPostByID();
-        // };
     
 
 
@@ -62,6 +63,7 @@ export default function PostView() {
                     />
                 </label>
                 <button className='comment-submit-button'>Send Comment</button>
+                <PostContent/>
             </form>
             
         )

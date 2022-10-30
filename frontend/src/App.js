@@ -44,6 +44,8 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register"element={<Register/>}/>
         <Route path="/friends"element={<Friends/>}/>
+        <Route path="/posts/:post_id"element={<PostView/>}/>
+
 
      </Routes>
      
@@ -56,7 +58,6 @@ function App() {
         <Route path="/"element={<Login/>}/>
         <Route path="/login"element={<Login/>}/>
         <Route path="/register"element={<Register/>}/>
-       <Route path="/posts/:post_id"element={<PostView/>}/>
 
      </Routes>
      
