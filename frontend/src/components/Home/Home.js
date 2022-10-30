@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { test, getInbox, getPost } from '../../api/Post';
-import { refreshToken } from '../../api/User';
-import { NavLink } from "react-router-dom";
+import { refreshToken, isAuthenticated } from '../../api/User';
+import { useNavigate } from "react-router-dom";
 
 const Home = () =>{
+    let navigate = useNavigate(); 
     const [post, setPost] = useState({
         loading: false,
         data: null,
@@ -22,13 +23,17 @@ const Home = () =>{
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        getInbox(json).then((response) =>{
+        test().then((response) =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
-                    console.log("success")
-                }).catch((error)=>{
-                    console.log(error)
+                    if (response === true){
+                        console.log("success")
+                    }
+                    else{
+                        window.location.reload();
+                        window.location.href = '/login';
+                    }
                 })
 
             }else{
@@ -40,8 +45,10 @@ const Home = () =>{
         //window.location.href="/home"
     }
 
-    return (
-        <main className='page'>
+ 
+
+    return (    
+    <main className='page'>
         <form onSubmit={handleSubmit}>
         <div>
             <h1>Home</h1>
