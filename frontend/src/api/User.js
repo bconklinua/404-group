@@ -1,5 +1,18 @@
 import axios from 'axios'
 
+export function isAuthenticated(){
+    let i = true;
+    refreshToken().then((response)=>{
+        if (response == null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    })
+
+}
+
 export function authenticate(param = {}){
     const url = 'http://localhost:8000/api/auth/login/'
     const body = {
@@ -44,6 +57,7 @@ export function postUser(param = {}){
 }
 
 export function getToken(param = {}){
+    // Gets a token
     const url = 'http://localhost:8000/api/token/obtain/'
     const body = {
         email: param.email,
@@ -65,11 +79,14 @@ export function getToken(param = {}){
     })
 }
 export function refreshToken(){
+    // Gets a new token using refresh token
     const url = 'http://127.0.0.1:8000/api/token/refresh/'
     return axios.post(url, {refresh: localStorage.getItem('refresh_token')}).then((response)=>{
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.setItem('access_token', response.data.access);
         localStorage.setItem('refresh_token', response.data.refresh);
+    }).catch((error)=>{
+        return error.response
     })
 }
