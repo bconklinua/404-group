@@ -20,7 +20,14 @@ from rest_framework import routers
 from apps.Post.views import PostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
+<<<<<<< HEAD
 from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView
+=======
+from apps.Follow.views import FollowersListView, FollowingListView
+from apps.Comment.views import PostCommentView
+from apps.Comment.views import AuthorCommentView
+
+>>>>>>> 43471e2 (Fix bug with LIkes, add in Comments)
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
@@ -30,6 +37,10 @@ post_like_router = routers.DefaultRouter()
 post_like_router.register(r'likes', PostLikeView, 'likes')
 author_like_router = routers.DefaultRouter()
 author_like_router.register(r'likes', AuthorLikeView, 'likes')
+post_comment_router = routers.DefaultRouter()
+post_comment_router.register(r'comments', PostCommentView, 'comments')
+author_comment_router = routers.DefaultRouter()
+author_comment_router.register(r'comments', AuthorCommentView, 'comments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,5 +60,6 @@ urlpatterns = [
     path('followers/', FollowersListView.as_view()),
     path('following/', FollowingListView.as_view()),
     path('truefriends/', TrueFriendsListView.as_view()),
-
+    path('posts/<int:post_id>/', include(post_comment_router.urls)),
+    path('authors/<int:author_id>/', include(author_comment_router.urls)),
 ]

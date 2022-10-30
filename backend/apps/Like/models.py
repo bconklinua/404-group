@@ -8,7 +8,7 @@ from django.dispatch import receiver
 class Like(models.Model):
     type = models.CharField(default="like", editable=False, max_length=4)
     date = models.DateTimeField(auto_now_add=True)                    # when the like was done
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, editable=False)  # the author who liked this
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)  # the author who liked this
     post = models.ForeignKey('Post.Post', on_delete=models.CASCADE, null=True, blank=True) #The post associated to the like
     comment = models.ForeignKey('Comment.Comment', on_delete=models.CASCADE, null=True, blank=True) #The post associated to the like
 
