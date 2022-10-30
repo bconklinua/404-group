@@ -1,10 +1,10 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Login.css"
 import { authenticate, getToken } from '../../api/User';
 
 const Login = () => {
-
+    let navigate = useNavigate(); 
     const handleSubmit = (e) =>{
         e.preventDefault();
         const data = new FormData(e.target)
@@ -15,7 +15,7 @@ const Login = () => {
                 getToken(json).then((response)=>{
                     if (response.status === 200){
                         console.log(response)
-                        //window.location.href="/home"
+                        navigate('/home')
                     }else console.log(response.status);
                 })
 

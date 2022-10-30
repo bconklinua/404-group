@@ -17,10 +17,9 @@ export function getInbox(){
     })
 }
 
-export function test(param = {}){
+export function test(){
     const url = 'http://127.0.0.1:8000/authors/' // has to be userID
 
-    console.log(param)
 
     return axios.get(url, {
         headers:{
@@ -44,6 +43,30 @@ export function getPost(){
             "Content-Type": "application/json",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
             // authorization?
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}
+
+export function postPost(param = {}){
+    const url = 'http://127.0.0.1:8000/posts'
+
+    const body = {
+        title: param.title,
+        description: param.description,
+        content: param.content,
+        visibility: param.visibility,
+        unlisted: param.unlisted
+    }
+
+    return axios.post(url, body, {
+        headers:{
+            "Content-Type": "text/plain",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
         return response;
