@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { getFollowers } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 
-const Friends = () => {
+const Followers = () => {
     const [followers, setFollowers] = useState({
         data: null,
     })
@@ -47,7 +47,7 @@ const Friends = () => {
     if (followers.data){
         content = followers.data.map((follower, key)=>
             <div>
-                {follower.date}
+                {follower.sender_username}
             </div>
         )
         
@@ -60,4 +60,4 @@ const Friends = () => {
         </div>
     )
 }
-export default Friends;
+export default Followers;
