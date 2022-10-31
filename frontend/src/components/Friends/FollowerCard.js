@@ -1,11 +1,13 @@
 import React from 'react'
-import './FollowerCard.css'
+import './ProfileCard.css'
 
 const FollowerCard = (props) => {
 
     return (
-        <div>
-            {props.follower.sender_username}
+        <div className='card'>
+            <div className='box1'>
+                {props.follower.sender_username}
+            </div>
         </div>
     )
 }

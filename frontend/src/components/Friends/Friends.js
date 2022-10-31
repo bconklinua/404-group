@@ -1,26 +1,26 @@
 import react, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import { getFollowers } from '../../api/Friends'
+import { getFriends } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FollowerCard from './FollowerCard'
 
-const Followers = () => {
-    const [followers, setFollowers] = useState({
+const Friends = () => {
+    const [friends, setFriends] = useState({
         data: null,
     })
     useEffect(()=>{
-        setFollowers({
+        setFriends({
             data: null,
         })
-        getFollowers().then((response)=>{
+        getFriends().then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("success")
                         console.log(response.status)
-                        getFollowers().then((response)=>{
+                        getFriends().then((response)=>{
                             if (response.status === 200){
-                                setFollowers({
+                                setFriends({
                                     data: response.data,
                                 })
                             }
@@ -34,7 +34,7 @@ const Followers = () => {
                     }
                 })
             }else if (response.status === 200){
-                setFollowers({
+                setFriends({
                     data: response.data,
                 })
             }
@@ -42,15 +42,15 @@ const Followers = () => {
     }, [])
 
     let content = null;
-    console.log(followers.data)
-    if (followers.data){
-        if (followers.data.length === 0){
-            content = (<div className="none">No Followers</div>)
+    console.log(friends.data)
+    if (friends.data){
+        if (friends.data.length === 0){
+            content = (<div className="none">No Friends</div>)
         }
         else{
-            content = followers.data.map((follower, key)=>
+            content = friends.data.map((friend, key)=>
 
-            <FollowerCard follower={follower}/>
+            <FollowerCard friend={friend}/>
 
             )
         }
@@ -62,4 +62,4 @@ const Followers = () => {
         </div>
     )
 }
-export default Followers;
+export default Friends;

@@ -2,10 +2,11 @@ import react, { useState } from 'react'
 
 import {Box, Tab} from '@mui/material'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
-
-import Tabs from '@mui/material/Tab'
 import Followers from '../Friends/Followers'
 import FriendRequestPage from '../Friends/FriendRequestPage'
+import Followings from '../Friends/Followings'
+import Friends from '../Friends/Friends'
+import './Profile.css'
 
 const Profile = () =>{
 
@@ -20,7 +21,7 @@ const Profile = () =>{
 
     return (
         <main>
-            <h1>{profile.username}</h1>
+            <h1 className='profileName'>{profile.username}</h1>
             <div>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -34,9 +35,9 @@ const Profile = () =>{
                 </Box>
                 
                 <TabPanel value="1"> My Posts</TabPanel>
-                <TabPanel value="2"> </TabPanel>
+                <TabPanel value="2"> <Friends/></TabPanel>
                 <TabPanel value="3"> <Followers/></TabPanel>
-                <TabPanel value="4"> Following</TabPanel>
+                <TabPanel value="4"> <Followings/></TabPanel>
                 <TabPanel value="5"> <FriendRequestPage/></TabPanel>
             </TabContext>
 

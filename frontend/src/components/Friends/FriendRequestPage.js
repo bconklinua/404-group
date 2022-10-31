@@ -2,6 +2,7 @@ import React from 'react'
 import react, { useEffect, useState } from 'react'
 import { getFriendRequests } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
+import FriendRequestCard from './FriendRequestCard'
 
 const FriendRequestPage = () => {
     const [Requests, setRequests] = useState({
@@ -42,17 +43,21 @@ const FriendRequestPage = () => {
     let content = null;
     console.log(Requests.data)
     if (Requests.data){
-        content = Requests.data.map((request, key)=>
-            <div>
-                {request.sender_username}
-            </div>
-        )
+        if (Requests.data.length === 0){
+            content = (<div className="none">No Requests</div>)
+        }
+        else{
+            content = Requests.data.map((request, key)=>
+
+            <FriendRequestCard request={request}/>
+
+            )
+        }
         
     }
 
     return (
         <div>
-            <h1>Friend Requests</h1>
             {content}
         </div>
     )

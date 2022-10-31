@@ -1,26 +1,25 @@
-import react, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
-import { getFollowers } from '../../api/Friends'
+import { useEffect, useState } from 'react'
+import { getFollowings } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FollowerCard from './FollowerCard'
 
-const Followers = () => {
-    const [followers, setFollowers] = useState({
+const Followings = () => {
+    const [followings, setFollowings] = useState({
         data: null,
     })
     useEffect(()=>{
-        setFollowers({
+        setFollowings({
             data: null,
         })
-        getFollowers().then((response)=>{
+        getFollowings().then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("success")
                         console.log(response.status)
-                        getFollowers().then((response)=>{
+                        getFollowings().then((response)=>{
                             if (response.status === 200){
-                                setFollowers({
+                                setFollowings({
                                     data: response.data,
                                 })
                             }
@@ -34,7 +33,7 @@ const Followers = () => {
                     }
                 })
             }else if (response.status === 200){
-                setFollowers({
+                setFollowings({
                     data: response.data,
                 })
             }
@@ -42,18 +41,19 @@ const Followers = () => {
     }, [])
 
     let content = null;
-    console.log(followers.data)
-    if (followers.data){
-        if (followers.data.length === 0){
-            content = (<div className="none">No Followers</div>)
+    console.log(followings.data)
+    if (followings.data){
+        if (followings.data.length === 0){
+            content = (<div className="none">No Following</div>)
         }
         else{
-            content = followers.data.map((follower, key)=>
+            content = followings.data.map((following, key)=>
 
-            <FollowerCard follower={follower}/>
+            <FollowerCard follower={following}/>
 
             )
         }
+
     }
 
     return (
@@ -62,4 +62,4 @@ const Followers = () => {
         </div>
     )
 }
-export default Followers;
+export default Followings;

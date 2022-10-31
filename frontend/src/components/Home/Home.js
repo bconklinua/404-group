@@ -26,7 +26,7 @@ const Home = () =>{
                 // if token expired
                 refreshToken().then((response)=>{
                     if (response.status === 200){
-                        test().then((response)=>{
+                        getInbox().then((response)=>{
 
                             console.log(response)
                         }) 
