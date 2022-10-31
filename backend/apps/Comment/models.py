@@ -14,7 +14,7 @@ CONTENT_TYPE_CHOICES = [
 class Comment(models.Model):
     type = models.CharField(default="comment", editable=False, max_length=7)
     published = models.DateTimeField(auto_now_add=True)                    # when the comment was made
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)  # the author who made the comment
+    author = models.ForeignKey(Author, on_delete=models.CASCADE,null=True, blank=True)  # the author who made the comment
     comment = models.CharField(max_length=5000)
-    post = models.ForeignKey('Post.Post', on_delete=models.CASCADE)
+    post = models.ForeignKey('Post.Post', on_delete=models.CASCADE, null=True, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="")

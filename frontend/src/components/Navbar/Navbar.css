@@ -10,12 +10,16 @@ li {
     list-style: none;
 }
 
+h3 {
+    color: white;
+}
+
 .nav {
     height: 5.5vh;
     line-height: 5vh;
     
-    box-shadow: rgba(127, 127, 201, 0.23) 0 30px 30px -20px;
-    background-color: rgb(153, 142, 173);
+    box-shadow: rgba(230, 228, 233, 0.651) 0 30px 30px -20px;
+    background-color: #1F1B24;
 }
 
 
@@ -40,7 +44,7 @@ li {
 }
 
  .navLinks li{
-    color: black;
+
     font-size: 20px;
     padding: 0 10px;
     margin: 0 10px;
@@ -72,6 +76,7 @@ li {
     text-decoration: none;
     opacity: 0.9;
     text-transform: capitalize;
+    color: white;
 }
 .link:hover {
     opacity: 1;
@@ -85,9 +90,17 @@ li {
     bottom: 0;
     width: 0;
     height: 2px;
-    background: black;
+    background: white;
     transition: all .45s;
 }
 .link:hover::before{
     width: 100%     
 }
+
+.active {
+    color: white;
+    text-decoration: none;
+}
+.active::before{
+    width: 100%  
+   }

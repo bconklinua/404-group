@@ -6,8 +6,8 @@ import Register from './components/Register/Register';
 import Home from './components/Home/Home';
 import PostView from './components/PostView/PostView';
 import PostPost from './components/Post/PostPost';
-import Friends from './components/Friends/Friends';
-import FriendRequestPage from './components/Friends/FriendRequestPage'
+import Profile from './components/Profile/Profile';
+import FriendRequestPage from './components/Friends/FriendRequestPage';
 import Welcome from './components/Home/Welcome';
 import { isAuthenticated } from './api/User';
 import { useState } from 'react';
@@ -43,7 +43,7 @@ function App() {
         <Route path="/post" element={<PostPost/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register"element={<Register/>}/>
-        <Route path="/friends"element={<Friends/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/posts/:post_id"element={<PostView/>}/>
 
 

@@ -10,7 +10,7 @@ from ..Follow.models import Follow
 
 class FRSendView(GenericAPIView):
     #authentication_classes = []  # temp stuff
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.AllowAny,)
     serializer_class = FriendRequestSerializer
 
     def post(self, request, author_id):
@@ -37,6 +37,11 @@ class FRSendView(GenericAPIView):
 
 
 class FRListView(GenericAPIView):
+
+    serializer_class = FriendRequestSerializer
+    queryset = FriendRequest.objects.all()
+    
+
     def get(self, request):
         author = Author.objects.get(username=request.user.username).id
         fr_list = FriendRequest.objects.filter(recipient=author)
@@ -65,6 +70,9 @@ class FRListView(GenericAPIView):
 
 
 class FRAcceptView(GenericAPIView):
+
+    serializer_class = FriendRequestSerializer
+
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
@@ -94,6 +102,9 @@ class FRAcceptView(GenericAPIView):
 
 
 class FRRejectView(GenericAPIView):
+
+    serializer_class = FriendRequestSerializer
+
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
