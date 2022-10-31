@@ -51,7 +51,7 @@ const MyPosts = () => {
     console.log(posts.data)
     if (posts.data){
         if (posts.data.length === 0){
-            content = (<div className="none">No Postss</div>)
+            content = (<div className="none">No Posts</div>)
         }
         else{
             content = posts.data.map((post, key)=>

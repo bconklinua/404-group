@@ -56,16 +56,17 @@ export function postPost(param = {}){
     const url = 'http://127.0.0.1:8000/posts/'
 
     const body = {
-        title: param.title,
-        description: param.description,
-        content: param.content,
-        visibility: param.visibility,
-        unlisted: param.unlisted
+        title: "param.title",
+        description: "param.description",
+        content: "param.content",
+        visibility: "PUBLIC",
+        unlisted: true,
+        contentType: "text/plain"
     }
-
+    console.log(body)
     return axios.post(url, body, {
         headers:{
-            "Content-Type": "text/plain",
+            "Content-Type": "application/json",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -79,7 +80,7 @@ export function postPost(param = {}){
 export function getPosts(){
     const url = 'http://127.0.0.1:8000/currentauthor/posts/'
 
-    return axios.get(url, {
+        return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
             Authorization: `JWT ${localStorage.getItem("access_token")}`

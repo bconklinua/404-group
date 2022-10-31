@@ -1,7 +1,7 @@
 import react, { useEffect, useState } from 'react'
 import { getFriends } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
-import FollowerCard from './FollowerCard'
+import FriendCard from './FriendCard'
 import PostCard from '../Post/PostCard'
 import { getPosts } from '../../api/Post'
 
@@ -52,7 +52,7 @@ const Friends = () => {
         else{
             content = friends.data.map((friend, key)=>
 
-            <FollowerCard friend={friend}/>
+            <FriendCard friend={friend}/>
 
             )
         }

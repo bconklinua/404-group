@@ -62,9 +62,10 @@ export function getFriends(){
 }
 
 export function acceptFollower(id){
+    console.log(localStorage.getItem("access_token"))
     const url = `http://localhost:8000/friendrequest/accept/${id}/`
 
-    return axios.post(url, {
+    return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
@@ -78,8 +79,8 @@ export function acceptFollower(id){
 
 export function rejectFollower(id){
     const url = `http://localhost:8000/friendrequest/reject/${id}/`
-
-    return axios.post(url, {
+    
+    return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
@@ -87,6 +88,7 @@ export function rejectFollower(id){
     }).then((response) =>{
         return response;
     }).catch((error)=>{
+        
         return error.response;
     })
 }

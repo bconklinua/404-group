@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getFollowings } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
-import FollowerCard from './FollowerCard'
+import FollowingCard from './FollowingCard'
 
 const Followings = () => {
     const [followings, setFollowings] = useState({
@@ -54,7 +54,7 @@ const Followings = () => {
         else{
             content = followings.data.map((following, key)=>
 
-            <FollowerCard follower={following}/>
+            <FollowingCard following={following}/>
 
             )
         }
