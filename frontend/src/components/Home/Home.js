@@ -39,6 +39,7 @@ const Home = () =>{
                 })
 
             }else{
+                alert("you are logged in and cookies valid")
                 console.log(response)
             }
             console.log(response.status)
