@@ -1,26 +1,25 @@
-import React from 'react'
-import react, { useEffect, useState } from 'react'
-import { getFriendRequests } from '../../api/Friends'
+import { useEffect, useState } from 'react'
+import { getFollowings } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
-import FriendRequestCard from './FriendRequestCard'
+import FollowerCard from './FollowerCard'
 
-const FriendRequestPage = () => {
-    const [Requests, setRequests] = useState({
+const Followings = () => {
+    const [followings, setFollowings] = useState({
         data: null,
     })
     useEffect(()=>{
-        setRequests({
+        setFollowings({
             data: null,
         })
-        getFriendRequests().then((response)=>{
+        getFollowings().then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("success")
                         console.log(response.status)
-                        getFriendRequests().then((response)=>{
+                        getFollowings().then((response)=>{
                             if (response.status === 200){
-                                setRequests({
+                                setFollowings({
                                     data: response.data,
                                 })
                             }
@@ -30,10 +29,11 @@ const FriendRequestPage = () => {
                     else{
                         window.location.reload();
                         window.location.href = '/login';
+                        
                     }
                 })
             }else if (response.status === 200){
-                setRequests({
+                setFollowings({
                     data: response.data,
                 })
             }
@@ -41,19 +41,19 @@ const FriendRequestPage = () => {
     }, [])
 
     let content = null;
-    console.log(Requests.data)
-    if (Requests.data){
-        if (Requests.data.length === 0){
-            content = (<div className="none">No Requests</div>)
+    console.log(followings.data)
+    if (followings.data){
+        if (followings.data.length === 0){
+            content = (<div className="none">No Following</div>)
         }
         else{
-            content = Requests.data.map((request, key)=>
+            content = followings.data.map((following, key)=>
 
-            <FriendRequestCard request={request}/>
+            <FollowerCard follower={following}/>
 
             )
         }
-        
+
     }
 
     return (
@@ -62,5 +62,4 @@ const FriendRequestPage = () => {
         </div>
     )
 }
-
-export default FriendRequestPage
+export default Followings;

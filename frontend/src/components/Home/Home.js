@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () =>{
     let navigate = useNavigate(); 
     const [post, setPost] = useState({
-        loading: false,
         data: null,
-        error: false,
     })
 
     // useEffect(()=>{
@@ -23,11 +21,15 @@ const Home = () =>{
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
-        test().then((response) =>{
+        getInbox().then((response) =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
-                    if (response === true){
+                    if (response.status === 200){
+                        getInbox().then((response)=>{
+
+                            console.log(response)
+                        }) 
                         console.log("success")
                     }
                     else{
