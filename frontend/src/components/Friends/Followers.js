@@ -16,7 +16,7 @@ const Followers = () => {
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
-                        console.log("success")
+                        console.log("refresh token")
                         console.log(response.status)
                         getFollowers().then((response)=>{
                             if (response.status === 200){
@@ -24,7 +24,13 @@ const Followers = () => {
                                     data: response.data,
                                 })
                             }
-                            console.log("true");
+                            else{
+                                console.log("not authenticated")
+                                localStorage.removeItem("refresh_token")
+                                window.location.reload();
+                                window.location.href = '/login'; 
+                            }
+
                         })
                     }
                     else{

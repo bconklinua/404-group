@@ -1,8 +1,9 @@
 import react, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
 import { getFriends } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FollowerCard from './FollowerCard'
+import PostCard from '../Post/PostCard'
+import { getPosts } from '../../api/Post'
 
 const Friends = () => {
     const [friends, setFriends] = useState({
@@ -34,6 +35,7 @@ const Friends = () => {
                     }
                 })
             }else if (response.status === 200){
+                console.log(response)
                 setFriends({
                     data: response.data,
                 })

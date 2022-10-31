@@ -53,7 +53,7 @@ export function getPost(){
 }
 
 export function postPost(param = {}){
-    const url = 'http://127.0.0.1:8000/posts'
+    const url = 'http://127.0.0.1:8000/posts/'
 
     const body = {
         title: param.title,
@@ -67,6 +67,23 @@ export function postPost(param = {}){
         headers:{
             "Content-Type": "text/plain",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}
+
+export function getPosts(){
+    const url = 'http://127.0.0.1:8000/currentauthor/posts/'
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+            // authorization?
         }
     }).then((response) =>{
         return response;

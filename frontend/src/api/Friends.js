@@ -62,7 +62,7 @@ export function getFriends(){
 }
 
 export function acceptFollower(id){
-    const url = `http://localhost:8000/friendrequest/accept/${id}`
+    const url = `http://localhost:8000/friendrequest/accept/${id}/`
 
     return axios.post(url, {
         headers:{
@@ -77,7 +77,7 @@ export function acceptFollower(id){
 }
 
 export function rejectFollower(id){
-    const url = `http://localhost:8000/friendrequest/reject/${id}`
+    const url = `http://localhost:8000/friendrequest/reject/${id}/`
 
     return axios.post(url, {
         headers:{

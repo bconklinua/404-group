@@ -8,15 +8,23 @@ import { refreshToken } from '../../api/User';
 
 const FriendRequestCard = (props) => {
     const accept = (e) => {
-        acceptFollower(props.request.sender_id).then((response) =>{
+        acceptFollower(props.request.id).then((response) =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("Refresh Token")
-                        acceptFollower(props.request.sender_id).then((response)=>{
-                            window.location.reload()
-                            console.log(response)
+                        acceptFollower(props.request.id).then((response)=>{
+                            if (response.status === 401){
+                                // window.location.reload();
+                                // window.location.href = '/login';  
+                                console.log(response.status)        
+                            }
+                            else{
+                                props.removeRequest(props.request)
+                                console.log(response)
+                            }
+
                         }) 
                         
                     }
@@ -27,21 +35,31 @@ const FriendRequestCard = (props) => {
                 })
 
             }else{
+                props.removeRequest(props.request)
                 console.log(response)
             }
             console.log(response.status)
         })
+
+    
     }
     const reject = (e) => {
-        rejectFollower(props.request.sender_id).then((response) =>{
+        rejectFollower(props.request.id).then((response) =>{
             if (response.status === 401){
                 // if token expired
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("Refresh Token")
-                        rejectFollower(props.request.sender_id).then((response)=>{
-                            window.location.reload()
-                            console.log(response)
+                        rejectFollower(props.request.id).then((response)=>{
+                            if (response.status === 401){
+                                // window.location.reload();
+                                // window.location.href = '/login';  
+                                console.log(response.status)        
+                            }
+                            else{
+                                props.removeRequest(props.request)
+                                console.log(response)
+                            }
                         }) 
                         
                     }
@@ -52,6 +70,7 @@ const FriendRequestCard = (props) => {
                 })
 
             }else{
+                props.removeRequest(props.request)
                 console.log(response)
             }
             console.log(response.status)

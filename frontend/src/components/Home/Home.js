@@ -28,9 +28,17 @@ const Home = () =>{
                     if (response.status === 200){
                         getInbox().then((response)=>{
 
-                            console.log(response)
+                            if (response.status === 200){
+                                console.log("succes")
+                            }
+                            else{
+                                console.log("not authenticated")
+                                localStorage.removeItem("refresh_token")
+                                window.location.reload();
+                                window.location.href = '/login'; 
+                            }
                         }) 
-                        console.log("success")
+                        console.log("refreshed token")
                     }
                     else{
                         window.location.reload();

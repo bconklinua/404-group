@@ -6,6 +6,7 @@ import Followers from '../Friends/Followers'
 import FriendRequestPage from '../Friends/FriendRequestPage'
 import Followings from '../Friends/Followings'
 import Friends from '../Friends/Friends'
+import MyPosts from '../Post/MyPosts'
 import './Profile.css'
 
 const Profile = () =>{
@@ -14,6 +15,7 @@ const Profile = () =>{
 
     const [profile, setProfile] = useState({
         username: localStorage.getItem("username"),
+        email: localStorage.getItem("email")
     })
     const handleChange = (e, newValue) =>{
         setValue(newValue)
@@ -22,6 +24,7 @@ const Profile = () =>{
     return (
         <main>
             <h1 className='profileName'>{profile.username}</h1>
+            <body className='profileName'>{profile.email} </body>
             <div>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -34,7 +37,7 @@ const Profile = () =>{
                     </TabList>
                 </Box>
                 
-                <TabPanel value="1"> My Posts</TabPanel>
+                <TabPanel value="1"> <MyPosts/> </TabPanel>
                 <TabPanel value="2"> <Friends/></TabPanel>
                 <TabPanel value="3"> <Followers/></TabPanel>
                 <TabPanel value="4"> <Followings/></TabPanel>

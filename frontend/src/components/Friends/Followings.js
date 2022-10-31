@@ -23,7 +23,12 @@ const Followings = () => {
                                     data: response.data,
                                 })
                             }
-                            console.log("true");
+                            else{
+                                console.log("not authenticated")
+                                localStorage.removeItem("refresh_token")
+                                window.location.reload();
+                                window.location.href = '/login'; 
+                            }
                         })
                     }
                     else{

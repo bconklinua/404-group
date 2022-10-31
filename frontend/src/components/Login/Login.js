@@ -33,8 +33,8 @@ const Login = () => {
         <div className="box">
             <h1>Login</h1>
             
-            <input type="email" placeholder="email" name='email'/>
-            <input type="password" placeholder="password" name='password'/>
+            <input className="input" type="email" placeholder="email" name='email'/>
+            <input className="input" type="password" placeholder="password" name='password'/>
 
             <button className="login-button" onSubmit={handleSubmit}>Login</button>
             <NavLink className="register-button" to="/register">Register</NavLink>

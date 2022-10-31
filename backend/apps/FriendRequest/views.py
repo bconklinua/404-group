@@ -57,7 +57,7 @@ class FRListView(GenericAPIView):
             sender_last_name = fr_author.last_name
 
             fr_date = fr.date
-            fr_dict.update({'id:' : fr_id})
+            fr_dict.update({'id' : fr_id})
             fr_dict.update({'date': fr_date})
             fr_dict.update({'sender_id' : sender_id})
             fr_dict.update({'sender_username': sender_username})
