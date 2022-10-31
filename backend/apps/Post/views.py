@@ -29,3 +29,12 @@ class PostView(viewsets.ModelViewSet):
         serializer = PostSerializer(instance=instance)
         serializer.data['count'] = instance.count
         return Response(serializer.data)
+
+class LoggedInPostView(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+    def list(self, request):
+        queryset = Post.objects.filter(author = request.user)
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
