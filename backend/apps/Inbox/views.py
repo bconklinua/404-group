@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import InboxSerializer
 from .models import Inbox
+from rest_framework.response import Response
 # Create your views here.
 
 class InboxView(viewsets.ModelViewSet):
@@ -12,3 +13,9 @@ class InboxView(viewsets.ModelViewSet):
         if user_id:
             return Inbox.objects.filter(author_id=user_id)
         return super().get_queryset()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = InboxSerializer(instance=instance)
+        serializer.data['count'] = instance.count
+        return Response(serializer.data)
