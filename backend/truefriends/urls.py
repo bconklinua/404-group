@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from apps.Like.views import PostLikeView, AuthorLikeView
 from rest_framework import routers
-from apps.Post.views import PostView
+from apps.Post.views import PostView, LoggedInPostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
 from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView
@@ -28,6 +28,8 @@ from apps.Comment.views import AuthorCommentView
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
+logged_in_post_router = routers.DefaultRouter()
+logged_in_post_router.register(r'posts', LoggedInPostView, 'posts')
 author_router = routers.DefaultRouter()
 author_router.register(r'authors', AuthorView, 'authors')
 post_like_router = routers.DefaultRouter()
@@ -59,4 +61,5 @@ urlpatterns = [
     path('truefriends/', TrueFriendsListView.as_view()),
     path('posts/<int:post_id>/', include(post_comment_router.urls)),
     path('authors/<int:author_id>/', include(author_comment_router.urls)),
+    path('currentauthor/', include(logged_in_post_router.urls))
 ]
