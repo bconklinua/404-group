@@ -30,6 +30,13 @@ class PostView(viewsets.ModelViewSet):
         serializer.data['count'] = instance.count
         return Response(serializer.data)
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.author == request.user:
+            return super().update(request)
+        return Response("not authenticated", status=status.HTTP_401_UNAUTHORIZED)
+        
+
 class LoggedInPostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
