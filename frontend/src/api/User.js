@@ -1,18 +1,5 @@
 import axios from 'axios'
 
-export function isAuthenticated(){
-    let i = true;
-    refreshToken().then((response)=>{
-        if (response == null){
-            return true;
-        }
-        else{
-            return false;
-        }
-    })
-
-}
-
 export function authenticate(param = {}){
     const url = 'http://localhost:8000/api/auth/login/'
     const body = {
@@ -31,6 +18,7 @@ export function authenticate(param = {}){
         localStorage.clear()
         localStorage.setItem("authorID", response.data.id)
         localStorage.setItem("username", response.data.username)
+        localStorage.setItem("email", response.data.email)
         return response;
     }).catch((error)=>{
         return error.response;

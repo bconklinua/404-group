@@ -40,6 +40,12 @@ const FriendRequestPage = () => {
         })
     }, [])
 
+    const removeRequest = (name) => {
+        setRequests({
+            data: Requests.data.filter(el => el !== name)
+        })
+    }
+
     let content = null;
     console.log(Requests.data)
     if (Requests.data){
@@ -49,7 +55,7 @@ const FriendRequestPage = () => {
         else{
             content = Requests.data.map((request, key)=>
 
-            <FriendRequestCard request={request}/>
+            <FriendRequestCard request={request} removeRequest={removeRequest}/>
 
             )
         }

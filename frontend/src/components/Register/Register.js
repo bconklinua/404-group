@@ -34,10 +34,10 @@ const Register = () => {
     <main className='page'>
         <form onSubmit={handleSubmit}>
         <div className="box">
-            <h1>Register</h1>
-            <input type="email" placeholder="email" name='email'/>
-            <input type="text" placeholder="username" name='username'/>
-            <input type="password" placeholder="password" name='password' onChange={handleInputChange}/>
+            <h1 className="register">Register</h1>
+            <input className="input" type="email" placeholder="email" name='email'/>
+            <input className="input" type="text" placeholder="username" name='username'/>
+            <input className="input" type="password" placeholder="password" name='password' onChange={handleInputChange}/>
 
             <button className="register-button1" onSubmit={handleSubmit}>Register</button>
             <NavLink className="login-button1" to="/login">Login</NavLink>
