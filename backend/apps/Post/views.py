@@ -6,11 +6,13 @@ from .serializers import PostSerializer
 from .models import Post
 from apps.User.models import Author
 from rest_framework import viewsets, status, permissions
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 # Create your views here.
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
     def get_queryset(self):
         user_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         if user_id:
