@@ -46,6 +46,7 @@ class Post(models.Model):
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='post_images', null=True, blank=True)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
