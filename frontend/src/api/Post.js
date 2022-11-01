@@ -52,6 +52,23 @@ export function getPost(){
     })
 }
 
+export function getPostByID(post_id) {
+    const url = `http://localhost:8000/posts/${post_id}/`
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        // console.log("returning response");
+        // console.log(response.data);
+        return response;
+    }).catch((error)=>{
+        return error.response;
+    })
+}
+
+
 export function postPost(param = {}){
     const url = 'http://127.0.0.1:8000/posts'
 

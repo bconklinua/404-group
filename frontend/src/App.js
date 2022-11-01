@@ -4,6 +4,7 @@ import  { Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Home from './components/Home/Home';
+import PostView from './components/PostView/PostView';
 import PostPost from './components/Post/PostPost';
 import Profile from './components/Profile/Profile';
 import FriendRequestPage from './components/Friends/FriendRequestPage';
@@ -11,6 +12,7 @@ import Welcome from './components/Home/Welcome';
 import { isAuthenticated } from './api/User';
 import { useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
+import PageNotFound from './404-page';
 
 function App() {
   const [info, setInfo] = useState({
@@ -43,6 +45,9 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register"element={<Register/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/posts/:post_id"element={<PostView/>}/>
+        <Route path="/page-not-found"element={<PageNotFound/>}/>
+
 
      </Routes>
      
