@@ -34,7 +34,7 @@ class Category(models.Model):
 class Post(models.Model):
 
     type = models.CharField(default="post", editable=False, max_length=4)
-    title = models.CharField(max_length=30, default="Untitled")
+    title = models.CharField(max_length=30, default="Untitled", unique=True)
     source = models.SlugField(max_length=100, editable=False)
     origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
