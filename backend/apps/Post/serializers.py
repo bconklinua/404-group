@@ -8,6 +8,9 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 class PostSerializer(serializers.ModelSerializer):
+
+    image = serializers.ImageField(required=False)
+
     class Meta:
         model = Post
         fields = ('type','author', 'title', 'id', 'source', 'origin', 'description', 

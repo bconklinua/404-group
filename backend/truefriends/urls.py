@@ -24,6 +24,8 @@ from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsL
 from apps.Follow.views import FollowersListView, FollowingListView
 from apps.Comment.views import PostCommentView
 from apps.Comment.views import AuthorCommentView
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 post_router = routers.DefaultRouter()
@@ -63,3 +65,5 @@ urlpatterns = [
     path('authors/<int:author_id>/', include(author_comment_router.urls)),
     path('currentauthor/', include(logged_in_post_router.urls))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

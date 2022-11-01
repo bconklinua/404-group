@@ -30,6 +30,9 @@ class Category(models.Model):
         return self.name
 
 
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
 # Create your models here.
 class Post(models.Model):
 
@@ -46,7 +49,7 @@ class Post(models.Model):
     published = models.DateTimeField(auto_now_add=True)
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='post_images', null=True, blank=True)
+    image = models.ImageField(upload_to=upload_to, null=True, blank=True)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
