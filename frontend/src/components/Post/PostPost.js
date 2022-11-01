@@ -7,6 +7,7 @@ import { refreshToken } from '../../api/User'
 
 const PostPost = () => {
     const [checked, setChecked] = useState(false)
+    const [image, setImage] = useState('')
     console.log({checked})
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -45,6 +46,14 @@ const PostPost = () => {
     const handleChange = (e) =>{
         setChecked(e.target.checked)
     }
+    const uploadImage = (e) =>{
+        const files = e.target.files
+        const data = new FormData()
+        data.append('file', files[0])
+        console.log(files[0])
+    }
+
+
 
     return (
         <main>
@@ -54,6 +63,7 @@ const PostPost = () => {
                 <input placeholder="title" name='title'/>
                 <input placeholder="description" name='description'/>
                 <input placeholder="content" name='content'/>
+                <input placeholder="UploadImage" name='file' type="file" onChange={uploadImage}/>
                 <FormControlLabel control={<Switch checked={checked} color="secondary" onChange={handleChange}/>}/>
                 
                 <button onSubmit={handleSubmit}>Submit</button>

@@ -56,9 +56,9 @@ export function postPost(param = {}){
     const url = 'http://127.0.0.1:8000/posts/'
 
     const body = {
-        title: "param.title",
-        description: "param.description",
-        content: "param.content",
+        title: param.title,
+        description: param.description,
+        content: param.content,
         visibility: "PUBLIC",
         unlisted: true,
         contentType: "text/plain"
