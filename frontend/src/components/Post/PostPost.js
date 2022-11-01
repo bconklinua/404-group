@@ -2,32 +2,48 @@ import react, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { postPost } from '../../api/Post'
 
-import { Switch, FormControlLabel } from '@mui/material'
+import { Switch, FormControlLabel, Button } from '@mui/material'
 import { refreshToken } from '../../api/User'
 
 const PostPost = () => {
-    const [checked, setChecked] = useState(false)
-    const [image, setImage] = useState('')
-    console.log({checked})
+    const [visibility, setVisibility] = useState(false)
+    const [image, setImage] = useState(null)
+    const [unlisted, setUnlisted] = useState(false)
+    const [file, setFile] = useState(undefined)
+
     const handleSubmit = (e) =>{
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
+        if (visibility){
+            json["visibility"] = "PUBLIC"
+        }else{
+            json["visibility"] = "PRIVATE"
+        }
+        
+        json["unlisted"] = unlisted
+        if (image){
+            json["image"] = image
+        }
+        
         postPost(json).then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("refresh token")
                         console.log(response.status)
-                        postPost().then((response)=>{
+                        postPost(json).then((response)=>{
                             if (response.status === 200){
                                 console.log("posted")
                             }
-                            else{
+                            else if (response.status === 401){
                                 console.log("not authenticated")
                                 localStorage.removeItem("refresh_token")
                                 window.location.reload();
                                 window.location.href = '/login'; 
+                            }
+                            else{
+                                console.log(response)
                             }
 
                         })
@@ -44,15 +60,24 @@ const PostPost = () => {
         console.log(json)
     }
     const handleChange = (e) =>{
-        setChecked(e.target.checked)
+        setVisibility(e.target.checked)
+        console.log("visibility")
     }
     const uploadImage = (e) =>{
-        const files = e.target.files
-        const data = new FormData()
-        data.append('file', files[0])
-        console.log(files[0])
+    
+        if (e.target.files[0]){
+            setFile(URL.createObjectURL(e.target.files[0]))
+        }
+        else {
+            setImage(e.target.files[0])
+            setFile(undefined)
+        }
+        console.log(e.target.files[0])
     }
-
+    const handleUnlisted = (e) =>{
+        setUnlisted(e.target.checked)
+        console.log("unlisted")
+    }
 
 
     return (
@@ -63,9 +88,10 @@ const PostPost = () => {
                 <input placeholder="title" name='title'/>
                 <input placeholder="description" name='description'/>
                 <input placeholder="content" name='content'/>
-                <input placeholder="UploadImage" name='file' type="file" onChange={uploadImage}/>
-                <FormControlLabel control={<Switch checked={checked} color="secondary" onChange={handleChange}/>}/>
-                
+                <input placeholder="UploadImage" name='file' type="file" accept="image/png, image/jpeg" onChange={uploadImage}/>
+                { file && <img src={file}/>}
+                <FormControlLabel label="public" control={<Switch checked={visibility} color="secondary" onChange={handleChange}/>}/>
+                <FormControlLabel label="unlisted" control={<Switch checked={unlisted} color="secondary" onChange={handleUnlisted}/>}/>
                 <button onSubmit={handleSubmit}>Submit</button>
                 </div>
             </form>

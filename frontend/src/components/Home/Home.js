@@ -2,76 +2,71 @@ import React, {useState, useEffect} from 'react'
 import { test, getInbox, getPost } from '../../api/Post';
 import { refreshToken, isAuthenticated } from '../../api/User';
 import { useNavigate } from "react-router-dom";
+import PostCard from "../Post/PostCard";
 
-const Home = () =>{
-    let navigate = useNavigate(); 
-    const [post, setPost] = useState({
+const MyPosts = () => {
+    const [posts, setPosts] = useState({
         data: null,
     })
-
-    // useEffect(()=>{
-    //     setPost({
-    //         loading: true,
-    //         data: null,
-    //         error: false,
-    //     })
-    //     // Use axios.get
-    // }) 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        const data = new FormData(e.target)
-        const json = Object.fromEntries(data.entries())
-        getInbox().then((response) =>{
+    useEffect(()=>{
+        setPosts({
+            data: null,
+        })
+        getInbox().then((response)=>{
             if (response.status === 401){
-                // if token expired
                 refreshToken().then((response)=>{
                     if (response.status === 200){
+                        console.log("success")
+                        console.log(response.status)
                         getInbox().then((response)=>{
-
                             if (response.status === 200){
-                                console.log("succes")
+                                setPosts({
+                                    data: response.data,
+                                })
                             }
                             else{
-                                console.log("not authenticated")
                                 localStorage.removeItem("refresh_token")
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
-                        }) 
-                        console.log("refreshed token")
+                            console.log("true");
+                        })
                     }
                     else{
                         window.location.reload();
                         window.location.href = '/login';
+                        
                     }
                 })
-
-            }else{
-                alert("you are logged in and cookies valid")
+            }else if (response.status === 200){
                 console.log(response)
+                setPosts({
+                    data: response.data,
+                })
             }
-            console.log(response.status)
         })
-        //console.log(Object.fromEntries(data.entries()))
-        //window.location.href="/home"
+    }, [])
+
+    let content = null;
+
+    if (posts.data){
+        if (posts.data.length === 0){
+            content = (<div className="none">No Posts</div>)
+        }
+        else{
+            console.log(posts.data)
+            content = posts.data[0].items.slice().reverse().map((post, key)=>
+            
+            <PostCard post={post}/>
+
+            )
+        }
     }
 
- 
-
-    return (    
-    <main className='page'>
-        <form onSubmit={handleSubmit}>
+    return (
         <div>
-            <h1>Home</h1>
-            
-
-
-            <button  onSubmit={handleSubmit}>test</button>
-
+            {content}
         </div>
-        </form>
-    </main>
     )
 }
-
-export default Home
+export default MyPosts;

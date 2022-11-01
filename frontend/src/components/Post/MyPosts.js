@@ -54,8 +54,9 @@ const MyPosts = () => {
             content = (<div className="none">No Posts</div>)
         }
         else{
-            content = posts.data.map((post, key)=>
 
+            content = posts.data.slice().reverse().map((post, key)=>
+            
             <PostCard post={post}/>
 
             )
