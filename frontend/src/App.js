@@ -12,6 +12,7 @@ import Welcome from './components/Home/Welcome';
 import { isAuthenticated } from './api/User';
 import { useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
+import PageNotFound from './404-page';
 
 function App() {
   const [info, setInfo] = useState({
@@ -45,6 +46,7 @@ function App() {
         <Route path="/register"element={<Register/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/posts/:post_id"element={<PostView/>}/>
+        <Route path="/page-not-found"element={<PageNotFound/>}/>
 
 
      </Routes>

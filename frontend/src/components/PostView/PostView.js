@@ -6,6 +6,7 @@ import './PostView.css'
 import no_img from './no-image-icon-4.png';
 import { getPostByID } from '../../api/Post';
 // import { getPostByID } from '../../api/PostViewMethods';
+import '../../404-page.css'
 
 
 
@@ -59,6 +60,8 @@ export default function PostView() {
                         setPostContent({
                             data: "404"
                         })
+                        window.location.reload();
+                        window.location.href='/page-not-found';
                     }
                 })
             }, [])
@@ -135,7 +138,12 @@ export default function PostView() {
     }
 
     
+    const validatePost = ({ check404}) => {
+        if (check404 === "404") {
+            console.log("validate post gave 404")
+        }
 
+    }
 
 
 
