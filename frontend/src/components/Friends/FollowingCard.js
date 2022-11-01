@@ -1,6 +1,7 @@
 import React from 'react'
 import './ProfileCard.css'
 
+
 const FollowerCard = (props) => {
 
     return (
@@ -9,6 +10,7 @@ const FollowerCard = (props) => {
                 {props.following.recipient_username}
             </div>
         </div>
+
     )
 }
 

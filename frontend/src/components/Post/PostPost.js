@@ -2,13 +2,14 @@ import react, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { postPost } from '../../api/Post'
 
-import { Switch, FormControlLabel } from '@mui/material'
+import { Switch, FormControlLabel, Button } from '@mui/material'
 import { refreshToken } from '../../api/User'
 
 const PostPost = () => {
     const [visibility, setVisibility] = useState(false)
     const [image, setImage] = useState(null)
     const [unlisted, setUnlisted] = useState(false)
+    const [file, setFile] = useState(undefined)
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -63,7 +64,14 @@ const PostPost = () => {
         console.log("visibility")
     }
     const uploadImage = (e) =>{
-        setImage(e.target.files[0])
+    
+        if (e.target.files[0]){
+            setFile(URL.createObjectURL(e.target.files[0]))
+        }
+        else {
+            setImage(e.target.files[0])
+            setFile(undefined)
+        }
         console.log(e.target.files[0])
     }
     const handleUnlisted = (e) =>{
@@ -81,8 +89,9 @@ const PostPost = () => {
                 <input placeholder="description" name='description'/>
                 <input placeholder="content" name='content'/>
                 <input placeholder="UploadImage" name='file' type="file" accept="image/png, image/jpeg" onChange={uploadImage}/>
-                <FormControlLabel control={<Switch checked={visibility} color="secondary" onChange={handleChange}/>}/>
-                <FormControlLabel control={<Switch checked={unlisted} color="secondary" onChange={handleUnlisted}/>}/>
+                { file && <img src={file}/>}
+                <FormControlLabel label="public" control={<Switch checked={visibility} color="secondary" onChange={handleChange}/>}/>
+                <FormControlLabel label="unlisted" control={<Switch checked={unlisted} color="secondary" onChange={handleUnlisted}/>}/>
                 <button onSubmit={handleSubmit}>Submit</button>
                 </div>
             </form>

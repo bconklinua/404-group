@@ -9,6 +9,7 @@ import { Box, Button, CardActionArea } from '@mui/material';
 import './PostCard.css'
 import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
+import PostView from '../PostView/PostView';
 
 
 const PostCard = (props) => {
@@ -26,7 +27,7 @@ const PostCard = (props) => {
     }  
 
     const handleClick = (e) =>{
-        console.log(props.post.image)
+        window.location.href = `/posts/${props.post.id}`
     }
     const handleLike = (e) =>{
         e.preventDefault();
@@ -84,6 +85,7 @@ const PostCard = (props) => {
                 <IconButton onClick={handleLike} size="small" color="secondary">
                 <Favorite/>
                 </IconButton>
+                {props.post.count}
 
             </Card>
 
