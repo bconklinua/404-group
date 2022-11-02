@@ -20,7 +20,7 @@ from rest_framework import routers
 from apps.Post.views import PostView, LoggedInPostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
-from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView
+from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView, UnfollowView
 from apps.Follow.views import FollowersListView, FollowingListView
 from apps.Comment.views import PostCommentView
 from apps.Comment.views import AuthorCommentView
@@ -60,6 +60,7 @@ urlpatterns = [
     path('authors/<int:author_id>/inbox/', include('apps.Inbox.urls')),
     path('followers/', FollowersListView.as_view()),
     path('following/', FollowingListView.as_view()),
+    path('unfollow/<int:user_id>/', UnfollowView.as_view()),
     path('truefriends/', TrueFriendsListView.as_view()),
     path('posts/<int:post_id>/', include(post_comment_router.urls)),
     path('authors/<int:author_id>/', include(author_comment_router.urls)),
