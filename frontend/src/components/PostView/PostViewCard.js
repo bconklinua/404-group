@@ -10,6 +10,8 @@ import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { deletePost } from '../../api/Post';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostViewCard = (props) => {
     
@@ -34,6 +36,9 @@ const PostViewCard = (props) => {
     const handleClick = (e) =>{
         console.log("true")
     }
+    const handleEdit = (e) =>{
+        window.location.href = `/edit/${props.post.id}`
+    }
     const handleDeletePost = (e) =>{
         console.log("delete")
         deletePost(props.post.id).then((response)=>{
@@ -52,12 +57,17 @@ const PostViewCard = (props) => {
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
+                            else{
+                                toast.error('something went wrong');
+                            }
                         })
                     }
                 })
             }else if(response.status === 204){
                 window.location.reload();
                 window.location.href = '/profile'; 
+            }else{
+                toast.error('something went wrong');
             }
             console.log(response)
         })
@@ -127,7 +137,7 @@ const PostViewCard = (props) => {
             </div>
             
             <div>
-                <Button>Edit</Button>
+                <Button onClick={handleEdit}>Edit</Button>
                 <Button onClick={handleDeletePost}>Delete</Button>
             </div>
             </div>

@@ -6,6 +6,8 @@ import PostCard from "../Post/PostCard";
 import CommentCard from './CommentCard'
 import { postComment, getComments } from '../../api/Comments';
 import { Box, TextField, Divider, Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Comments = (props) => {
@@ -73,6 +75,7 @@ const Comments = (props) => {
                                     setComments({
                                       data:comments.data  
                                     })
+                                    toast.success("comment posted")
                                 }else if (response.status === 401){
                                     console.log("not authenticated")
                                     localStorage.removeItem("refresh_token")
@@ -80,7 +83,7 @@ const Comments = (props) => {
                                     window.location.href = '/login'; 
                                 }
                                 else{
-                                    console.log(response)
+                                    toast.error("comment NOT posted")
                                 }
                                 console.log("...");
                             })
@@ -95,12 +98,15 @@ const Comments = (props) => {
                     setComments({
                       data:comments.data  
                     })
+                    toast.success("comment posted")
                     
                     console.log(comments.data.slice())
                 } else if (response.status === 404) {
                     console.log('404')
                     window.location.reload();
                     window.location.href='/page-not-found';
+                }else{
+                    toast.error("comment NOT posted")
                 }
             })
         }

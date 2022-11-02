@@ -111,7 +111,7 @@ export function getPosts(){
 }
 
 export function editPost(param = {}){
-    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}`
+    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
 
     let form_data = new FormData();
     if (param.image) form_data.append("image", param.image, param.image.name)
