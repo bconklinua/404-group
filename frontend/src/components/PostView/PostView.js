@@ -9,6 +9,7 @@ import { getPostByID } from '../../api/Post';
 import '../../404-page.css'
 import { CardMedia, Box, Card } from '@mui/material';
 import PostCard from '../Post/PostCard';
+import PostViewCard from './PostViewCard';
 import Comments from './Comment';
 import { postComment } from '../../api/Comments';
 
@@ -84,7 +85,7 @@ export default function PostView() {
 
         else{
             console.log(postContent.data.image)
-            content = (<PostCard post={postContent.data}/>)
+            content = (<PostViewCard post={postContent.data}/>)
         }
     }
 
