@@ -35,8 +35,8 @@ export function test(){
     })
 }
 
-export function getPost(){
-    const url = 'http://127.0.0.1:8000/authors/7/posts'
+export function getUserPost(user_id){
+    const url = `http://127.0.0.1:8000/authors/${user_id}/posts/`
 
     return axios.get(url, {
         headers:{

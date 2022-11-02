@@ -1,10 +1,13 @@
-import React from 'react';
+import React from 'react'
+import '../Friends/ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea } from '@mui/material';
-import Favorite from '@mui/icons-material/Favorite';
 
-export default function PostCard(props) {
-    const handleClick = (e) =>{
-        window.location.href = `/posts/${props.post.id}`
+
+const ExploreCard = (props) => {
+
+    const handleClick = () =>{
+        console.log(props.user.username)
+        window.location.href = `/user/${props.user.id}/${props.user.username}`
     }
 
     return (
@@ -13,14 +16,16 @@ export default function PostCard(props) {
             <CardActionArea onClick={handleClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                    {props.post.author} posted {props.post.title}
+                    {props.user.username}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                    {props.post.published}
+                    {props.user.email}
                     </Typography>
                 </CardContent>
             </CardActionArea>
             </Card>
         </Box>
-    );
+    )
 }
+
+export default ExploreCard;

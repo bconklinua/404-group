@@ -79,3 +79,17 @@ export function refreshToken(){
         return error.response
     })
 }
+
+export function getAllUsers(){
+    const url = 'http://127.0.0.1:8000/authors/'
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}

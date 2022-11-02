@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react'
 import { test, getInbox, getPost } from '../../api/Post';
 import { refreshToken, isAuthenticated } from '../../api/User';
 import { useNavigate } from "react-router-dom";
-import PostCard from "../Post/PostCard";
 import LikesCard from './LikesCard';
 import CommentCard from './CommentCard'
+import PostCard from "./PostCard"
 
 const InboxView = (props) =>{
     const [posts, setPosts] = useState({

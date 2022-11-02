@@ -1,26 +1,32 @@
-import react, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
-import { getFollowers } from '../../api/Friends'
-import { refreshToken, getAllUsers } from '../../api/User'
-import ExploreCard from './ExploreCard'
+import react, { useState, useEffect } from 'react'
 
-const Explore = () => {
-    const [users, setUsers] = useState({
+import {Box, Divider, Tab} from '@mui/material'
+import {TabContext, TabList, TabPanel} from '@mui/lab'
+import { useParams } from 'react-router-dom'
+import { refreshToken } from '../../api/User'
+import { getUserPost } from '../../api/Post'
+import UserPostCard from './UserPostCard'
+import PostCard from '../Post/PostCard'
+
+const UserView = () =>{
+
+    const {user_id, username} = useParams();
+    const [userPost, setUserPost] = useState({
         data: null,
     })
     useEffect(()=>{
-        setUsers({
+        setUserPost({
             data: null,
         })
-        getAllUsers().then((response)=>{
+        getUserPost(user_id).then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("refresh token")
                         console.log(response.status)
-                        getAllUsers().then((response)=>{
+                        getUserPost(user_id).then((response)=>{
                             if (response.status === 200){
-                                setUsers({
+                                setUserPost({
                                     data: response.data,
                                 })
                             }
@@ -40,32 +46,34 @@ const Explore = () => {
                     }
                 })
             }else if (response.status === 200){
-                setUsers({
+                setUserPost({
                     data: response.data,
                 })
             }
         })
     }, [])
-
     let content = null;
-    console.log(users.data)
-    if (users.data){
-        if (users.data.length === 0){
-            content = (<div className="none">No Users</div>)
+    console.log(userPost.data)
+    if (userPost.data){
+        if (userPost.data.length === 0){
+            content = (<div className="none">No Posts</div>)
         }
         else{
-            content = users.data.map((user, key)=>
+            content = userPost.data.slice().reverse().map((post, key)=>
 
-            <ExploreCard user={user}/>
+            <PostCard post={post}/>
 
             )
         }
     }
-
     return (
-        <div>
+        <main>
+            <h1 className='profileName'>{username}</h1>
+
+            <Divider/>
             {content}
-        </div>
+        </main>
     )
+
 }
-export default Explore;
+export default UserView
