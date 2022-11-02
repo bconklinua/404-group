@@ -10,23 +10,36 @@ from ..Comment.serializers import CommentSerializer
 
 class InboxSerializer(serializers.ModelSerializer):
 
-    items = serializers.SerializerMethodField()
+    posts = serializers.SerializerMethodField()
+    likes = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
 
     class Meta:
         model = Inbox
-        fields = ('type','items')
+        fields = ('type','author','posts', 'likes','comments')
 
-    def get_items(self, obj):
-        items = [post for post in PostSerializer(obj.posts.all(), many=True).data]
+    def get_posts(self, obj):
+        return [post for post in PostSerializer(obj.posts.all(), many=True).data]
+    
+    def get_likes(self, obj):
+        #Get posts made by the author
         authors_posts = Post.objects.filter(author=obj.author)
         
         #add likes on author's posts
+        likes = []
         for like in LikeSerializer(Like.objects.filter(post__in=authors_posts), many=True).data:
-            items.append(like)
+            likes.append(like)
 
-        #add likes on author's posts
+        return likes
+
+    def get_comments(self, obj):
+        #Get posts made by the author
+        authors_posts = Post.objects.filter(author=obj.author)
+    
+        #add comments on author's posts
+        comments = []
         for comment in CommentSerializer(Comment.objects.filter(post__in=authors_posts), many=True).data:
-            items.append(comment)
+            comments.append(comment)
 
-        return items
+        return comments
 

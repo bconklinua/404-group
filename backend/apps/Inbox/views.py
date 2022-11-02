@@ -17,5 +17,4 @@ class InboxView(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = InboxSerializer(instance=instance)
-        serializer.data['count'] = instance.count
         return Response(serializer.data)
