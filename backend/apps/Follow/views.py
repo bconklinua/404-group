@@ -3,9 +3,13 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from ..User.models import Author
 from .models import Follow
+from ..User.serializers import AuthorSerializer
+from .serializers import FollowSerializer
 
 
 class FollowersListView(GenericAPIView):
+
+    serializer_class = FollowSerializer
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
@@ -37,6 +41,7 @@ class FollowersListView(GenericAPIView):
 
 
 class TrueFriendsListView(GenericAPIView):
+    serializer_class = AuthorSerializer
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
@@ -68,6 +73,7 @@ class TrueFriendsListView(GenericAPIView):
         return response.Response(f_list, status=status.HTTP_200_OK)
 
 class FollowingListView(GenericAPIView):
+    serializer_class = FollowSerializer
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
@@ -99,6 +105,7 @@ class FollowingListView(GenericAPIView):
 
 
 class UnfollowView(GenericAPIView):
+    serializer_class = FollowSerializer
 
     def post(self, request, user_id):
         user_id = self.kwargs['user_id']
@@ -114,6 +121,7 @@ class UnfollowView(GenericAPIView):
 
 
 class WithdrawView(GenericAPIView):
+    serializer_class = FollowSerializer
 
     def post(self, request, user_id):
         user_id = self.kwargs['user_id']
@@ -130,6 +138,7 @@ class WithdrawView(GenericAPIView):
 
 
 class UnfriendView(GenericAPIView):
+    serializer_class = FollowSerializer
 
     def post(self, request, user_id):
         user_id = self.kwargs['user_id']
