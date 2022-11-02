@@ -42,7 +42,7 @@ class Post(models.Model):
     origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="UTF-8")
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True)
     count = models.IntegerField(default=0)
     author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.ManyToManyField(Category, blank=True)
@@ -50,6 +50,7 @@ class Post(models.Model):
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
     image = models.ImageField(upload_to=upload_to, null=True, blank=True)
+    image_url = models.CharField(default="", null=True, blank=True, max_length=100)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
@@ -88,6 +89,3 @@ def add_post(instance, created, **kwargs):
     #If the post is not marked as "unlisted", then publish the post
     if not instance.unlisted:
         instance.publish_post()
-    
-
-
