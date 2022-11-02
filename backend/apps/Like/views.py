@@ -22,7 +22,12 @@ class PostLikeView(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         liked_post_id = self.kwargs['post_id'] if 'post_id' in self.kwargs else None
         serializer = self.serializer_class(data=request.data)
+        
         if serializer.is_valid():
+            existing_like = Like.objects.filter(post_id = liked_post_id).filter(author=request.user)
+            if existing_like:
+                existing_like.delete()
+                return Response("Existing like deleted", status=status.HTTP_202_ACCEPTED)
             serializer.save(post_id=liked_post_id)
             serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
