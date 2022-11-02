@@ -1,7 +1,7 @@
 from typing import OrderedDict
 from rest_framework import serializers
 from .models import Category, Post, Like
-
+from ..User.serializers import AuthorSerializer
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -20,6 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         if not isinstance(instance, OrderedDict):
+            rep["author"] = AuthorSerializer(instance.author).data["username"]
             rep["categories"] = [cat['name'] for cat in CategorySerializer(instance.categories.all(), many=True).data]
         return rep
 
