@@ -35,8 +35,8 @@ export function test(){
     })
 }
 
-export function getPost(){
-    const url = 'http://127.0.0.1:8000/authors/7/posts'
+export function getUserPost(user_id){
+    const url = `http://127.0.0.1:8000/authors/${user_id}/posts/`
 
     return axios.get(url, {
         headers:{
@@ -134,8 +134,8 @@ export function editPost(param = {}){
     })
 }
 
-export function deletePost(param = {}){
-    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}`
+export function deletePost(post_id){
+    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${post_id}/`
 
     return axios.delete(url, {
         headers:{

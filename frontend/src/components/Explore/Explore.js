@@ -1,35 +1,36 @@
-import React, {useState, useEffect} from 'react'
-import { test, getInbox, getPost } from '../../api/Post';
-import { refreshToken, isAuthenticated } from '../../api/User';
-import { useNavigate } from "react-router-dom";
-import PostCard from "../Post/PostCard";
+import react, { useEffect, useState } from 'react'
+import {Link} from 'react-router-dom'
+import { getFollowers } from '../../api/Friends'
+import { refreshToken, getAllUsers } from '../../api/User'
+import ExploreCard from './ExploreCard'
 
-const MyPosts = () => {
-    const [posts, setPosts] = useState({
+const Explore = () => {
+    const [users, setUsers] = useState({
         data: null,
     })
     useEffect(()=>{
-        setPosts({
+        setUsers({
             data: null,
         })
-        getInbox().then((response)=>{
+        getAllUsers().then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
-                        console.log("success")
+                        console.log("refresh token")
                         console.log(response.status)
-                        getInbox().then((response)=>{
+                        getAllUsers().then((response)=>{
                             if (response.status === 200){
-                                setPosts({
+                                setUsers({
                                     data: response.data,
                                 })
                             }
                             else{
+                                console.log("not authenticated")
                                 localStorage.removeItem("refresh_token")
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
-                            console.log("true");
+
                         })
                     }
                     else{
@@ -39,8 +40,7 @@ const MyPosts = () => {
                     }
                 })
             }else if (response.status === 200){
-                console.log(response)
-                setPosts({
+                setUsers({
                     data: response.data,
                 })
             }
@@ -48,16 +48,15 @@ const MyPosts = () => {
     }, [])
 
     let content = null;
-
-    if (posts.data){
-        if (posts.data.length === 0){
-            content = (<div className="none">No Posts</div>)
+    console.log(users.data)
+    if (users.data){
+        if (users.data.length === 0){
+            content = (<div className="none">No Users</div>)
         }
         else{
-            console.log(posts.data)
-            content = posts.data[0].posts.slice().reverse().map((post, key)=>
-            
-            <PostCard post={post}/>
+            content = users.data.map((user, key)=>
+
+            <ExploreCard user={user}/>
 
             )
         }
@@ -69,4 +68,4 @@ const MyPosts = () => {
         </div>
     )
 }
-export default MyPosts;
+export default Explore;

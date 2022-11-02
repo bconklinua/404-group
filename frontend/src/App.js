@@ -13,6 +13,8 @@ import { isAuthenticated } from './api/User';
 import { useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import PageNotFound from './404-page';
+import Inbox from './components/Inbox/Inbox';
+import UserView from './components/UserView/UserView';
 
 function App() {
   const [info, setInfo] = useState({
@@ -43,9 +45,10 @@ function App() {
         <Route path="/home" element={<Home/>}/>
         <Route path="/post" element={<PostPost/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/register"element={<Register/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/posts/:post_id"element={<PostView/>}/>
+        <Route path="/user/:user_id/:username"element={<UserView/>}/>
+        <Route path="/inbox"element={<Inbox/>}/>
         <Route path="/page-not-found"element={<PageNotFound/>}/>
 
 

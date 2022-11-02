@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,7 +16,6 @@ const PostCard = (props) => {
     
     let content = null
     if (props.post.image){
-        console.log(props.post.image)
         let imgurl = `http://localhost:8000${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
@@ -29,6 +28,15 @@ const PostCard = (props) => {
     const handleClick = (e) =>{
         window.location.href = `/posts/${props.post.id}`
     }
+
+    const [likes, setLikes] = useState(props.post.count);
+    const incrementLikes = () => {
+        setLikes(likes + 1)
+    }
+    const decrementLikes = () =>{
+        setLikes(likes - 1)
+    }
+
     const handleLike = (e) =>{
         e.preventDefault();
         doLike(props.post.id).then((response)=>{
@@ -40,6 +48,10 @@ const PostCard = (props) => {
                         doLike(props.post.id).then((response)=>{
                             if (response.status === 201){
                                 console.log("liked")
+                                incrementLikes()
+                            }
+                            else if (response.status === 202){
+                                decrementLikes()
                             }
                             else if (response.status === 401){
                                 console.log("not authenticated")
@@ -59,8 +71,14 @@ const PostCard = (props) => {
                         
                     }
                 })
-            }else if (response.status === 201)
+            }
+            else if (response.status === 201){
                 console.log("liked")
+                incrementLikes()
+            }
+            else if (response.status === 202){
+                decrementLikes()
+            }
         })
         console.log(props.post.id)
     }
@@ -77,7 +95,13 @@ const PostCard = (props) => {
                             {props.post.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {props.post.description}
+                            description: {props.post.description}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        user: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {props.post.published}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -85,7 +109,7 @@ const PostCard = (props) => {
                 <IconButton onClick={handleLike} size="small" color="secondary">
                 <Favorite/>
                 </IconButton>
-                {props.post.count}
+                {likes}
 
             </Card>
 

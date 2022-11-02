@@ -1,8 +1,8 @@
 import react, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { postPost } from '../../api/Post'
-
-import { Switch, FormControlLabel, Button } from '@mui/material'
+import {PhotoCamera} from '@mui/icons-material'
+import { Switch, FormControlLabel, Button, IconButton } from '@mui/material'
 import { refreshToken } from '../../api/User'
 
 const PostPost = () => {
@@ -90,11 +90,14 @@ const PostPost = () => {
                 <input placeholder="title" name='title'/>
                 <input placeholder="description" name='description'/>
                 <input placeholder="content" name='content'/>
-                <input placeholder="UploadImage" name='file' type="file" accept="image/png, image/jpeg" onChange={uploadImage}/>
+                <IconButton color="secondary" aria-label="upload picture" component="label">
+                <input hidden accept="image/png, image/jpeg" name='file' type="file" onChange={uploadImage}/>
+                <PhotoCamera />
+                </IconButton>
                 { file && <img src={file}/>}
                 <FormControlLabel label="public" control={<Switch checked={visibility} color="secondary" onChange={handleChange}/>}/>
                 <FormControlLabel label="unlisted" control={<Switch checked={unlisted} color="secondary" onChange={handleUnlisted}/>}/>
-                <button onSubmit={handleSubmit}>Submit</button>
+                <Button type="submit" onSubmit={handleSubmit} color='secondary'>Submit</Button>
                 </div>
             </form>
         </main>

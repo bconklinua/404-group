@@ -110,11 +110,10 @@ export default function PostView() {
             <h1 className='profileName'>PostView</h1>
             {content}
 
-            <div className='postview-main'>
                 
-                <Comments id={post_id} />
+            <Comments id={post_id} />
                 
-            </div>
+
             <TestPostID />
             {/* <PostContent /> */}
         </div>

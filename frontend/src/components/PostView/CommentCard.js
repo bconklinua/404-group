@@ -17,7 +17,7 @@ const CommentCard = (props) => {
                         {props.comment.comment}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {props.comment.comment}
+                        user: <Box fontWeight='bold' display='inline'>{props.comment.author}  </Box>
                     </Typography>
                 </CardContent>
             </Card>

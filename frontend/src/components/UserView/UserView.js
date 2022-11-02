@@ -1,35 +1,42 @@
-import React, {useState, useEffect} from 'react'
-import { test, getInbox, getPost } from '../../api/Post';
-import { refreshToken, isAuthenticated } from '../../api/User';
-import { useNavigate } from "react-router-dom";
-import PostCard from "../Post/PostCard";
+import react, { useState, useEffect } from 'react'
 
-const MyPosts = () => {
-    const [posts, setPosts] = useState({
+import {Box, Divider, Tab} from '@mui/material'
+import {TabContext, TabList, TabPanel} from '@mui/lab'
+import { useParams } from 'react-router-dom'
+import { refreshToken } from '../../api/User'
+import { getUserPost } from '../../api/Post'
+import UserPostCard from './UserPostCard'
+import PostCard from '../Post/PostCard'
+
+const UserView = () =>{
+
+    const {user_id, username} = useParams();
+    const [userPost, setUserPost] = useState({
         data: null,
     })
     useEffect(()=>{
-        setPosts({
+        setUserPost({
             data: null,
         })
-        getInbox().then((response)=>{
+        getUserPost(user_id).then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
-                        console.log("success")
+                        console.log("refresh token")
                         console.log(response.status)
-                        getInbox().then((response)=>{
+                        getUserPost(user_id).then((response)=>{
                             if (response.status === 200){
-                                setPosts({
+                                setUserPost({
                                     data: response.data,
                                 })
                             }
                             else{
+                                console.log("not authenticated")
                                 localStorage.removeItem("refresh_token")
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
-                            console.log("true");
+
                         })
                     }
                     else{
@@ -39,34 +46,34 @@ const MyPosts = () => {
                     }
                 })
             }else if (response.status === 200){
-                console.log(response)
-                setPosts({
+                setUserPost({
                     data: response.data,
                 })
             }
         })
     }, [])
-
     let content = null;
-
-    if (posts.data){
-        if (posts.data.length === 0){
+    console.log(userPost.data)
+    if (userPost.data){
+        if (userPost.data.length === 0){
             content = (<div className="none">No Posts</div>)
         }
         else{
-            console.log(posts.data)
-            content = posts.data[0].posts.slice().reverse().map((post, key)=>
-            
+            content = userPost.data.slice().reverse().map((post, key)=>
+
             <PostCard post={post}/>
 
             )
         }
     }
-
     return (
-        <div>
+        <main>
+            <h1 className='profileName'>{username}</h1>
+
+            <Divider/>
             {content}
-        </div>
+        </main>
     )
+
 }
-export default MyPosts;
+export default UserView
