@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { test, getInbox, getPost } from '../../api/Post';
+import { deletePost } from '../../api/Post';
 import { refreshToken, isAuthenticated } from '../../api/User';
 import { useNavigate } from "react-router-dom";
 import PostCard from "../Post/PostCard";
 import CommentCard from './CommentCard'
 import { postComment, getComments } from '../../api/Comments';
+import { Box, TextField, Divider } from '@mui/material';
 
 
 const Comments = (props) => {
@@ -97,13 +98,15 @@ const Comments = (props) => {
             })
         }
 
+        const handleDelete = (e) =>{
 
+        }
 
         return (
             
             <form onSubmit={handleSubmit}>
                 {/* <PostContent/> */}
-                <label>Comment:
+                {/* <label>Comment:
                     <input
                         type="text"
                         value={comment}
@@ -111,8 +114,13 @@ const Comments = (props) => {
                         onChange={(e) => setComment(e.target.value)}
                     />
                 </label>
-                <button className='comment-submit-button'>Send Comment</button>
-                
+                <button className='comment-submit-button'>Send Comment</button> */}
+                <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={5} sx={{ margin: 'auto', width: 1000, maxWidth: '100%',}}>
+                    <TextField fullWidth label="Comment" id="comment" name="comment"/>
+                    <button className='comment-submit-button'>Send Comment</button>
+                </Box>
+                <Divider />
+
             </form>
             
         )

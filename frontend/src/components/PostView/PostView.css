@@ -40,3 +40,21 @@
     transform: scale(1.10);
     background-color: rgb(0, 214, 214);
 }
+
+
+.card1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.box2 {
+    background-color: white;
+    width: 30em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Josefin Sans', cursive;
+}

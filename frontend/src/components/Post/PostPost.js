@@ -18,14 +18,15 @@ const PostPost = () => {
         if (visibility){
             json["visibility"] = "PUBLIC"
         }else{
-            json["visibility"] = "PRIVATE"
+            json["visibility"] = "FRIENDS"
         }
         
         json["unlisted"] = unlisted
         if (image){
             json["image"] = image
         }
-        
+        json["unlisted"] = unlisted
+        console.log(json)
         postPost(json).then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
@@ -66,10 +67,11 @@ const PostPost = () => {
     const uploadImage = (e) =>{
     
         if (e.target.files[0]){
+            setImage(e.target.files[0])
             setFile(URL.createObjectURL(e.target.files[0]))
         }
         else {
-            setImage(e.target.files[0])
+            setImage(null)
             setFile(undefined)
         }
         console.log(e.target.files[0])
