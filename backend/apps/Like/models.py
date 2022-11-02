@@ -11,9 +11,6 @@ class Like(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)  # the author who liked this
     post = models.ForeignKey('Post.Post', on_delete=models.CASCADE, null=True, blank=True) #The post associated to the like
     comment = models.ForeignKey('Comment.Comment', on_delete=models.CASCADE, null=True, blank=True) #The post associated to the like
-
-    class Meta:
-        unique_together = ('author', 'post',) 
     
     def save(self, *args, **kwargs):
         if self.comment:
