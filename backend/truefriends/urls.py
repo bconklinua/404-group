@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.Like.views import PostLikeView, AuthorLikeView
-from rest_framework import routers
+from drf_yasg import openapi
+from rest_framework import routers, permissions
 from apps.Post.views import PostView, LoggedInPostView
 from apps.User.views import AuthorView
 from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
@@ -26,6 +27,8 @@ from apps.Comment.views import PostCommentView
 from apps.Comment.views import AuthorCommentView
 from django.conf.urls.static import static
 from django.conf import settings
+#from rest_framework.schemas import get_schema_view
+from drf_yasg.views import get_schema_view
 
 
 post_router = routers.DefaultRouter()
@@ -43,10 +46,24 @@ post_comment_router.register(r'comments', PostCommentView, 'comments')
 author_comment_router = routers.DefaultRouter()
 author_comment_router.register(r'comments', AuthorCommentView, 'comments')
 
+schema_view = get_schema_view(
+    openapi.Info(
+        #  add your swagger doc title
+        title="TrueFriends API",
+        #  version of the swagger doc
+        default_version='v1',
+        # first line that appears on the top of the doc
+        description="Methods for the TrueFriends Social Network",
+    ),
+    public=True,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(author_router.urls)),
     path('', include(post_router.urls)),
+    #path('schema/', get_schema_view(title="TrueFriends API", permission_classes=(permissions.AllowAny,))),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include('apps.User.urls')),
     path('api/auth/', include("apps.User.urls")),
     path('friendrequest/', FRListView.as_view()),
