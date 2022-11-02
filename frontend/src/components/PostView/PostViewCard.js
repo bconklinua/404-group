@@ -16,8 +16,15 @@ import 'react-toastify/dist/ReactToastify.css';
 const PostViewCard = (props) => {
     
     let content = null
-    if (props.post.image){
-        console.log(props.post.image)
+    
+    if (props.post.image_url != ""){
+
+        console.log(props.post.image_url)
+        content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
+    }
+    else if (props.post.image){
+        
+        console.log("props.post.image")
         let imgurl = `http://localhost:8000${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
@@ -124,7 +131,7 @@ const PostViewCard = (props) => {
         {likes}
     </div>
     ) 
-    if ('' + props.post.author === localStorage.getItem("authorID")){
+    if ('' + props.post.author === localStorage.getItem("username")){
         
         extraContent = (    
         <div className='card1'>

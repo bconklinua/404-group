@@ -92,3 +92,49 @@ export function rejectFollower(id){
         return error.response;
     })
 }
+
+export function unFollow(id){
+    const url = `http://localhost:8000/unfollow/${id}/`
+    
+    return axios.post(url, {data:{}}, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}
+export function unFriend(id){
+    const url = `http://localhost:8000/unfriend/${id}/`
+    
+    return axios.post(url, {data:{}}, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}
+export function sendFriendRequest(id){
+    const url = `http://localhost:8000/friendrequest/${id}/`
+    
+    return axios.post(url, {data:{}}, {
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+}

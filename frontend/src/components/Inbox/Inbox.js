@@ -37,7 +37,7 @@ const Inbox = () =>{
             </TabContext>
 
             </div>
-        </main>
+        </main> 
     )
 
 }

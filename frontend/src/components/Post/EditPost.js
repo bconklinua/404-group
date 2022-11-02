@@ -14,6 +14,7 @@ const EditPost = () => {
     const [unlisted, setUnlisted] = useState(false)
     const [file, setFile] = useState(undefined)
     const {post_id} = useParams();
+    const [urlImage, setUrlImage] = useState(null)
     // const [fields, setFields] = useState({
     //     title: "",
     //     Description: "",
@@ -24,39 +25,49 @@ const EditPost = () => {
         document.getElementById('title').value=data.title
         document.getElementById('description').value=data.description
         document.getElementById('content').value=data.content
+        
+        if (data.image){
+            document.getElementById('image_url').value=`http://localhost:8000${data.image}`
+            setUrlImage(`http://localhost:8000${data.image}`)
+        }
+            
+        else if (data.image_url != "")
+            document.getElementById('image_url').value=data.image_url
+            setUrlImage(data.image_url)
+
     }
 
-
-    getPostByID(post_id).then((response)=>{
-        if (response.status === 401){
-            refreshToken().then((response)=>{
-                if (response.status === 200){
-                    console.log("success")
-                    console.log(response.status)
-                    getPostByID(post_id).then((response)=>{
-                        if (response.status === 200){
-                            setFields(response.data)
-                        }
-                        else{
-                            localStorage.removeItem("refresh_token")
-                            window.location.reload();
-                            window.location.href = '/login'; 
-                        }
-                        console.log("true");
-                    })
-                }
-                else{
-                    window.location.reload();
-                    window.location.href = '/login';
-                    
-                }
-            })
-        }else if (response.status === 200){
-            console.log(response)
-            setFields(response.data)
-        }
-    })
-
+    useEffect(()=>{
+        getPostByID(post_id).then((response)=>{
+            if (response.status === 401){
+                refreshToken().then((response)=>{
+                    if (response.status === 200){
+                        console.log("success")
+                        console.log(response.status)
+                        getPostByID(post_id).then((response)=>{
+                            if (response.status === 200){
+                                setFields(response.data)
+                            }
+                            else{
+                                localStorage.removeItem("refresh_token")
+                                window.location.reload();
+                                window.location.href = '/login'; 
+                            }
+                            console.log("true");
+                        })
+                    }
+                    else{
+                        window.location.reload();
+                        window.location.href = '/login';
+                        
+                    }
+                })
+            }else if (response.status === 200){
+                console.log(response)
+                setFields(response.data)
+            }
+        })
+    }, [])
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -74,7 +85,7 @@ const EditPost = () => {
         json["unlisted"] = unlisted
         json["post_id"] = post_id
 
-        if (image && json.url){
+        if (image && json.image_url){
             toast.error('cannot have both image link and image')
         }
         else{
@@ -144,13 +155,13 @@ const EditPost = () => {
         console.log("unlisted")
     }
 
-
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
 
             <Card sx={{ minWidth:500, maxWidth: 1000 }}>
 
                 <CardContent>
+
                     { file && <img src={file}/>}
                     <main>
                         <form onSubmit={handleSubmit}>
@@ -167,7 +178,7 @@ const EditPost = () => {
                                 <input className='input1' placeholder="content" name='content' id='content'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="image link" name='url'/>
+                                <input className='input1' placeholder="image link" name='image_url' id='image_url'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <IconButton color="primary" aria-label="upload picture" component="label">

@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Login.css"
 import { authenticate, getToken } from '../../api/User';
 import { Alert, AlertTitle } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 

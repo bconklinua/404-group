@@ -15,7 +15,13 @@ import PostView from '../PostView/PostView';
 const PostCard = (props) => {
     
     let content = null
-    if (props.post.image){
+    
+    if (props.post.image_url != ""){
+        console.log(props.post.image_url)
+        console.log("wtsfs")
+        content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
+    }
+    else if (props.post.image){
         let imgurl = `http://localhost:8000${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>

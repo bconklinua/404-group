@@ -29,7 +29,7 @@ const PostPost = () => {
         }
         json["unlisted"] = unlisted
 
-        if (image && json.url){
+        if (image && json.image_url){
             toast.error('cannot have both image link and image')
         }
         else{
@@ -140,7 +140,7 @@ const PostPost = () => {
                                 <input className='input1' placeholder="content" name='content'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="image link" name='url'/>
+                                <input className='input1' placeholder="image link" name='image_url'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <IconButton color="primary" aria-label="upload picture" component="label">
