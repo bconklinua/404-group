@@ -111,3 +111,46 @@ class UnfollowView(GenericAPIView):
         msg_str = name + " has been unfollowed."
         message = {"message": msg_str}
         return response.Response(message, status=status.HTTP_200_OK)
+
+
+class WithdrawView(GenericAPIView):
+
+    def post(self, request, user_id):
+        user_id = self.kwargs['user_id']
+        user_obj = Author.objects.get(id=user_id)
+        name = user_obj.username
+        if not Follow.objects.filter(followee=request.user.id, follower=user_obj.id).exists():
+            return response.Response(
+                {"error": "invalid follow object - you are not being followed by a user with that id"},
+                status=status.HTTP_400_BAD_REQUEST)
+        Follow.objects.filter(followee=request.user.id, follower=user_obj.id).delete()
+        msg_str = name + " is no longer following you"
+        message = {"message": msg_str}
+        return response.Response(message, status=status.HTTP_200_OK)
+
+
+class UnfriendView(GenericAPIView):
+
+    def post(self, request, user_id):
+        user_id = self.kwargs['user_id']
+        user_obj = Author.objects.get(id=user_id)
+        name = user_obj.username
+        out_follow = False
+        in_follow = False
+        if Follow.objects.filter(follower=request.user.id, followee=user_obj.id).exists():
+            out_follow = True
+        if Follow.objects.filter(followee=request.user.id, follower=user_obj.id).exists():
+            in_follow = True
+        if not out_follow and not in_follow:
+            return response.Response(
+                {"error": "invalid request - you are not following, nor being followed by a user with that id"},
+                status=status.HTTP_400_BAD_REQUEST)
+        msg_str = ""
+        if out_follow:
+            Follow.objects.filter(follower=request.user.id, followee=user_obj.id).delete()
+            msg_str += name + " has been unfollowed. "
+        if in_follow:
+            Follow.objects.filter(followee=request.user.id, follower=user_obj.id).delete()
+            msg_str += name + " is no longer following you."
+        message = {"message": msg_str}
+        return response.Response(message, status=status.HTTP_200_OK)
