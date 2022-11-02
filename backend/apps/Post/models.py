@@ -50,6 +50,7 @@ class Post(models.Model):
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
     image = models.ImageField(upload_to=upload_to, null=True, blank=True)
+    image_url = models.CharField(default="", null=True, blank=True, max_length=100)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
@@ -88,6 +89,3 @@ def add_post(instance, created, **kwargs):
     #If the post is not marked as "unlisted", then publish the post
     if not instance.unlisted:
         instance.publish_post()
-    
-
-
