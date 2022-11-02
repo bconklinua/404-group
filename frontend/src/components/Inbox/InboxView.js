@@ -3,8 +3,10 @@ import { test, getInbox, getPost } from '../../api/Post';
 import { refreshToken, isAuthenticated } from '../../api/User';
 import { useNavigate } from "react-router-dom";
 import PostCard from "../Post/PostCard";
+import LikesCard from './LikesCard';
+import CommentCard from './CommentCard'
 
-const MyPosts = () => {
+const InboxView = (props) =>{
     const [posts, setPosts] = useState({
         data: null,
     })
@@ -55,11 +57,24 @@ const MyPosts = () => {
         }
         else{
             console.log(posts.data)
-            content = posts.data[0].posts.slice().reverse().map((post, key)=>
-            
-            <PostCard post={post}/>
+            if (props.selection === 'posts'){
+                content = posts.data[0].posts.slice().reverse().map((post, key)=>
+                
+                <PostCard post={post}/>
 
-            )
+                )
+            }
+            else if (props.selection === 'likes'){
+                content = posts.data[0].likes.slice().reverse().map((like, key)=>
+                <LikesCard like={like}/>
+                )
+            }
+            else if (props.selection === 'comments'){
+                
+                content = posts.data[0].comments.slice().reverse().map((comment, key)=>
+                <CommentCard comment={comment}/>
+                )
+            }
         }
     }
 
@@ -69,4 +84,5 @@ const MyPosts = () => {
         </div>
     )
 }
-export default MyPosts;
+
+export default InboxView

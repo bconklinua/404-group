@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState}from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,7 +9,7 @@ import { Box, Button, CardActionArea } from '@mui/material';
 import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
-
+import { deletePost } from '../../api/Post';
 
 const PostViewCard = (props) => {
     
@@ -24,9 +24,43 @@ const PostViewCard = (props) => {
     }else{
         content = (<h4>{props.post.content}</h4>)
     }  
-
+    const [likes, setLikes] = useState(props.post.count);
+    const incrementLikes = () => {
+        setLikes(likes + 1)
+    }
+    const decrementLikes = () =>{
+        setLikes(likes - 1)
+    }
     const handleClick = (e) =>{
         console.log("true")
+    }
+    const handleDeletePost = (e) =>{
+        console.log("delete")
+        deletePost(props.post.id).then((response)=>{
+            if (response.status === 401){
+                refreshToken().then((response)=>{
+                    if (response.status === 200){
+                        console.log("refresh token")
+                        deletePost(props.post.id).then((response)=>{
+                            if (response.status === 204){
+                                window.location.reload();
+                                window.location.href = '/profile'; 
+                            }
+                            else if (response.status === 401){
+                                console.log("not authenticated")
+                                localStorage.removeItem("refresh_token")
+                                window.location.reload();
+                                window.location.href = '/login'; 
+                            }
+                        })
+                    }
+                })
+            }else if(response.status === 204){
+                window.location.reload();
+                window.location.href = '/profile'; 
+            }
+            console.log(response)
+        })
     }
     const handleLike = (e) =>{
         e.preventDefault();
@@ -39,6 +73,7 @@ const PostViewCard = (props) => {
                         doLike(props.post.id).then((response)=>{
                             if (response.status === 201){
                                 console.log("liked")
+                                incrementLikes()
                             }
                             else if (response.status === 401){
                                 console.log("not authenticated")
@@ -46,10 +81,14 @@ const PostViewCard = (props) => {
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
+                            else if (response.status === 202)
+                            decrementLikes()
+                            
                             else{
                                 console.log(response)
                             }
 
+                            console.log(response)
                         })
                     }
                     else{
@@ -59,7 +98,10 @@ const PostViewCard = (props) => {
                     }
                 })
             }else if (response.status === 201)
-                console.log("liked")
+                incrementLikes()
+            else if (response.status === 202)
+                decrementLikes()
+            console.log(response)
         })
         console.log(props.post.id)
     }
@@ -69,7 +111,7 @@ const PostViewCard = (props) => {
         <IconButton onClick={handleLike} size="small" color="secondary">
             <Favorite/>
         </IconButton>
-        {props.post.count}
+        {likes}
     </div>
     ) 
     if ('' + props.post.author === localStorage.getItem("authorID")){
@@ -81,16 +123,18 @@ const PostViewCard = (props) => {
                 <IconButton onClick={handleLike} size="small" color="secondary">
                     <Favorite/>
                 </IconButton>
-                {props.post.count}
+                {likes}
             </div>
             
             <div>
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button onClick={handleDeletePost}>Delete</Button>
             </div>
             </div>
         </div>)
     }
+
+
 
     return (
 
@@ -104,7 +148,13 @@ const PostViewCard = (props) => {
                             {props.post.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {props.post.description}
+                            description: {props.post.description}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            user: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {props.post.published}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
