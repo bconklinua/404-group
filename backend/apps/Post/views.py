@@ -7,6 +7,7 @@ from .models import Post
 from apps.User.models import Author
 from rest_framework import viewsets, status, permissions
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from apps.Follow.models import Follow
 
 # Create your views here.
 
@@ -16,7 +17,7 @@ class PostView(viewsets.ModelViewSet):
     def get_queryset(self):
         user_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         if user_id:
-            return Post.objects.filter(author_id=user_id)
+            return Post.objects.filter(author=user_id).filter()
         return Post.objects.all()
     
     def create(self, request, *args, **kwargs):
@@ -31,6 +32,23 @@ class PostView(viewsets.ModelViewSet):
         serializer = PostSerializer(instance=instance)
         serializer.data['count'] = instance.count
         return Response(serializer.data)
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        user_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
+        if user_id == request.user.id or not user_id:
+            serializer = PostSerializer(queryset, many=True)
+            return Response(serializer.data)
+
+        author_follows = Follow.objects.filter(followee_id=user_id).filter(follower=request.user)
+        user_follows = Follow.objects.filter(followee=request.user).filter(follower_id=user_id)
+        #If they are not friends, show only public posrs 
+        if not author_follows or not user_follows:
+            queryset = queryset.filter(visibility="PUBLIC")
+        queryset = queryset.filter(unlisted=False)
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
