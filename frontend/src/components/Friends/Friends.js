@@ -43,6 +43,12 @@ const Friends = () => {
         })
     }, [])
 
+    const removeFriend = (name) => {
+        setFriends({
+            data: friends.data.filter(el => el !== name)
+        })
+    }
+
     let content = null;
     console.log(friends.data)
     if (friends.data){
@@ -52,7 +58,7 @@ const Friends = () => {
         else{
             content = friends.data.map((friend, key)=>
 
-            <FriendCard friend={friend}/>
+            <FriendCard friend={friend} removeFriend={removeFriend}/>
 
             )
         }

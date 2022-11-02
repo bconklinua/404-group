@@ -10,12 +10,21 @@ import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { deletePost } from '../../api/Post';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PostViewCard = (props) => {
     
     let content = null
-    if (props.post.image){
-        console.log(props.post.image)
+    
+    if (props.post.image_url != ""){
+
+        console.log(props.post.image_url)
+        content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
+    }
+    else if (props.post.image){
+        
+        console.log("props.post.image")
         let imgurl = `http://localhost:8000${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
@@ -33,6 +42,9 @@ const PostViewCard = (props) => {
     }
     const handleClick = (e) =>{
         console.log("true")
+    }
+    const handleEdit = (e) =>{
+        window.location.href = `/edit/${props.post.id}`
     }
     const handleDeletePost = (e) =>{
         console.log("delete")
@@ -52,12 +64,17 @@ const PostViewCard = (props) => {
                                 window.location.reload();
                                 window.location.href = '/login'; 
                             }
+                            else{
+                                toast.error('something went wrong');
+                            }
                         })
                     }
                 })
             }else if(response.status === 204){
                 window.location.reload();
                 window.location.href = '/profile'; 
+            }else{
+                toast.error('something went wrong');
             }
             console.log(response)
         })
@@ -114,7 +131,7 @@ const PostViewCard = (props) => {
         {likes}
     </div>
     ) 
-    if ('' + props.post.author === localStorage.getItem("authorID")){
+    if ('' + props.post.author === localStorage.getItem("username")){
         
         extraContent = (    
         <div className='card1'>
@@ -127,7 +144,7 @@ const PostViewCard = (props) => {
             </div>
             
             <div>
-                <Button>Edit</Button>
+                <Button onClick={handleEdit}>Edit</Button>
                 <Button onClick={handleDeletePost}>Delete</Button>
             </div>
             </div>

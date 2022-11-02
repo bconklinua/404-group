@@ -15,6 +15,9 @@ import Navbar from './components/Navbar/Navbar';
 import PageNotFound from './404-page';
 import Inbox from './components/Inbox/Inbox';
 import UserView from './components/UserView/UserView';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import EditPost from './components/Post/EditPost';
 
 function App() {
   const [info, setInfo] = useState({
@@ -32,6 +35,8 @@ function App() {
   // }
 
   let render = (info.login != null) ? (
+
+
     <Router>
      {/* <nav className='text-center'>
        <Link to="/login">Login </Link>
@@ -40,7 +45,9 @@ function App() {
 
 
      </nav> */}
+
      <Navbar/>
+     
      <Routes>
         <Route path="/home" element={<Home/>}/>
         <Route path="/post" element={<PostPost/>}/>
@@ -50,13 +57,16 @@ function App() {
         <Route path="/user/:user_id/:username"element={<UserView/>}/>
         <Route path="/inbox"element={<Inbox/>}/>
         <Route path="/page-not-found"element={<PageNotFound/>}/>
+        <Route path="/edit/:post_id" element={<EditPost/>}/>
 
 
      </Routes>
      
     </Router>
 
+
   ) :(
+
     <Router>
 
      <Routes>
@@ -70,7 +80,7 @@ function App() {
 
   )
 
-  return (render)
+  return (<div><ToastContainer position="top-center"/>{render}</div>)
 
 }
 

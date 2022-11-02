@@ -79,6 +79,7 @@ export function postPost(param = {}){
     form_data.append("content", param.content)
     form_data.append("visibility", param.visibility)
     form_data.append("unlisted", param.unlisted)
+    form_data.append("image_url", param.image_url)
 
     return axios.post(url, form_data, {
         headers:{
@@ -111,7 +112,7 @@ export function getPosts(){
 }
 
 export function editPost(param = {}){
-    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}`
+    const url = `http://127.0.0.1:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
 
     let form_data = new FormData();
     if (param.image) form_data.append("image", param.image, param.image.name)

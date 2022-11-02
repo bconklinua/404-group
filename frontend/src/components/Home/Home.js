@@ -3,7 +3,8 @@ import { test, getInbox, getPost } from '../../api/Post';
 import { refreshToken, isAuthenticated } from '../../api/User';
 import { useNavigate } from "react-router-dom";
 import PostCard from "../Post/PostCard";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const MyPosts = () => {
     const [posts, setPosts] = useState({
         data: null,
@@ -65,6 +66,7 @@ const MyPosts = () => {
 
     return (
         <div>
+            <ToastContainer/>
             {content}
         </div>
     )

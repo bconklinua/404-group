@@ -45,6 +45,12 @@ const Followings = () => {
         })
     }, [])
 
+    const removeFollowing = (name) => {
+        setFollowings({
+            data: followings.data.filter(el => el !== name)
+        })
+    }
+
     let content = null;
     console.log(followings.data)
     if (followings.data){
@@ -54,7 +60,7 @@ const Followings = () => {
         else{
             content = followings.data.map((following, key)=>
 
-            <FollowingCard following={following}/>
+            <FollowingCard following={following} removeFollowing={removeFollowing}/>
 
             )
         }
