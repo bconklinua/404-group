@@ -42,7 +42,7 @@ class Post(models.Model):
     origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="UTF-8")
-    content = models.TextField()
+    content = models.TextField(blank=True, null=True)
     count = models.IntegerField(default=0)
     author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE) #Switch to OneToOne field with User
     categories = models.ManyToManyField(Category, blank=True)
