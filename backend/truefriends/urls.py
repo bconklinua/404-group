@@ -34,17 +34,17 @@ from drf_yasg.views import get_schema_view
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
 logged_in_post_router = routers.DefaultRouter()
-logged_in_post_router.register(r'posts', LoggedInPostView, 'posts')
+logged_in_post_router.register(r'my-posts', LoggedInPostView, 'my-posts')
 author_router = routers.DefaultRouter()
 author_router.register(r'authors', AuthorView, 'authors')
 post_like_router = routers.DefaultRouter()
-post_like_router.register(r'likes', PostLikeView, 'likes')
+post_like_router.register(r'post-likes', PostLikeView, 'post-likes')
 author_like_router = routers.DefaultRouter()
-author_like_router.register(r'likes', AuthorLikeView, 'likes')
+author_like_router.register(r'author-likes', AuthorLikeView, 'author-likes')
 post_comment_router = routers.DefaultRouter()
-post_comment_router.register(r'comments', PostCommentView, 'comments')
+post_comment_router.register(r'post-comments', PostCommentView, 'post-comments')
 author_comment_router = routers.DefaultRouter()
-author_comment_router.register(r'comments', AuthorCommentView, 'comments')
+author_comment_router.register(r'author-comments', AuthorCommentView, 'author-comments')
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -66,24 +66,24 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include('User.urls')),
     path('api/auth/', include("User.urls")),
-    path('friendrequest/', FRListView.as_view()),
-    path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view()),
-    path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view()),
-    path('friendrequest/<int:author_id>/', FRSendView.as_view()),
-    path('authors/<int:author_id>/', include(post_router.urls)),
-    path('authors/<int:author_id>/', include(author_like_router.urls)),
-    path('posts/<int:post_id>/', include(post_like_router.urls)),
-    path('comments/<int:comment_id>/', include(post_like_router.urls)),
-    path('authors/<int:author_id>/inbox/', include('Inbox.urls')),
-    path('followers/', FollowersListView.as_view()),
-    path('following/', FollowingListView.as_view()),
-    path('unfollow/<int:user_id>/', UnfollowView.as_view()),
-    path('unfriend/<int:user_id>/', UnfriendView.as_view()),
-    path('withdraw/<int:user_id>/', WithdrawView.as_view()),
-    path('truefriends/', TrueFriendsListView.as_view()),
-    path('posts/<int:post_id>/', include(post_comment_router.urls)),
-    path('authors/<int:author_id>/', include(author_comment_router.urls)),
-    path('currentauthor/', include(logged_in_post_router.urls))
+    path('friendrequest/', FRListView.as_view(), name="friend_request_list"),
+    path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
+    path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
+    path('friendrequest/<int:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
+    path('authors/<int:author_id>/', include(post_router.urls)),  # authors-list, authors-details?
+    path('authors/<int:author_id>/', include(author_like_router.urls)),  # likes-list, likes-details?
+    path('posts/<int:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-details?
+    path('comments/<int:comment_id>/', include(post_like_router.urls)),  # comments-likes-list, comments-likes-details?
+    path('authors/<int:author_id>/inbox/', include('Inbox.urls')),  # inbox-list, inbox-details?
+    path('followers/', FollowersListView.as_view(), name="followers_list"),
+    path('following/', FollowingListView.as_view(), name="following_list"),
+    path('unfollow/<int:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
+    path('unfriend/<int:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),
+    path('withdraw/<int:user_id>/', WithdrawView.as_view(), name="withdraw_by_user_id"),
+    path('truefriends/', TrueFriendsListView.as_view(), name="true_friends_list"),
+    path('posts/<int:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-details?
+    path('authors/<int:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-details?
+    path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-details?
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
