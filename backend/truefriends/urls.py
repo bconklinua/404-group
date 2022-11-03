@@ -15,16 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from apps.Like.views import PostLikeView, AuthorLikeView
+from Like.views import PostLikeView, AuthorLikeView
 from drf_yasg import openapi
 from rest_framework import routers, permissions
-from apps.Post.views import PostView, LoggedInPostView
-from apps.User.views import AuthorView
-from apps.FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
-from apps.Follow.views import FollowersListView, FollowingListView, TrueFriendsListView, UnfollowView, UnfriendView, WithdrawView
-from apps.Follow.views import FollowersListView, FollowingListView
-from apps.Comment.views import PostCommentView
-from apps.Comment.views import AuthorCommentView
+from Post.views import PostView, LoggedInPostView
+from User.views import AuthorView
+from FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
+from Follow.views import FollowersListView, FollowingListView, TrueFriendsListView, UnfollowView, UnfriendView, WithdrawView
+from Follow.views import FollowersListView, FollowingListView
+from Comment.views import PostCommentView
+from Comment.views import AuthorCommentView
 from django.conf.urls.static import static
 from django.conf import settings
 #from rest_framework.schemas import get_schema_view
@@ -64,8 +64,8 @@ urlpatterns = [
     path('', include(post_router.urls)),
     #path('schema/', get_schema_view(title="TrueFriends API", permission_classes=(permissions.AllowAny,))),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/', include('apps.User.urls')),
-    path('api/auth/', include("apps.User.urls")),
+    path('api/', include('User.urls')),
+    path('api/auth/', include("User.urls")),
     path('friendrequest/', FRListView.as_view()),
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view()),
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view()),
@@ -74,7 +74,7 @@ urlpatterns = [
     path('authors/<int:author_id>/', include(author_like_router.urls)),
     path('posts/<int:post_id>/', include(post_like_router.urls)),
     path('comments/<int:comment_id>/', include(post_like_router.urls)),
-    path('authors/<int:author_id>/inbox/', include('apps.Inbox.urls')),
+    path('authors/<int:author_id>/inbox/', include('Inbox.urls')),
     path('followers/', FollowersListView.as_view()),
     path('following/', FollowingListView.as_view()),
     path('unfollow/<int:user_id>/', UnfollowView.as_view()),
