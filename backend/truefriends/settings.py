@@ -39,18 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Third-party apps
+    # Third-party applications
     'rest_framework',
     'corsheaders',
     'drf_yasg',
-    # Local apps
-    'apps.User',
-    'apps.Post',
-    'apps.Like',
-    'apps.FriendRequest',
-    'apps.Comment',
-    'apps.Inbox',
-    'apps.Follow',
+    # Local applications
+    'User',
+    'Post',
+    'Like',
+    'FriendRequest',
+    'Comment',
+    'Inbox',
+    'Follow',
 ]
 
 AUTH_USER_MODEL = 'User.Author'
