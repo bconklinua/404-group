@@ -79,7 +79,6 @@ class FRAcceptView(GenericAPIView):
         if f_req.recipient.id != request.user.id:
             return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
 
-        print("valid friend request for user", request.user.username)
         follower_author = Author.objects.get(id=f_req.sender.id)
         followee_author = Author.objects.get(id=request.user.id)
 
