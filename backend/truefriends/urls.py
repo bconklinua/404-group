@@ -34,17 +34,17 @@ from drf_yasg.views import get_schema_view
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
 logged_in_post_router = routers.DefaultRouter()
-logged_in_post_router.register(r'my-posts', LoggedInPostView, 'my-posts')
+logged_in_post_router.register(r'posts', LoggedInPostView, 'my-posts')
 author_router = routers.DefaultRouter()
 author_router.register(r'authors', AuthorView, 'authors')
 post_like_router = routers.DefaultRouter()
-post_like_router.register(r'post-likes', PostLikeView, 'post-likes')
+post_like_router.register(r'likes', PostLikeView, 'post-likes')
 author_like_router = routers.DefaultRouter()
-author_like_router.register(r'author-likes', AuthorLikeView, 'author-likes')
+author_like_router.register(r'likes', AuthorLikeView, 'author-likes')
 post_comment_router = routers.DefaultRouter()
-post_comment_router.register(r'post-comments', PostCommentView, 'post-comments')
+post_comment_router.register(r'comments', PostCommentView, 'post-comments')
 author_comment_router = routers.DefaultRouter()
-author_comment_router.register(r'author-comments', AuthorCommentView, 'author-comments')
+author_comment_router.register(r'comments', AuthorCommentView, 'author-comments')
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -60,8 +60,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(author_router.urls)),
-    path('', include(post_router.urls)),
+    path('', include(author_router.urls)),  #authors-list, authors-details?
+    path('', include(post_router.urls)),  # posts-list, posts-details?
     #path('schema/', get_schema_view(title="TrueFriends API", permission_classes=(permissions.AllowAny,))),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include('User.urls')),
