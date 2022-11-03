@@ -59,12 +59,6 @@ class TestIfLoggedIn(APIView):
 
     def get(self, request):
         if request.user.is_authenticated:
-            print("authenticated")
-            person = request.user
-            print("username: " + person.username)
-            print("email:" + person.email)
-
             return Response("authenticated", status=status.HTTP_202_ACCEPTED)
         else:
-            print("not authenticated")
             return Response("not authenticated", status=status.HTTP_401_UNAUTHORIZED)
