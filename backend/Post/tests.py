@@ -33,7 +33,7 @@ def get_temporary_jpeg_image():
     return tmp_file
 
 
-class FriendRequestTestCase(TestCase):
+class PostTestCase(TestCase):
     access1 = None
     access2 = None
     refresh1 = None
