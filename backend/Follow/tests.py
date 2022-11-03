@@ -8,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
 
 
-class FriendRequestTestCase(TestCase):
+class FollowTestCase(TestCase):
     access1 = None
     access2 = None
     refresh1 = None
