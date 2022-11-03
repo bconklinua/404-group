@@ -138,6 +138,13 @@ class FriendRequestTestCase(TestCase):
                                     data=my_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
+
+        # Delete the temporary image created from posting to endpoint
+        image_obj = Post.objects.get(id=response.data['id'])
+        storage = image_obj.image.storage
+        path = image_obj.image.path
+        storage.delete(path)
+
         self.assertEqual(response.data['contentType'], 'image/png;base64')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -152,6 +159,13 @@ class FriendRequestTestCase(TestCase):
                                     data=my_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
+
+        # Delete the temporary image created from posting to endpoint
+        image_obj = Post.objects.get(id=response.data['id'])
+        storage = image_obj.image.storage
+        path = image_obj.image.path
+        storage.delete(path)
+
         self.assertEqual(response.data['contentType'], 'image/jpeg;base64')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -211,6 +225,7 @@ class FriendRequestTestCase(TestCase):
                                    data=None,
                                    **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                    format='json')
+
         self.assertNotEqual(response.data, [])
         self.assertEqual(response.data[0]['contentType'], 'image/png;base64')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -227,6 +242,7 @@ class FriendRequestTestCase(TestCase):
                                    data=None,
                                    **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                    format='json')
+
         self.assertNotEqual(response.data, [])
         self.assertEqual(response.data[0]['contentType'], 'image/jpeg;base64')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
