@@ -63,7 +63,10 @@ class Post(models.Model):
         #Get list of people who are following the author of this post
         follower_list = [f.follower for f in Follow.objects.filter(followee=self.author)]
         following_list = [f.followee for f in Follow.objects.filter(follower=self.author)]
-        
+
+        # add yourself to list of your followers, so your own posts are put in your inbox
+        follower_list.append(self.author)
+
         for follower in follower_list:
             try:
                 inbox = Inbox.objects.get(author=follower)
