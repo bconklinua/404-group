@@ -41,5 +41,12 @@ class AuthorCommentView(viewsets.ModelViewSet):
     def get_queryset(self):
         user_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         if user_id:
-            return Comment.objects.filter(author_id=user_id)
-        return Comment.objects.all()
+            if user_id == self.request.user.id:
+                return Comment.objects.filter(author_id=user_id)
+            else:
+                follow_obj = Follow.objects.filter(follower=self.request.user.id, followee=user_id)
+                if follow_obj.exists():
+                    return Comment.objects.filter(author_id=user_id)
+                else:
+                    return Comment.objects.filter(author_id=-1)
+        return Comment.objects.filter(author_id=-1)

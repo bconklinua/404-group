@@ -14,7 +14,7 @@ from Post.models import Post, Category
 from Post.tests import get_temporary_jpeg_image, get_temporary_png_image
 
 
-class CommentTestCase(TestCase):
+class PostCommentTestCase(TestCase):
     access1 = None
     access2 = None
     refresh1 = None
@@ -226,4 +226,84 @@ class CommentTestCase(TestCase):
                                    format='json'
                                    )
         self.assertEqual(response.data['comment'], comment_data['comment'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_author_comments(self):
+        """get a list of all of your own comments"""
+        comment_data = self.default_comment_data
+        comment_data['author'] = self.author1
+        comment_data['post'] = self.author1_text_post
+        Comment.objects.create(**comment_data)
+        comment_data['comment'] = "this is another comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author1_image_post
+        comment_data['comment'] = "this is the 3rd comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_text_post
+        comment_data['comment'] = "this is the 4th comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_image_post
+        comment_data['comment'] = "this is the 5th comment"
+        Comment.objects.create(**comment_data)
+        url = reverse('author-comments-list', kwargs={"author_id": self.author1.id})
+        response = self.client.get(path=url,
+                                   data=None,
+                                   **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
+                                   format='json'
+                                   )
+        self.assertEqual(len(response.data), 5)
+        self.assertEqual(response.data[4]['comment'], comment_data['comment'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_another_unfollowed_author_comments(self):
+        """attempt to get a list of all of another author's comments who you are not following"""
+        comment_data = self.default_comment_data
+        comment_data['author'] = self.author2
+        comment_data['post'] = self.author1_text_post
+        Comment.objects.create(**comment_data)
+        comment_data['comment'] = "this is another comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author1_image_post
+        comment_data['comment'] = "this is the 3rd comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_text_post
+        comment_data['comment'] = "this is the 4th comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_image_post
+        comment_data['comment'] = "this is the 5th comment"
+        Comment.objects.create(**comment_data)
+        url = reverse('author-comments-list', kwargs={"author_id": self.author2.id})
+        response = self.client.get(path=url,
+                                   data=None,
+                                   **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
+                                   format='json'
+                                   )
+        self.assertEqual(len(response.data), 0)  # no comments in response
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_another_followed_author_comments(self):
+        """attempt to get a list of all of another author's comments who you are following"""
+        comment_data = self.default_comment_data
+        comment_data['author'] = self.author2
+        comment_data['post'] = self.author1_text_post
+        Comment.objects.create(**comment_data)
+        comment_data['comment'] = "this is another comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author1_image_post
+        comment_data['comment'] = "this is the 3rd comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_text_post
+        comment_data['comment'] = "this is the 4th comment"
+        Comment.objects.create(**comment_data)
+        comment_data['post'] = self.author2_image_post
+        comment_data['comment'] = "this is the 5th comment"
+        Comment.objects.create(**comment_data)
+        url = reverse('author-comments-list', kwargs={"author_id": self.author2.id})
+        Follow.objects.create(follower=self.author1, followee=self.author2)
+        response = self.client.get(path=url,
+                                   data=None,
+                                   **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
+                                   format='json'
+                                   )
+        self.assertEqual(len(response.data), 5)  # 5 comments in response
         self.assertEqual(response.status_code, status.HTTP_200_OK)
