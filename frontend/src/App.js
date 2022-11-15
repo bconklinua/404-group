@@ -18,7 +18,10 @@ import UserView from './components/UserView/UserView';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import EditPost from './components/Post/EditPost';
+import axios from 'axios';
 
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 function App() {
   const [info, setInfo] = useState({
     login: localStorage.getItem("refresh_token"),
