@@ -4,7 +4,7 @@
   "description": "Group Project for CMPUT404",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "heroku-postbuild": "cd frontend && npm i && npm start"
   },
   "repository": {
     "type": "git",
