@@ -4,7 +4,7 @@
   "description": "Group Project for CMPUT404",
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "cd frontend && npm i && npm start"
+    "heroku-postbuild": "cd frontend && npm i"
   },
   "repository": {
     "type": "git",
