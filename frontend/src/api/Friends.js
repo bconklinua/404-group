@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export function getFollowers(){
-    const url = `http://localhost:8000/followers/` // has to be userID
+    const url = `http://${window.location.hostname}:8000/followers/` // has to be userID
 
     return axios.get(url, {
         headers:{
@@ -16,7 +16,7 @@ export function getFollowers(){
 }
 
 export function getFollowings(){
-    const url = `http://localhost:8000/following/` // has to be userID
+    const url = `http://${window.location.hostname}:8000/following/` // has to be userID
 
     return axios.get(url, {
         headers:{
@@ -32,7 +32,7 @@ export function getFollowings(){
 
 
 export function getFriendRequests(){
-    const url = `http://localhost:8000/friendrequest/` // has to be userID
+    const url = `http://${window.location.hostname}:8000/friendrequest/` // has to be userID
 
     return axios.get(url, {
         headers:{
@@ -47,7 +47,7 @@ export function getFriendRequests(){
 }
 
 export function getFriends(){
-    const url = 'http://localhost:8000/truefriends/'
+    const url = 'http://${window.location.hostname}:8000/truefriends/'
 
     return axios.get(url, {
         headers:{
@@ -63,7 +63,7 @@ export function getFriends(){
 
 export function acceptFollower(id){
     console.log(localStorage.getItem("access_token"))
-    const url = `http://localhost:8000/friendrequest/accept/${id}/`
+    const url = `http://${window.location.hostname}:8000/friendrequest/accept/${id}/`
 
     return axios.post(url, {data:{}}, {
         headers:{
@@ -78,7 +78,7 @@ export function acceptFollower(id){
 }
 
 export function rejectFollower(id){
-    const url = `http://localhost:8000/friendrequest/reject/${id}/`
+    const url = `http://${window.location.hostname}:8000/friendrequest/reject/${id}/`
     
     return axios.post(url, {data:{}}, {
         headers:{
@@ -94,7 +94,7 @@ export function rejectFollower(id){
 }
 
 export function unFollow(id){
-    const url = `http://localhost:8000/unfollow/${id}/`
+    const url = `http://${window.location.hostname}:8000/unfollow/${id}/`
     
     return axios.post(url, {data:{}}, {
         headers:{
@@ -109,7 +109,7 @@ export function unFollow(id){
     })
 }
 export function unFriend(id){
-    const url = `http://localhost:8000/unfriend/${id}/`
+    const url = `http://${window.location.hostname}:8000/unfriend/${id}/`
     
     return axios.post(url, {data:{}}, {
         headers:{
@@ -124,7 +124,7 @@ export function unFriend(id){
     })
 }
 export function sendFriendRequest(id){
-    const url = `http://localhost:8000/friendrequest/${id}/`
+    const url = `http://${window.location.hostname}:8000/friendrequest/${id}/`
     
     return axios.post(url, {data:{}}, {
         headers:{
