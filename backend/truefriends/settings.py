@@ -191,7 +191,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # deployment strictly
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+     'https://true-friends-404.herokuapp.com',
 ]
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'backend/media')
