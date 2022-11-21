@@ -79,5 +79,5 @@ def get_user(id_):
 def add_post(instance, created, **kwargs):
     try:
         user_inbox = Inbox.objects.get(author=instance)
-    except ObjectDoesNotExist:
+    except:
         user_inbox = Inbox.objects.create(author=instance)
