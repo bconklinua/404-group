@@ -32,6 +32,7 @@ const Register = () => {
     // div styling taken from stackoverflow, can adjust later
     
     <main className='page'>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/> 
         <form onSubmit={handleSubmit}>
         <div className="box">
             <h1 className="register">Register</h1>
