@@ -86,7 +86,7 @@ urlpatterns = [
     path('posts/<int:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?
     path('authors/<int:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
-    #re_path('.*', TemplateView.as_view(template_name='index.html')),
+    re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
