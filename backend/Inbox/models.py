@@ -6,7 +6,7 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 class Inbox(models.Model):
-    type = models.CharField(default="inbox", editable=False)
+    type = models.CharField(default="inbox", editable=False, max_length=8)
     author = models.OneToOneField('User.Author', on_delete=models.CASCADE)
     posts = models.ManyToManyField('Post.Post', blank=True)
 
