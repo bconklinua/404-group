@@ -26,7 +26,7 @@ export function authenticate(param = {}){
 }
 
 export function postUser(param = {}){
-    const url = `https://${window.location.hostname}:8000/api/auth/register/`
+    const url = `https://${window.location.hostname}/api/auth/register/`
     const body = {
         email: param.email,
         username: param.username,
