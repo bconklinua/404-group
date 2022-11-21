@@ -181,9 +181,9 @@ SIMPLE_JWT = {
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build', 'static') # for deployment
+    os.path.join(BASE_DIR, 'build', 'static') # for deployment and local dev
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # deployment strictly
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
