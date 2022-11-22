@@ -12,6 +12,7 @@ import PostView from '../PostView/PostView';
 import { deletePost } from '../../api/Post';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../../api/api';
 
 const PostViewCard = (props) => {
     
@@ -25,7 +26,7 @@ const PostViewCard = (props) => {
     else if (props.post.image){
         
         console.log("props.post.image")
-        let imgurl = `http://localhost:8000${props.post.image}`
+        let imgurl = `${BASE_URL}${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
             // <img src={imgurl} alt="Girl in a jacket" ></img>
