@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { BASE_URL } from './api'
 
 
 export function getInbox(){
-    const url = `http://${window.location.hostname}:8000/authors/${localStorage.getItem("authorID")}/inbox/` // has to be userID
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/inbox/` // has to be userID
 
 
     return axios.get(url, {
@@ -18,7 +19,7 @@ export function getInbox(){
 }
 
 export function test(){
-    const url = 'http://${window.location.hostname}:8000/authors/' // has to be userID
+    const url = `${BASE_URL}/authors/` // has to be userID
 
 
     return axios.get(url, {
@@ -53,7 +54,7 @@ export function getUserPost(user_id){
 }
 
 export function getPostByID(post_id) {
-    const url = `http://${window.location.hostname}:8000/posts/${post_id}/`
+    const url = `${BASE_URL}/posts/${post_id}/`
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
@@ -70,7 +71,7 @@ export function getPostByID(post_id) {
 
 
 export function postPost(param = {}){
-    const url = 'http://${window.location.hostname}:8000/posts/'
+    const url = `${BASE_URL}/posts/`
 
     let form_data = new FormData();
     if (param.image) form_data.append("image", param.image, param.image.name)
@@ -95,7 +96,7 @@ export function postPost(param = {}){
 }
 
 export function getPosts(){
-    const url = 'http://${window.location.hostname}:8000/currentauthor/posts/'
+    const url = `${BASE_URL}/currentauthor/posts/`
 
         return axios.get(url, {
         headers:{
@@ -112,7 +113,7 @@ export function getPosts(){
 }
 
 export function editPost(param = {}){
-    const url = `http://${window.location.hostname}:8000/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
 
     let form_data = new FormData();
     if (param.image) form_data.append("image", param.image, param.image.name)
@@ -136,7 +137,7 @@ export function editPost(param = {}){
 }
 
 export function deletePost(post_id){
-    const url = `http://${window.location.hostname}:8000/authors/${localStorage.getItem("authorID")}/posts/${post_id}/`
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/posts/${post_id}/`
 
     return axios.delete(url, {
         headers:{

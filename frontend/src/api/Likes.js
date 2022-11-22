@@ -1,7 +1,8 @@
 import axios from "axios";
+import { BASE_URL } from './api'
 
 export function doLike(id){
-    const url = `http://${window.location.hostname}:8000/posts/${id}/likes/`
+    const url = `${BASE_URL}/posts/${id}/likes/`
     
     return axios.post(url, {data:{}}, {
         headers:{
