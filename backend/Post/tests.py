@@ -1,14 +1,11 @@
 import json
-
 from django.test import TestCase
 from User.models import Author
-from Follow.models import Follow
-from FriendRequest.models import FriendRequest
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
-from Post.models import Post, Category
+from Post.models import Post
 
 
 def get_temporary_png_image():
