@@ -12,6 +12,7 @@ export function authenticate(param = {}){
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
         }
     }).then((response) =>{
         console.log(response)
@@ -36,6 +37,7 @@ export function postUser(param = {}){
     return axios.post(url, body, {
         headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
         },
     }).then((response) =>{
         return response;
@@ -57,6 +59,7 @@ export function getToken(param = {}){
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
         }
     }).then((response) =>{
         localStorage.setItem("access_token", response.data.access)
@@ -85,6 +88,7 @@ export function getAllUsers(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response)=>{
