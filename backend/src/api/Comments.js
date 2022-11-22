@@ -6,6 +6,7 @@ export function getComments(post_id){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
             // authorization?
         }
@@ -29,6 +30,7 @@ export function postComment(param = {}){
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{

@@ -6,6 +6,7 @@ export function getFollowers(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -21,6 +22,7 @@ export function getFollowings(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -37,6 +39,7 @@ export function getFriendRequests(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -52,6 +55,7 @@ export function getFriends(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -68,6 +72,7 @@ export function acceptFollower(id){
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -83,6 +88,7 @@ export function rejectFollower(id){
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -99,6 +105,7 @@ export function unFollow(id){
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -114,6 +121,7 @@ export function unFriend(id){
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -129,6 +137,7 @@ export function sendFriendRequest(id){
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{

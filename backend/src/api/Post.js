@@ -8,6 +8,7 @@ export function getInbox(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -24,6 +25,7 @@ export function test(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
             // authorization?
         }
@@ -41,6 +43,7 @@ export function getUserPost(user_id){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
             // authorization?
         }
@@ -57,6 +60,7 @@ export function getPostByID(post_id) {
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -84,6 +88,7 @@ export function postPost(param = {}){
     return axios.post(url, form_data, {
         headers:{
             "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -100,6 +105,7 @@ export function getPosts(){
         return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
             // authorization?
         }
@@ -125,6 +131,7 @@ export function editPost(param = {}){
     return axios.put(url, form_data, {
         headers:{
             "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
@@ -141,6 +148,7 @@ export function deletePost(post_id){
     return axios.delete(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
             Authorization: `JWT ${localStorage.getItem("access_token")}`
         }
     }).then((response) =>{
