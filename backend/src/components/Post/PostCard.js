@@ -10,6 +10,7 @@ import './PostCard.css'
 import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
+import { BASE_URL } from '../../api/api';
 
 
 const PostCard = (props) => {
@@ -22,7 +23,7 @@ const PostCard = (props) => {
         content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
     else if (props.post.image){
-        let imgurl = `http://localhost:8000${props.post.image}`
+        let imgurl = `${BASE_URL}${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
             // <img src={imgurl} alt="Girl in a jacket" ></img>
