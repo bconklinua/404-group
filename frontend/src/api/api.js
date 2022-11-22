@@ -1,1 +1,1 @@
-export const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://true-friends-404.herokuapp.com';
+export const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'http://true-friends-404.herokuapp.com';
