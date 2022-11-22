@@ -46,7 +46,7 @@ export function postUser(param = {}){
 
 export function getToken(param = {}){
     // Gets a token
-    const url = `https://${window.location.hostname}:8000/api/token/obtain/`
+    const url = `https://${window.location.hostname}/api/token/obtain/`
     const body = {
         email: param.email,
         password: param.password,
@@ -68,7 +68,7 @@ export function getToken(param = {}){
 }
 export function refreshToken(){
     // Gets a new token using refresh token
-    const url = `http://${window.location.hostname}:8000/api/token/refresh/`
+    const url = `https://${window.location.hostname}/api/token/refresh/`
     return axios.post(url, {refresh: localStorage.getItem('refresh_token')}).then((response)=>{
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
