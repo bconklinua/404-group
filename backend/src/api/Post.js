@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { BASE_URL } from './api'
 
 export function getInbox(){
     const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/inbox/` // has to be userID

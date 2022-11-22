@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from './api';
 
 export function getComments(post_id){
     const url = `${BASE_URL}/posts/${post_id}/comments/`

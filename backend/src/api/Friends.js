@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import { BASE_URL } from './api';
 
 export function getFollowers(){
     const url = `${BASE_URL}/followers/` // has to be userID
