@@ -34,11 +34,6 @@ SECRET_KEY = 'django-insecure-h@ay-jwnj$6(z+m_0bjw00%js6fodnc&6-qg*lc9@dsvk&j3g0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-ALLOWED_HOSTS = ['*'] 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -195,6 +190,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'https://true-friends-404.herokuapp.com',
+     'https://localhost:3000',
 ]
 
 CORS_ALLOW_HEADERS = [
