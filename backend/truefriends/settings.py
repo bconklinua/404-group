@@ -73,7 +73,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'truefriends.urls'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 TEMPLATES = [
     {
