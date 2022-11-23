@@ -1,11 +1,10 @@
 import react, { useState, useEffect } from 'react'
 
-import {Box, Divider, Tab} from '@mui/material'
+//import {Box, Divider, Tab} from '@mui/material'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
 import { useParams } from 'react-router-dom'
 import { refreshToken } from '../../api/User'
 import { getUserPost } from '../../api/Post'
-import UserPostCard from './UserPostCard'
 import PostCard from '../Post/PostCard'
 
 const UserView = () =>{
@@ -70,7 +69,7 @@ const UserView = () =>{
         <main>
             <h1 className='profileName'>{username}</h1>
 
-            <Divider/>
+
             {content}
         </main>
     )
