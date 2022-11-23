@@ -5,7 +5,6 @@ import {TabContext, TabList, TabPanel} from '@mui/lab'
 import { useParams } from 'react-router-dom'
 import { refreshToken } from '../../api/User'
 import { getUserPost } from '../../api/Post'
-import UserPostCard from './UserPostCard'
 import PostCard from '../Post/PostCard'
 
 const UserView = () =>{
