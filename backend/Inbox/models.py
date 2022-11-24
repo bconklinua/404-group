@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 class Inbox(models.Model):
-    type = models.CharField(default="inbox", editable=False, max_length=4)
+    type = models.CharField(default="inbox", editable=False, max_length=8)
     author = models.OneToOneField('User.Author', on_delete=models.CASCADE)
     posts = models.ManyToManyField('Post.Post', blank=True)
 

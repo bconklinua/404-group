@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+.none{
+    text-align: center;
+}
+
+.card {
+    height: 9vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box1 {
+    background-color: white;
+    width: 30em;
+    height: 5em;
+
+    border-radius: 1em;
+    box-shadow: 0 0.188em 1.550em rgb(167, 180, 194);
+    display: flex;
+    padding: 2em;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Josefin Sans', cursive;
+}

@@ -1,0 +1,60 @@
+
+.postview-header {
+    font-family: arial;
+    font-size: 15px;
+    margin: 25px;
+    height: 110px;
+    outline: dashed 1px black;
+    display: flex;
+    justify-content: center;
+}
+
+.postview-title {
+    margin: 0 auto;
+}
+
+.postview-main {
+    margin: 10px;
+    text-align: center;
+    border: 1px salmon;
+    line-height: 115px;
+}
+
+.no-post-img {
+    max-width: 30%;
+    max-height: 30%;
+    vertical-align: middle;
+}
+
+.comment-submit-button {
+    border: none;
+    width: 40%;
+    height: 3em;
+    background-color: rgb(35, 113, 182);
+    justify-content: center;
+    transition: 0.5s;
+    border-radius: 1em;
+}
+
+.comment-submit-button:hover {
+    transform: scale(1.10);
+    background-color: rgb(0, 214, 214);
+}
+
+
+.card1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.box2 {
+    background-color: white;
+    width: 30em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Josefin Sans', cursive;
+}
