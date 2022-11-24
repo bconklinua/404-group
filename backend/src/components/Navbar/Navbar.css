@@ -1,0 +1,106 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+li {
+
+    list-style: none;
+}
+
+h3 {
+    color: white;
+}
+
+.nav {
+    height: 5.5vh;
+    line-height: 5vh;
+    
+    box-shadow: rgba(230, 228, 233, 0.651) 0 30px 30px -20px;
+    background-color: #1F1B24;
+}
+
+
+
+.TrueFriends {
+    font-size: 30px;   
+}
+
+.navLinks {
+    display: flex;
+    justify-content: flex-end;
+    width: 75%;
+}
+
+.container {
+    max-width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+ .navLinks li{
+
+    font-size: 20px;
+    padding: 0 10px;
+    margin: 0 10px;
+    cursor: pointer;
+    text-transform: capitalize;
+    text-decoration: none;
+}  
+
+
+
+/* .navLinks Link a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 30px 25px;
+    text-decoration: none;
+    font-size: 25px;
+  }
+  
+  .navLinks Link a:hover {
+    background-color: rgb(109, 58, 110);
+    color: white;
+  } */
+
+.link{
+    font-size: 20px;
+    margin: 0 20px;
+    position: relative;
+    text-decoration: none;
+    opacity: 0.9;
+    text-transform: capitalize;
+    color: white;
+}
+.link:hover {
+    opacity: 1;
+
+}
+
+.link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all .45s;
+}
+.link:hover::before{
+    width: 100%     
+}
+
+.active {
+    color: white;
+    text-decoration: none;
+}
+.active::before{
+    width: 100%  
+   }

@@ -1,4 +1,3 @@
-from tkinter import CASCADE
 from django.db import models
 from User.models import Author
 from django.db.models.signals import post_save

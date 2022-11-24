@@ -1,0 +1,20 @@
+{
+  "name": "404-group",
+  "version": "1.0.0",
+  "description": "Group Project for CMPUT404",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "cd frontend && npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bconklinua/404-group.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bconklinua/404-group/issues"
+  },
+  "homepage": "https://github.com/bconklinua/404-group#readme"
+}
