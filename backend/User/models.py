@@ -19,7 +19,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=True, max_length=100)
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")

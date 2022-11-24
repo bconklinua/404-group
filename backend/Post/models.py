@@ -37,7 +37,7 @@ def upload_to(instance, filename):
 # Create your models here.
 class Post(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=True, max_length=100)
     type = models.CharField(default="post", editable=False, max_length=4)
     title = models.CharField(max_length=30, default="Untitled", unique=True)
     source = models.SlugField(max_length=100, editable=False)
