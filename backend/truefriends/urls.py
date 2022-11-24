@@ -35,6 +35,8 @@ from django.views.generic import TemplateView
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
+author_post_router = routers.DefaultRouter()
+author_post_router.register(r'posts', PostView, 'author-posts')
 logged_in_post_router = routers.DefaultRouter()
 logged_in_post_router.register(r'posts', LoggedInPostView, 'my-posts')
 author_router = routers.DefaultRouter()
@@ -72,7 +74,7 @@ urlpatterns = [
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
     path('friendrequest/<uuid:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
-    path('authors/<uuid:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?
+    path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls)),  # authors-list, authors-detail?
     path('authors/<uuid:author_id>/', include(author_like_router.urls)),  # likes-list, likes-detail?
     path('posts/<uuid:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-detail?
     path('comments/<int:comment_id>/', include(post_like_router.urls)),  # comments-likes-list, comments-likes-detail?
