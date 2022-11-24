@@ -14,7 +14,11 @@ class Author(AbstractBaseUser, PermissionsMixin):
     """
     Custom User Model
     """
-
+    ACCT_TYPE_CHOICES = (
+        ('author', _('Regular Author Account')),
+        ('team13_proxy', _('Proxy Account for connecting to Team 13')),
+        ('team19_proxy', _('Proxy Account for connecting to Team 19'))
+    )
 
     username_validator = UnicodeUsernameValidator()
 
@@ -22,6 +26,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
+    account_type = models.CharField(max_length=32, choices=ACCT_TYPE_CHOICES, default='author')
     #friend_requests = models.ManyToOneRel()
 
     EMAIL_FIELD = 'email'

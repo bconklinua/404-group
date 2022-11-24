@@ -20,7 +20,7 @@ from drf_yasg import openapi
 from rest_framework import routers, permissions
 from Post.views import PostView, LoggedInPostView
 from User.views import AuthorView
-from FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView
+from FriendRequest.views import FRSendView, FRListView, FRAcceptView, FRRejectView, FRAcceptBySearchView
 from Follow.views import FollowersListView, FollowingListView, TrueFriendsListView, UnfollowView, UnfriendView, WithdrawView
 from Follow.views import FollowersListView, FollowingListView
 from Comment.views import PostCommentView
@@ -68,6 +68,7 @@ urlpatterns = [
     path('api/auth/', include("User.urls")),
     path('friendrequest/', FRListView.as_view(), name="friend_request_list"),
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
+    path('friendrequest/accept/from/<str:fr_sender_username>/to/<str:fr_recipient_username>/', FRAcceptBySearchView.as_view(), name="friend_request_accept_by_search"),
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
     path('friendrequest/<int:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
     path('authors/<int:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?

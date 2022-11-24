@@ -115,3 +115,45 @@ class FRRejectView(GenericAPIView):
         f_req.delete()
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
+
+
+class FRAcceptBySearchView(GenericAPIView):
+
+    serializer_class = FriendRequestSerializer
+
+    def post(self, request, fr_sender_username, fr_recipient_username):
+        fr_sender_username = self.kwargs['fr_sender_username']
+        fr_recipient_username = self.kwargs['fr_recipient_username']
+
+        author_sender = Author.objects.get(username=fr_sender_username)
+        if author_sender is None:
+            return response.Response({"error": "invalid parameter for sender"}, status=status.HTTP_400_BAD_REQUEST)
+
+        author_recipient = Author.objects.get(username=fr_recipient_username)
+        if author_recipient is None:
+            return response.Response({"error": "invalid parameter for recipient"}, status=status.HTTP_400_BAD_REQUEST)
+
+        f_req = FriendRequest.objects.filter(sender=author_sender, recipient=author_recipient)
+        if f_req is None:
+            return response.Response({"error": "no friend request exists between those users"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # somehow check if the user accepting this request is the one authorized to do so
+        # if f_req.recipient.id != request.user.id:
+        #    return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
+
+        follow_list = Follow.objects.filter(follower=author_sender, followee=author_recipient)
+        if len(follow_list) > 0:
+            return response.Response({"error": "already being followed"}, status=status.HTTP_409_CONFLICT)
+
+        follow = Follow(follower=author_sender, followee=author_recipient)
+        f_req.delete()
+        follow.save()
+
+        response_dict = {}
+        response_dict.update({"message": "you accepted " + author_sender.username + " as a follower"})
+
+        followed_back = Follow.objects.filter(follower=author_recipient, followee=author_sender)
+        if len(followed_back) > 0:
+            response_dict.update({"true_friend": "you and " + author_sender.username + " are officially true friends."})
+
+        return response.Response(response_dict, status=status.HTTP_200_OK)
