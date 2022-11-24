@@ -9,6 +9,7 @@ from .managers import AuthorManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
+import uuid
 
 class Author(AbstractBaseUser, PermissionsMixin):
     """
@@ -18,8 +19,9 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     email = models.EmailField(_('email address'), unique=True)
-    username = models.CharField(max_length=30, unique=True)  # , validators=[username_validator]
+    username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
     #friend_requests = models.ManyToOneRel()
