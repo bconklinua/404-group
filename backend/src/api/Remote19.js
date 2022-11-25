@@ -9,7 +9,7 @@ export function Team19Users(){
         },
         headers:{
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*",
+
         }
     }).then((response)=>{
         return response
