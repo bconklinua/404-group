@@ -5,4 +5,4 @@ from .models import FriendRequest
 class FriendRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendRequest
-        fields = ('sender', 'recipient')
+        fields = ('sender', 'recipient', 'network')

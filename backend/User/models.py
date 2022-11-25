@@ -22,6 +22,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     ("https://true-friends-404.herokuapp.com", "Team12")
     ]
 
+
     username_validator = UnicodeUsernameValidator()
 
     id = models.UUIDField(default=uuid.uuid4, editable=True, primary_key=True)
@@ -30,6 +31,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
     host = models.CharField(choices=HOST_CHOICES, default="Team12", max_length = 50)
+
     #friend_requests = models.ManyToOneRel()
 
     EMAIL_FIELD = 'email'
