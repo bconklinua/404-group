@@ -8,6 +8,7 @@ from .serializers import FriendRequestSerializer
 from .models import FriendRequest
 from User.models import Author
 from Follow.models import Follow
+from django.views.decorators.csrf import csrf_exempt
 
 
 class FRSendView(GenericAPIView):
@@ -164,7 +165,7 @@ class FRAcceptExternalView(GenericAPIView):
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
 
-
+@csrf_exempt
 class FRSendFromExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
