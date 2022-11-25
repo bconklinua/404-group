@@ -74,7 +74,7 @@ urlpatterns = [
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
     path('friendrequest/<uuid:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
-    path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls)),  # authors-list, authors-detail?
+    path('authors/<uuid:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?
     path('authors/<uuid:author_id>/', include(author_like_router.urls)),  # likes-list, likes-detail?
     path('posts/<uuid:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-detail?
     path('comments/<int:comment_id>/', include(post_like_router.urls)),  # comments-likes-list, comments-likes-detail?
@@ -89,6 +89,7 @@ urlpatterns = [
     path('authors/<uuid:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
     re_path('.*', TemplateView.as_view(template_name='index.html')),
+    path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
