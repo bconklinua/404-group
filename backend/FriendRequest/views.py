@@ -168,21 +168,25 @@ class FRAcceptExternalView(GenericAPIView):
 class FRSendFromExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
-    def post(self, request, snd_uuid, snd_username, rec_uuid):
+    def post(self, request, network_id, snd_uuid, snd_username, rec_uuid):
 
-        sender_uuid = self.kwargs['snd_uuid']
-        recipient_uuid = self.kwargs['rec_uuid']
-        sender_username = self.kwargs['snd_username']
+        if network_id != 13 and network_id != 19:
+            return response.Response({"error": "invalid network ID: " + network_id}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            recipient = Author.objects.get(id=recipient_uuid)
+            recipient = Author.objects.get(id=rec_uuid)
         except ObjectDoesNotExist:
             return response.Response({"error": "recipient user with that UUID does not exist"})
 
         try:
-            sender = Author.objects.filter(username=sender_username).get(id=sender_uuid)
+            sender = Author.objects.filter(username=snd_username).get(id=snd_uuid)
         except ObjectDoesNotExist:
-            sender = Author.objects.create(id=sender_uuid, username=sender_username, email=sender_username + "@gmail.com", password="password123")
+            if network_id == 13:
+                sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
+                                               password="password123", account_type='external_team13_acct')
+            if network_id == 19:
+                sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
+                                               password="password123", account_type='external_team19_acct')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
@@ -192,11 +196,14 @@ class FRSendFromExternalView(GenericAPIView):
         follow_list = Follow.objects.filter(follower=sender, followee=recipient)
         if len(follow_list) > 0:
             return response.Response({"error": "can't send a friend request to someone you are already following!"}, status=status.HTTP_409_CONFLICT)
-
         # get a copy of the request as a mutable dict object
         updated_request = request.POST.copy()
         updated_request.update({'sender': snd_uuid})
         updated_request.update({'recipient': rec_uuid})
+        if network_id == 13:
+            updated_request.update({'network': 'team13_to_truefriends'})
+        if network_id == 19:
+            updated_request.update({'network': 'team19_to_truefriends'})
         serializer = self.serializer_class(data=updated_request)
         if serializer.is_valid():
             serializer.save()
@@ -207,22 +214,27 @@ class FRSendFromExternalView(GenericAPIView):
 class FRSendToExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
-    def post(self, request, snd_uuid, rec_username, rec_uuid):
+    def post(self, request, network_id, snd_uuid, rec_username, rec_uuid):
 
-        #sender_uuid = self.kwargs['snd_uuid']
-        #recipient_username = self.kwargs['rec_username']
-        #recipient_uuid = self.kwargs['rec_uuid']
+        if network_id != 13 and network_id != 19:
+            return response.Response({"error": "invalid network ID: " + network_id}, status=status.HTTP_400_BAD_REQUEST)
 
 
         try:
             sender = Author.objects.get(id=snd_uuid)
         except ObjectDoesNotExist:
-            return response.Response({"error": "sender author with that UUID does not exist"})
+            return response.Response({"error": "sender author with that UUID does not exist"},
+                                     status=status.HTTP_400_BAD_REQUEST)
 
         try:
             recipient = Author.objects.filter(username=rec_username).get(id=rec_uuid)
         except ObjectDoesNotExist:
-            recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com", password="password123")
+            if network_id == 13:
+                recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
+                                                  password="password123", account_type='external_team13_acct')
+            if network_id == 19:
+                recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
+                                                  password="password123", account_type='external_team19_acct')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
@@ -231,12 +243,17 @@ class FRSendToExternalView(GenericAPIView):
             return response.Response({"error": "friend request already exists"}, status=status.HTTP_409_CONFLICT)
         follow_list = Follow.objects.filter(follower=sender, followee=recipient)
         if len(follow_list) > 0:
-            return response.Response({"error": "can't send a friend request to someone you are already following!"}, status=status.HTTP_409_CONFLICT)
+            return response.Response({"error": "can't send a friend request to someone you are already following!"},
+                                     status=status.HTTP_409_CONFLICT)
 
         # get a copy of the request as a mutable dict object
         updated_request = request.POST.copy()
         updated_request.update({'sender': snd_uuid})
         updated_request.update({'recipient': rec_uuid})
+        if network_id == 13:
+            updated_request.update({'network': 'truefriends_to_team13'})
+        if network_id == 19:
+            updated_request.update({'network': 'truefriends_to_team19'})
         serializer = self.serializer_class(data=updated_request)
         if serializer.is_valid():
             serializer.save()

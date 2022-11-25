@@ -71,11 +71,11 @@ urlpatterns = [
     path('friendrequest/', FRListView.as_view(), name="friend_request_list"),
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
 
-
-    path('friendrequest/from_external/<uuid:snd_uuid>/<str:snd_username>/send/<uuid:rec_uuid>/', FRSendFromExternalView.as_view(), name="friend_request_send_from_external"),
-    path('friendrequest/to_external/<uuid:snd_uuid>/send/<str:rec_username>/<uuid:rec_uuid>/', FRSendToExternalView.as_view(), name="friend_request_send_to_external"),
+    path('friendrequest/from_external/<int:network_id>/<uuid:snd_uuid>/<str:snd_username>/send/<uuid:rec_uuid>/', FRSendFromExternalView.as_view(), name="friend_request_send_from_external"),
+    path('friendrequest/to_external/<int:network_id>/<uuid:snd_uuid>/send/<str:rec_username>/<uuid:rec_uuid>/', FRSendToExternalView.as_view(), name="friend_request_send_to_external"),
     path('friendrequest/accept_external/sender/<uuid:snd_uuid>/recipient/<uuid:rec_uuid>/', FRAcceptExternalView.as_view(), name="friend_request_accept_external"),
     path('friendrequest/reject_external/sender/<uuid:snd_uuid>/recipient/<uuid:rec_uuid>/', FRRejectExternalView.as_view(), name="friend_request_reject_external"),
+
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
     path('friendrequest/<uuid:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
     path('authors/<uuid:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?
