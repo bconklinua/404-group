@@ -35,6 +35,8 @@ from django.views.generic import TemplateView
 
 post_router = routers.DefaultRouter()
 post_router.register(r'posts', PostView, 'posts')
+author_post_router = routers.DefaultRouter()
+author_post_router.register(r'posts', PostView, 'author-posts')
 logged_in_post_router = routers.DefaultRouter()
 logged_in_post_router.register(r'posts', LoggedInPostView, 'my-posts')
 author_router = routers.DefaultRouter()
@@ -86,6 +88,7 @@ urlpatterns = [
     path('posts/<uuid:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?
     path('authors/<uuid:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
+    path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls)),
     re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
 
