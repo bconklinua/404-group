@@ -194,9 +194,13 @@ CORS_ORIGIN_WHITELIST = [
      'https://localhost:3000',
 ]
 
-ALLOWED_HOSTS=[     'http://localhost:3000',
-     'https://true-friends-404.herokuapp.com',
-     'https://localhost:3000',]
+ALLOWED_HOSTS=[     
+    'http://localhost:3000',
+    'https://true-friends-404.herokuapp.com',
+    'https://localhost:3000',
+    'https://cmput404-team13.herokuapp.com',
+    'https://social-distribution-404.herokuapp.com'
+]
 
 CORS_ALLOW_HEADERS = [
     "accept",

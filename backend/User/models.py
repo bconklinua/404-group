@@ -16,6 +16,11 @@ class Author(AbstractBaseUser, PermissionsMixin):
     Custom User Model
     """
 
+    HOST_CHOICES = [
+    ("Team13", "https://cmput404-team13.herokuapp.com"),
+    ("Team19", "https://social-distribution-404.herokuapp.com"),
+    ("Team12", "https://true-friends-404.herokuapp.com")
+    ]
 
     username_validator = UnicodeUsernameValidator()
 
@@ -24,6 +29,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
+    host = models.CharField(choices=HOST_CHOICES, default="Team12", max_length = 50)
     #friend_requests = models.ManyToOneRel()
 
     EMAIL_FIELD = 'email'
