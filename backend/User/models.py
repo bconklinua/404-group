@@ -15,20 +15,13 @@ class Author(AbstractBaseUser, PermissionsMixin):
     """
     Custom User Model
     """
-<<<<<<< HEAD
 
     HOST_CHOICES = [
     ("https://cmput404-team13.herokuapp.com", "Team13"),
     ("https://social-distribution-404.herokuapp.com", "Team19"),
     ("https://true-friends-404.herokuapp.com", "Team12")
     ]
-=======
-    ACCT_TYPE_CHOICES = (
-        ('truefriends', _('TrueFriends Author Account')),
-        ('external_team13_acct', _('External author from the Team 13 network')),
-        ('external_team19_acct', _('External author from the Team 19 network'))
-    )
->>>>>>> 788fd0f9d0ed772b0a84b1ad1df187f824e66bf6
+
 
     username_validator = UnicodeUsernameValidator()
 
@@ -37,11 +30,8 @@ class Author(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
-<<<<<<< HEAD
     host = models.CharField(choices=HOST_CHOICES, default="Team12", max_length = 50)
-=======
-    account_type = models.CharField(max_length=32, choices=ACCT_TYPE_CHOICES, default='truefriends')
->>>>>>> 788fd0f9d0ed772b0a84b1ad1df187f824e66bf6
+
     #friend_requests = models.ManyToOneRel()
 
     EMAIL_FIELD = 'email'
