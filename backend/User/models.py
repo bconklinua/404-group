@@ -30,7 +30,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
-    host = models.CharField(choices=HOST_CHOICES, default="Team12", max_length = 50)
+    host = models.CharField(choices=HOST_CHOICES, default="https://true-friends-404.herokuapp.com", max_length = 50)
 
     #friend_requests = models.ManyToOneRel()
 

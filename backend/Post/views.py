@@ -29,7 +29,7 @@ class PostView(viewsets.ModelViewSet):
             try:
                 post_author = Author.objects.filter(username=author_username).get(id=author_id)
             except ObjectDoesNotExist:
-                post_author = Author.objects.create(id=author_id, username=author_username, email=author_username + "@gmail.com", password="password123")
+                post_author = Author.objects.create(id=author_id, username=author_username, email=author_username + "@gmail.com", password="password123", host=request.user.host)
         else:
             post_author = request.user
         if serializer.is_valid():
