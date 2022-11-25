@@ -183,10 +183,10 @@ class FRSendFromExternalView(GenericAPIView):
         except ObjectDoesNotExist:
             if network_id == 13:
                 sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
-                                               password="password123", host='Team13')
+                                               password="password123", host='https://cmput404-team13.herokuapp.com')
             if network_id == 19:
                 sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
-                                               password="password123", host='Team19')
+                                               password="password123", host='https://social-distribution-404.herokuapp.com')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
@@ -231,10 +231,10 @@ class FRSendToExternalView(GenericAPIView):
         except ObjectDoesNotExist:
             if network_id == 13:
                 recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
-                                                  password="password123", host='Team13')
+                                                  password="password123", host='https://cmput404-team13.herokuapp.com')
             if network_id == 19:
                 recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
-                                                  password="password123", host='Team19')
+                                                  password="password123", host='https://social-distribution-404.herokuapp.com')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
