@@ -191,13 +191,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
      'https://true-friends-404.herokuapp.com',
-     'https://localhost:3000',
+     'https://cmput404-team13.herokuapp.com',
+     'https://social-distribution-404.herokuapp.com',
+     'http://localhost:8000'
 ]
 
 ALLOWED_HOSTS=[     
     'http://localhost:3000',
     'https://true-friends-404.herokuapp.com',
-    'https://localhost:3000',
+    'http://localhost:8000',
     'https://cmput404-team13.herokuapp.com',
     'https://social-distribution-404.herokuapp.com'
 ]
@@ -212,6 +214,7 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    "access-control-allow-origin"
 ]
 
 CORS_ALLOW_METHODS = [
