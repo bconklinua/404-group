@@ -1,4 +1,6 @@
 from typing import OrderedDict
+
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers, viewsets, status, permissions, response
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -18,6 +20,7 @@ class FRSendView(GenericAPIView):
         sender = Author.objects.get(username=request.user.username).id
         recipient = Author.objects.get(id=recipient_id).id
 
+        # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
         if len(fr_list) > 0:
             return response.Response({"error": "friend request already exists"}, status=status.HTTP_409_CONFLICT)
@@ -82,6 +85,7 @@ class FRAcceptView(GenericAPIView):
         follower_author = Author.objects.get(id=f_req.sender.id)
         followee_author = Author.objects.get(id=request.user.id)
 
+        # noinspection DuplicatedCode
         follow_list = Follow.objects.filter(follower=follower_author, followee=followee_author)
         if len(follow_list) > 0:
             return response.Response({"error": "already being followed"}, status=status.HTTP_409_CONFLICT)
@@ -117,21 +121,23 @@ class FRRejectView(GenericAPIView):
         return response.Response(response_dict, status=status.HTTP_200_OK)
 
 
-class FRAcceptBySearchView(GenericAPIView):
+class FRAcceptExternalView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
 
-    def post(self, request, fr_sender_username, fr_recipient_username):
-        fr_sender_username = self.kwargs['fr_sender_username']
-        fr_recipient_username = self.kwargs['fr_recipient_username']
+    def post(self, request, snd_uuid, rec_uuid):
+        sender_uuid = self.kwargs['snd_uuid']
+        recipient_uuid = self.kwargs['rec_uuid']
 
-        author_sender = Author.objects.get(username=fr_sender_username)
-        if author_sender is None:
+        try:
+            author_sender = Author.objects.get(id=sender_uuid)
+        except ObjectDoesNotExist:
             return response.Response({"error": "invalid parameter for sender"}, status=status.HTTP_400_BAD_REQUEST)
 
-        author_recipient = Author.objects.get(username=fr_recipient_username)
-        if author_recipient is None:
-            return response.Response({"error": "invalid parameter for recipient"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            author_recipient = Author.objects.get(id=recipient_uuid)
+        except ObjectDoesNotExist:
+            return response.Response({"error": "that recipient does not exist in our database - was a friend request sent to them?"})
 
         f_req = FriendRequest.objects.filter(sender=author_sender, recipient=author_recipient)
         if f_req is None:
@@ -155,5 +161,109 @@ class FRAcceptBySearchView(GenericAPIView):
         followed_back = Follow.objects.filter(follower=author_recipient, followee=author_sender)
         if len(followed_back) > 0:
             response_dict.update({"true_friend": "you and " + author_sender.username + " are officially true friends."})
+
+        return response.Response(response_dict, status=status.HTTP_200_OK)
+
+
+class FRSendFromExternalView(GenericAPIView):
+    serializer_class = FriendRequestSerializer
+
+    def post(self, request, snd_uuid, snd_username, rec_uuid):
+
+        sender_uuid = self.kwargs['snd_uuid']
+        recipient_uuid = self.kwargs['rec_uuid']
+        sender_username = self.kwargs['snd_username']
+
+        try:
+            recipient = Author.objects.get(id=recipient_uuid)
+        except ObjectDoesNotExist:
+            return response.Response({"error": "recipient user with that UUID does not exist"})
+
+        try:
+            sender = Author.objects.filter(username=sender_username).get(id=sender_uuid)
+        except ObjectDoesNotExist:
+            sender = Author.objects.create(id=sender_uuid, username=sender_username, email=sender_username + "@gmail.com", password="password123")
+
+        # noinspection DuplicatedCode
+        fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
+
+        if len(fr_list) > 0:
+            return response.Response({"error": "friend request already exists"}, status=status.HTTP_409_CONFLICT)
+        follow_list = Follow.objects.filter(follower=sender, followee=recipient)
+        if len(follow_list) > 0:
+            return response.Response({"error": "can't send a friend request to someone you are already following!"}, status=status.HTTP_409_CONFLICT)
+
+        # get a copy of the request as a mutable dict object
+        updated_request = request.POST.copy()
+        updated_request.update({'sender': snd_uuid})
+        updated_request.update({'recipient': rec_uuid})
+        serializer = self.serializer_class(data=updated_request)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FRSendToExternalView(GenericAPIView):
+    serializer_class = FriendRequestSerializer
+
+    def post(self, request, snd_uuid, rec_username, rec_uuid):
+
+        #sender_uuid = self.kwargs['snd_uuid']
+        #recipient_username = self.kwargs['rec_username']
+        #recipient_uuid = self.kwargs['rec_uuid']
+
+
+        try:
+            sender = Author.objects.get(id=snd_uuid)
+        except ObjectDoesNotExist:
+            return response.Response({"error": "sender author with that UUID does not exist"})
+
+        try:
+            recipient = Author.objects.filter(username=rec_username).get(id=rec_uuid)
+        except ObjectDoesNotExist:
+            recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com", password="password123")
+
+        # noinspection DuplicatedCode
+        fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
+
+        if len(fr_list) > 0:
+            return response.Response({"error": "friend request already exists"}, status=status.HTTP_409_CONFLICT)
+        follow_list = Follow.objects.filter(follower=sender, followee=recipient)
+        if len(follow_list) > 0:
+            return response.Response({"error": "can't send a friend request to someone you are already following!"}, status=status.HTTP_409_CONFLICT)
+
+        # get a copy of the request as a mutable dict object
+        updated_request = request.POST.copy()
+        updated_request.update({'sender': snd_uuid})
+        updated_request.update({'recipient': rec_uuid})
+        serializer = self.serializer_class(data=updated_request)
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(serializer.data, status=status.HTTP_201_CREATED)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FRRejectExternalView(GenericAPIView):
+
+    serializer_class = FriendRequestSerializer
+
+    def post(self, request, snd_uuid, rec_uuid):
+
+        try:
+            author_snd = Author.objects.get(id=snd_uuid)
+        except ObjectDoesNotExist:
+            return response.Response({"error": "sender author with that UUID does not exist - are you sure this request is valid?"})
+
+        try:
+            author_rec = Author.objects.get(id=rec_uuid)
+        except ObjectDoesNotExist:
+            return response.Response({"error": "recipient author with that UUID does not exist - are you sure this request is valid?"})
+
+        f_req = FriendRequest.objects.get(sender=author_snd.id, recipient=author_rec.id)
+
+        response_dict = {}
+        response_dict.update({"message": "you rejected " + author_snd.username + " as a follower"})
+        f_req.delete()
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
