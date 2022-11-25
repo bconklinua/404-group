@@ -17,9 +17,9 @@ class Author(AbstractBaseUser, PermissionsMixin):
     """
 
     HOST_CHOICES = [
-    ("Team13", "https://cmput404-team13.herokuapp.com"),
-    ("Team19", "https://social-distribution-404.herokuapp.com"),
-    ("Team12", "https://true-friends-404.herokuapp.com")
+    ("https://cmput404-team13.herokuapp.com", "Team13"),
+    ("https://social-distribution-404.herokuapp.com", "Team19"),
+    ("https://true-friends-404.herokuapp.com", "Team12")
     ]
 
     username_validator = UnicodeUsernameValidator()
