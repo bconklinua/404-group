@@ -8,6 +8,7 @@ from User.models import Author
 from rest_framework import viewsets, status, permissions
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from Follow.models import Follow
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -22,8 +23,17 @@ class PostView(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
+        author_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
+        author_username = self.kwargs['author_username'] if 'author_username' in self.kwargs else None
+        if author_id and author_username:
+            try:
+                post_author = Author.objects.filter(username=author_username).get(id=author_id)
+            except ObjectDoesNotExist:
+                post_author = Author.objects.create(id=author_id, username=author_username, email=author_username + "@gmail.com", password="password123")
+        else:
+            post_author = request.user
         if serializer.is_valid():
-            serializer.save(author=request.user)
+            serializer.save(author=post_author)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
