@@ -9,6 +9,7 @@ from .managers import AuthorManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
+import uuid
 
 class Author(AbstractBaseUser, PermissionsMixin):
     """
@@ -22,8 +23,9 @@ class Author(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
+    id = models.UUIDField(default=uuid.uuid4, editable=True, primary_key=True)
     email = models.EmailField(_('email address'), unique=True)
-    username = models.CharField(max_length=30, unique=True)  # , validators=[username_validator]
+    username = models.CharField(max_length=30, unique=False)  # , validators=[username_validator]
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
     account_type = models.CharField(max_length=32, choices=ACCT_TYPE_CHOICES, default='author')
@@ -84,5 +86,5 @@ def get_user(id_):
 def add_post(instance, created, **kwargs):
     try:
         user_inbox = Inbox.objects.get(author=instance)
-    except ObjectDoesNotExist:
+    except:
         user_inbox = Inbox.objects.create(author=instance)

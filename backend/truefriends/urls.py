@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from Like.views import PostLikeView, AuthorLikeView
 from drf_yasg import openapi
 from rest_framework import routers, permissions
@@ -29,6 +29,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 #from rest_framework.schemas import get_schema_view
 from drf_yasg.views import get_schema_view
+from django.views.generic import TemplateView
+
 
 
 post_router = routers.DefaultRouter()
@@ -70,21 +72,23 @@ urlpatterns = [
     path('friendrequest/accept/<int:fr_id>/', FRAcceptView.as_view(), name="friend_request_accept"),
     path('friendrequest/accept/from/<str:fr_sender_username>/to/<str:fr_recipient_username>/', FRAcceptBySearchView.as_view(), name="friend_request_accept_by_search"),
     path('friendrequest/reject/<int:fr_id>/', FRRejectView.as_view(), name="friend_request_reject"),
-    path('friendrequest/<int:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
-    path('authors/<int:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?
-    path('authors/<int:author_id>/', include(author_like_router.urls)),  # likes-list, likes-detail?
-    path('posts/<int:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-detail?
+    path('friendrequest/<uuid:author_id>/', FRSendView.as_view(), name="friend_request_to_user"),
+    path('authors/<uuid:author_id>/', include(post_router.urls)),  # authors-list, authors-detail?
+    path('authors/<uuid:author_id>/', include(author_like_router.urls)),  # likes-list, likes-detail?
+    path('posts/<uuid:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-detail?
     path('comments/<int:comment_id>/', include(post_like_router.urls)),  # comments-likes-list, comments-likes-detail?
-    path('authors/<int:author_id>/inbox/', include('Inbox.urls')),  # inbox-list, inbox-detail?
+    path('authors/<uuid:author_id>/inbox/', include('Inbox.urls')),  # inbox-list, inbox-detail?
     path('followers/', FollowersListView.as_view(), name="followers_list"),
     path('following/', FollowingListView.as_view(), name="following_list"),
-    path('unfollow/<int:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
-    path('unfriend/<int:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),
-    path('withdraw/<int:user_id>/', WithdrawView.as_view(), name="withdraw_by_user_id"),
+    path('unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
+    path('unfriend/<uuid:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),
+    path('withdraw/<uuid:user_id>/', WithdrawView.as_view(), name="withdraw_by_user_id"),
     path('truefriends/', TrueFriendsListView.as_view(), name="true_friends_list"),
-    path('posts/<int:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?
-    path('authors/<int:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
+    path('posts/<uuid:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?
+    path('authors/<uuid:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
+    re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

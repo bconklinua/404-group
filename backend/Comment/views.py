@@ -5,6 +5,9 @@ from Post.models import Post
 from Follow.models import Follow
 from rest_framework.response import Response
 from rest_framework import viewsets, status
+from django.views import View
+from django.http import HttpResponse, HttpResponseNotFound
+import os
 
 class PostCommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer

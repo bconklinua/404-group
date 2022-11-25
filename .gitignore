@@ -4,6 +4,15 @@
 db.sqlite3
 *__pycache__*
 __pycache__/
+<<<<<<< HEAD
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+.env
+.env.bat
+=======
+# **/migrations/**
+# !**/migrations
+# !**/migrations/__init__.py
+/backend/truefriends/.env
+>>>>>>> staging

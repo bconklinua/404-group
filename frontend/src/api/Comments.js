@@ -1,7 +1,8 @@
 import axios from "axios";
+import { BASE_URL } from './api'
 
 export function getComments(post_id){
-    const url = `http://localhost:8000/posts/${post_id}/comments/`
+    const url = `${BASE_URL}/posts/${post_id}/comments/`
 
     return axios.get(url, {
         headers:{
@@ -18,7 +19,7 @@ export function getComments(post_id){
 }
 
 export function postComment(param = {}){
-    const url = `http://localhost:8000/posts/${param.post_id}/comments/`
+    const url = `${BASE_URL}/posts/${param.post_id}/comments/`
 
     const body = {
         comment: param.comment,

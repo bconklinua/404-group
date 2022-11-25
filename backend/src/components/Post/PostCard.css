@@ -1,0 +1,18 @@
+.postCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input1 {
+
+    border-color: lightblue;
+
+    height: 2em;
+    width: 80%;
+    border-radius: 0.25em;
+
+    padding: 2em;
+    outline-color: rgb(49, 53, 143);
+    border-radius: 1em;
+    
+}
