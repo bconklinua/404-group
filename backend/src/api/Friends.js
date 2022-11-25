@@ -150,7 +150,7 @@ export function sendFriendRequest(id){
 }
 
 export function sendRemoteFriendRequest(network_id, rec_username, rec_uuid){
-    const url = `${BASE_URL}/friendrequest/to_external/${network_id}/${localStorage.getItem('authorID')}/send/${rec_username}${rec_uuid}`
+    const url = `${BASE_URL}/friendrequest/to_external/${network_id}/${localStorage.getItem('authorID')}/send/${rec_username}/${rec_uuid}`
     return axios.post(url, {data:{}}, {
         headers:{
             "Content-Type": "application/json",

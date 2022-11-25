@@ -3,7 +3,7 @@ import axios from 'axios'
 export function Team13Users(){
     const url = 'https://cmput404-team13.herokuapp.com/authors?page=1&size=1000000'
     return axios.get(url, {
-
+        
         headers:{
             "Content-Type": "application/json",
 
@@ -26,7 +26,7 @@ export function Team13SendRequest(foreign_author_id){
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*",
+
         }
     }).then((response)=>{
         return response
