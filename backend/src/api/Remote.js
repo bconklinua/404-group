@@ -5,6 +5,7 @@ export function Team13Users(){
     return axios.get(url, {
         headers:{
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
         }
     }).then((response)=>{
         return response
