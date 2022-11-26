@@ -3,9 +3,9 @@ import '../Friends/ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { Team19SendRequest } from '../../api/Remote19';
+import { sendRemoteFriendRequest } from '../../api/Friends';
 
 const Team19Card = (props) => {
 
@@ -14,33 +14,8 @@ const Team19Card = (props) => {
         window.location.href = `/user/${props.user.id}/${props.user.username}`
     }
     const handleFriendRequest = () =>{
-        Team13SendRequest(props.user.id).then((response) =>{
+        Team19SendRequest().then((response) =>{
             if (response.status === 401){
-                // if token expired
-                refreshToken().then((response)=>{
-                    if (response.status === 200){
-                        console.log("Refresh Token")
-                        Team13SendRequest(props.user.id).then((response)=>{
-                            if (response.status === 401){
-                                localStorage.refresh()
-                                window.location.reload();
-                                window.location.href = '/login';  
-                                console.log(response.status)        
-                            }
-                            else if (response.status === 201){
-                                toast.accept("Request Sent")
-                                console.log(response)
-                            }else{
-                                toast.error("Something went wrong")
-                            }
-                        }) 
-                        
-                    }
-                    else{
-                        window.location.reload();
-                        window.location.href = '/login';
-                    }
-                })
 
             }else if (response.status === 201){
                 toast.accept("Request Sent to Remote")
@@ -49,6 +24,18 @@ const Team19Card = (props) => {
                 toast.error("Something went wrong")
             }
             console.log(response.status)
+        })
+        var urlID = props.user.id.split('/');
+        var id = urlID[urlID.length - 1];
+        sendRemoteFriendRequest(19, props.user.displayName, id).then((response) =>{
+            if (response.status === 201){
+                toast.accept("Request Sent")
+            }
+            else{
+
+                toast.error("Something went wrong on our server")
+            }
+            console.log(response)
         })
 
 
@@ -63,7 +50,7 @@ const Team19Card = (props) => {
                     {props.user.displayName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                    Team 13
+                    Team 19
                     </Typography>
                 </CardContent>
             </CardActionArea>

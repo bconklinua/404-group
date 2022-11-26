@@ -2,7 +2,7 @@ import react, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import { getFollowers } from '../../api/Friends'
 import { refreshToken, getAllUsers } from '../../api/User'
-import Team13Card from './Team13Card'
+import Team19Card from './Team19Card'
 import { Team19Users } from '../../api/Remote19'
 
 const Team19 = () => {
@@ -58,7 +58,7 @@ const Team19 = () => {
         else{
             content = users.data.map((user, key)=>
 
-            <Team13Card user={user}/>
+            <Team19Card user={user}/>
 
             )
         }

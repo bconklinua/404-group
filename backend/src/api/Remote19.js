@@ -18,19 +18,28 @@ export function Team19Users(){
     })
 }
 
-export function Team19SendRequest(foreign_author_id){
-    const url = `https://social-distribution-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/followers/${foreign_author_id}`
+export function Team19SendRequest(){
+    const url = `https://social-distribution-404.herokuapp.com/authors/authoraid/inbox`
     const body = {
-        author:{
-            id: localStorage.getItem('authorID'),
+        type: "follow",
+        summary: `${localStorage.getItem('username')} wants to follow author you`,
+        actor: {
+            type: "author",
+            id: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
             displayName: localStorage.getItem('username'),
+            url: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+            host: "https://true-friends-404.herokuapp.com/",
         }
     }
     return axios.post(url, body, {
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
         headers:{
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*",
         }
+
     }).then((response)=>{
         return response
     }).catch((error)=>{
