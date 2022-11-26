@@ -15,44 +15,17 @@ const Team13Card = (props) => {
     }
     const handleFriendRequest = () =>{
         Team13SendRequest(props.user.id).then((response) =>{
-            if (response.status === 401){
-                // if token expired
-                refreshToken().then((response)=>{
-                    if (response.status === 200){
-                        console.log("Refresh Token")
-                        Team13SendRequest(props.user.id).then((response)=>{
-                            if (response.status === 401){
-                                localStorage.refresh()
-                                window.location.reload();
-                                window.location.href = '/login';  
-                                console.log(response.status)        
-                            }
-                            else if (response.status === 201){
-                                toast.accept("Request Sent")
-                                console.log(response)
-                            }else{
-                                toast.error("Something went wrong on their server")
-                            }
-                        }) 
-                        
-                    }
-                    else{
-                        window.location.reload();
-                        window.location.href = '/login';
-                    }
-                })
-
-            }else if (response.status === 201){
+            if (response.status === 200){
                 toast.accept("Request Sent to Remote")
                 console.log(response)
             }else{
                 toast.error("Something went wrong")
                 console.log(response)
             }
-            console.log(response.status)
+            console.log(response)
         })
         sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
-            if (response.status === 200){
+            if (response.status === 201){
                 toast.accept("Request Sent")
             }
             else{

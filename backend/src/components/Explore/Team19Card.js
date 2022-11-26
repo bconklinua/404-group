@@ -14,7 +14,9 @@ const Team19Card = (props) => {
         window.location.href = `/user/${props.user.id}/${props.user.username}`
     }
     const handleFriendRequest = () =>{
-        Team19SendRequest().then((response) =>{
+        var urlID = props.user.id.split('/');
+        var id = urlID[urlID.length - 1];
+        Team19SendRequest(id).then((response) =>{
             if (response.status === 401){
 
             }else if (response.status === 201){
@@ -25,8 +27,7 @@ const Team19Card = (props) => {
             }
             console.log(response.status)
         })
-        var urlID = props.user.id.split('/');
-        var id = urlID[urlID.length - 1];
+
         sendRemoteFriendRequest(19, props.user.displayName, id).then((response) =>{
             if (response.status === 201){
                 toast.accept("Request Sent")
