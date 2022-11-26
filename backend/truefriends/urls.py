@@ -45,6 +45,8 @@ post_like_router = routers.DefaultRouter()
 post_like_router.register(r'likes', PostLikeView, 'post-likes')
 author_like_router = routers.DefaultRouter()
 author_like_router.register(r'likes', AuthorLikeView, 'author-likes')
+foreign_like_router = routers.DefaultRouter()
+foreign_like_router.register(r'likes', PostLikeView, 'foreign-likes')
 post_comment_router = routers.DefaultRouter()
 post_comment_router.register(r'comments', PostCommentView, 'post-comments')
 author_comment_router = routers.DefaultRouter()
@@ -95,6 +97,7 @@ urlpatterns = [
     path('authors/<uuid:author_id>/', include(author_comment_router.urls)),  # author-comments-list, author-comments-detail?
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
     path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls)),
+    path('authors/<uuid:author_id>/<str:author_username>/posts/<uuid:post_id>/', include(foreign_like_router.urls)),
     re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
 
