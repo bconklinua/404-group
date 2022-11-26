@@ -22,7 +22,7 @@ const Team19 = () => {
                         Team19Users().then((response)=>{
                             if (response.status === 200){
                                 setUsers({
-                                    data: response.data.authorsPage,
+                                    data: response.data.items,
                                 })
                             }
                             else{
@@ -43,7 +43,7 @@ const Team19 = () => {
             }else if (response.status === 200){
                 console.log(response.data)
                 setUsers({
-                    data: response.data.authorsPage,
+                    data: response.data.items,
                 })
             }
         })

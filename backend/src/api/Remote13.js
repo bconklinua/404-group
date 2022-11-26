@@ -15,18 +15,39 @@ export function Team13Users(){
     })
 }
 
+export function Team13JWT(){
+    const url = 'https://cmput404-team13.herokuapp.com/users'
+    const body = {
+        username: 'team12',
+        password: 'securepassword'
+    }
+    return axios.put(url, body, {
+        
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        console.log(response.data)
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
+
 export function Team13SendRequest(foreign_author_id){
     const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/followers/${foreign_author_id}`
     const body = {
         author:{
-            id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username'),
+            id: `${localStorage.getItem('authorID')}`,
+            displayName: `${localStorage.getItem('username')}`,
         }
     }
+    console.log(url)
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
-
+            "Authorization": "BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlN…5NjZ9.ATODdLalZ7-ma7NGWL-U3FgGCSDndjF2SXEwCOuk9Y4"
         }
     }).then((response)=>{
         return response

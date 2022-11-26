@@ -47,6 +47,7 @@ const Team13Card = (props) => {
                 console.log(response)
             }else{
                 toast.error("Something went wrong")
+                console.log(response)
             }
             console.log(response.status)
         })
@@ -55,6 +56,7 @@ const Team13Card = (props) => {
                 toast.accept("Request Sent")
             }
             else{
+                console.log(response)
                 toast.error("Something went wrong on our server")
             }
         })

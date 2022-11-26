@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import { getFollowers } from '../../api/Friends'
 import { refreshToken, getAllUsers } from '../../api/User'
 import Team13Card from './Team13Card'
-import { Team13Users } from '../../api/Remote13'
+import { Team13Users, Team13JWT } from '../../api/Remote13'
 
 const Team13 = () => {
     const [users, setUsers] = useState({
@@ -48,6 +48,8 @@ const Team13 = () => {
             }
         })
     }, [])
+
+
 
     let content = null;
     console.log(users.data)
