@@ -49,8 +49,6 @@ const Team13 = () => {
         })
     }, [])
 
-
-
     let content = null;
     console.log(users.data)
     if (users.data){

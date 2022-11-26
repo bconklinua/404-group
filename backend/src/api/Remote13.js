@@ -47,7 +47,7 @@ export function Team13SendRequest(foreign_author_id){
     return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
-            "Authorization": "BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlN…5NjZ9.ATODdLalZ7-ma7NGWL-U3FgGCSDndjF2SXEwCOuk9Y4"
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
         }
     }).then((response)=>{
         return response
