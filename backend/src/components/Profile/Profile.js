@@ -9,6 +9,7 @@ import Friends from '../Friends/Friends'
 import MyPosts from '../Post/MyPosts'
 import Explore from '../Explore/Explore'
 import Team13 from '../Explore/Team13'
+import Team19 from '../Explore/Team19'
 import './Profile.css'
 
 const Profile = () =>{
@@ -38,6 +39,7 @@ const Profile = () =>{
                         <Tab label="Friend Requests" value="5"/>
                         <Tab label="Explore" value="6"/>
                         <Tab label="Team 13" value="7"/>
+                        <Tab label="Team 19" value="8"/>
                     </TabList>
                 </Box>
                 
@@ -48,6 +50,7 @@ const Profile = () =>{
                 <TabPanel value="5"> <FriendRequestPage/></TabPanel>
                 <TabPanel value="6"> <Explore/></TabPanel>
                 <TabPanel value="7"> <Team13/></TabPanel>
+                <TabPanel value="8"> <Team19/></TabPanel>
             </TabContext>
 
             </div>

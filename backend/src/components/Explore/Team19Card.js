@@ -3,11 +3,11 @@ import '../Friends/ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendRemoteFriendRequest } from '../../api/Friends';
+import { sendFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
-import { Team13SendRequest } from '../../api/Remote13';
+import { Team19SendRequest } from '../../api/Remote19';
 
-const Team13Card = (props) => {
+const Team19Card = (props) => {
 
     const handleClick = () =>{
         console.log(props.user.username)
@@ -31,7 +31,7 @@ const Team13Card = (props) => {
                                 toast.accept("Request Sent")
                                 console.log(response)
                             }else{
-                                toast.error("Something went wrong on their server")
+                                toast.error("Something went wrong")
                             }
                         }) 
                         
@@ -50,14 +50,7 @@ const Team13Card = (props) => {
             }
             console.log(response.status)
         })
-        sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
-            if (response.status === 201){
-                toast.accept("Request Sent")
-            }
-            else{
-                toast.error("Something went wrong on our server")
-            }
-        })
+
 
     }
 
@@ -81,4 +74,4 @@ const Team13Card = (props) => {
     )
 }
 
-export default Team13Card;
+export default Team19Card;
