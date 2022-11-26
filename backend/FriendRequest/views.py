@@ -170,7 +170,6 @@ class FRAcceptExternalView(GenericAPIView):
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
 
-@csrf_exempt
 class FRSendFromExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
