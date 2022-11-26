@@ -42,7 +42,7 @@ const Team13Card = (props) => {
                     }
                 })
 
-            }else if (response.status === 201){
+            }else if (response.status === 200){
                 toast.accept("Request Sent to Remote")
                 console.log(response)
             }else{
@@ -52,7 +52,7 @@ const Team13Card = (props) => {
             console.log(response.status)
         })
         sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
-            if (response.status === 200){
+            if (response.status === 201){
                 toast.accept("Request Sent")
             }
             else{

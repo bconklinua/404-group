@@ -18,8 +18,8 @@ export function Team19Users(){
     })
 }
 
-export function Team19SendRequest(){
-    const url = `https://social-distribution-404.herokuapp.com/authors/authoraid/inbox`
+export function Team19SendRequest(foreign_author_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/inbox`
     const body = {
         type: "follow",
         summary: `${localStorage.getItem('username')} wants to follow author you`,
