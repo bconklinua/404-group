@@ -15,14 +15,22 @@ const Team13Card = (props) => {
     }
     const handleFriendRequest = () =>{
         Team13SendRequest(props.user.id).then((response) =>{
-            if (response.status === 200){
-                toast.accept("Request Sent to Remote")
-                console.log(response)
-            }else{
+            // if (response.status === 200){
+            //     toast.accept("Request Sent to Remote")
+            //     console.log(response)
+            // }else{
+            //     toast.error("Something went wrong")
+            //     console.log(response)
+            // }
+            if (response){
                 toast.error("Something went wrong")
-                console.log(response)
             }
-            console.log(response)
+            else{
+                console.log(response)
+                toast.accept("Request Sent to Remote")
+                console.log('sent to 13')
+            }
+
         })
         sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
             if (response.status === 201){
