@@ -1,6 +1,7 @@
 from typing import OrderedDict
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers, viewsets, status, permissions, response
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
@@ -8,6 +9,7 @@ from .serializers import FriendRequestSerializer
 from .models import FriendRequest
 from User.models import Author
 from Follow.models import Follow
+from django.views.decorators.csrf import csrf_exempt
 
 
 class FRSendView(GenericAPIView):
@@ -15,6 +17,7 @@ class FRSendView(GenericAPIView):
     # permission_classes = (permissions.AllowAny,)
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, author_id):
         recipient_id = self.kwargs['author_id']
         sender = Author.objects.get(username=request.user.username).id
@@ -43,8 +46,8 @@ class FRListView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
     queryset = FriendRequest.objects.all()
-    
 
+    @csrf_exempt
     def get(self, request):
         author = Author.objects.get(username=request.user.username).id
         fr_list = FriendRequest.objects.filter(recipient=author)
@@ -76,6 +79,7 @@ class FRAcceptView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
@@ -108,6 +112,7 @@ class FRRejectView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
@@ -125,6 +130,7 @@ class FRAcceptExternalView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, snd_uuid, rec_uuid):
         sender_uuid = self.kwargs['snd_uuid']
         recipient_uuid = self.kwargs['rec_uuid']
@@ -164,10 +170,10 @@ class FRAcceptExternalView(GenericAPIView):
 
         return response.Response(response_dict, status=status.HTTP_200_OK)
 
-
 class FRSendFromExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, network_id, snd_uuid, snd_username, rec_uuid):
 
         if network_id != 13 and network_id != 19:
@@ -214,6 +220,7 @@ class FRSendFromExternalView(GenericAPIView):
 class FRSendToExternalView(GenericAPIView):
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, network_id, snd_uuid, rec_username, rec_uuid):
 
         if network_id != 13 and network_id != 19:
@@ -265,6 +272,7 @@ class FRRejectExternalView(GenericAPIView):
 
     serializer_class = FriendRequestSerializer
 
+    @csrf_exempt
     def post(self, request, snd_uuid, rec_uuid):
 
         try:
