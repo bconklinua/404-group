@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom'
 import { getFollowers } from '../../api/Friends'
 import { refreshToken, getAllUsers } from '../../api/User'
 import Team13Card from './Team13Card'
-import { Team13Users, Team13JWT } from '../../api/Remote13'
+import { Team19Users } from '../../api/Remote19'
 
-const Team13 = () => {
+const Team19 = () => {
     const [users, setUsers] = useState({
         data: null,
     })
@@ -13,16 +13,16 @@ const Team13 = () => {
         setUsers({
             data: null,
         })
-        Team13Users().then((response)=>{
+        Team19Users().then((response)=>{
             if (response.status === 401){
                 refreshToken().then((response)=>{
                     if (response.status === 200){
                         console.log("refresh token")
                         console.log(response.status)
-                        Team13Users().then((response)=>{
+                        Team19Users().then((response)=>{
                             if (response.status === 200){
                                 setUsers({
-                                    data: response.data.authorsPage,
+                                    data: response.data.items,
                                 })
                             }
                             else{
@@ -43,13 +43,11 @@ const Team13 = () => {
             }else if (response.status === 200){
                 console.log(response.data)
                 setUsers({
-                    data: response.data.authorsPage,
+                    data: response.data.items,
                 })
             }
         })
     }, [])
-
-
 
     let content = null;
     console.log(users.data)
@@ -72,4 +70,4 @@ const Team13 = () => {
         </div>
     )
 }
-export default Team13;
+export default Team19;
