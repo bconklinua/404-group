@@ -58,7 +58,7 @@ class Post(models.Model):
     visibility = models.CharField(choices=VISIBILITY_CHOICES, max_length=100, default="PUBLIC")
     unlisted = models.BooleanField(default=False)
     image = models.ImageField(upload_to=upload_to, null=True, blank=True)
-    image_url = models.CharField(default="", null=True, blank=True, max_length=100)
+    image_url = models.CharField(default="", null=True, blank=True, max_length=3000)
     host = models.CharField(choices=HOST_CHOICES, default="https://true-friends-404.herokuapp.com", max_length = 50, blank=True)
         
     def get_categories(self):
