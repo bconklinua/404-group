@@ -18,8 +18,6 @@ const PostCard = (props) => {
     let content = null
     
     if (props.post.image_url != ""){
-        console.log(props.post.image_url)
-        console.log("wtsfs")
         content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
     else if (props.post.image){

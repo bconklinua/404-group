@@ -86,20 +86,19 @@ const PostPost = () => {
         console.log("visibility")
     }
     const uploadImage = (e) =>{
-        const img = e.target.files[0];
-        const reader = new FileReader();
 
-        reader.onloadend = () => {
-            setImage(reader.result.toString());
-            console.log('loaded')
-            console.log(reader.result.toString());
-            setFile(URL.createObjectURL(e.target.files[0]))
-        }
-        reader.readAsDataURL(img)
 
         if (e.target.files[0]){
-            // setImage(e.target.files[0])
-            // setFile(URL.createObjectURL(e.target.files[0]))
+            const img = e.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onloadend = () => {
+                setImage(reader.result.toString());
+                console.log('loaded')
+                console.log(reader.result.toString());
+                setFile(URL.createObjectURL(e.target.files[0]))
+            }
+            reader.readAsDataURL(img)
         }
         else {
             setImage(null)
