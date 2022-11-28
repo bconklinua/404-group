@@ -4,6 +4,7 @@ import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui
 import { unFollow } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { useNavigate } from "react-router-dom";
+import { Team13Unfollow } from '../../api/Remote13';
 
 
 const FollowerCard = (props) => {
@@ -48,6 +49,13 @@ const FollowerCard = (props) => {
             }
             console.log(response.status)
         })
+        if (props.following.recipient_host === 'https://cmput404-team13.herokuapp.com'){
+            Team13Unfollow(props.following.recipient_id).then((response)=>{
+                console.log(response)
+            })
+        }else if(props.following.recipient_host === 'https://social-distribution-404.herokuapp.com'){
+            console.log('team 19')
+        }   
     }   
 
     return (
