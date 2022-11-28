@@ -93,6 +93,7 @@ urlpatterns = [
     path('following/', FollowingListView.as_view(), name="following_list"),
     path('unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
     path('unfriend/<uuid:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),
+    path('<uuid:follower_id>/unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="foreign_unfollow_by_user_id"),
     path('withdraw/<uuid:user_id>/', WithdrawView.as_view(), name="withdraw_by_user_id"),
     path('truefriends/', TrueFriendsListView.as_view(), name="true_friends_list"),
     path('posts/<uuid:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?

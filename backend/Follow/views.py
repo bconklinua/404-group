@@ -5,7 +5,7 @@ from User.models import Author
 from .models import Follow
 from User.serializers import AuthorSerializer
 from .serializers import FollowSerializer
-
+from django.core.exceptions import ObjectDoesNotExist
 
 class FollowersListView(GenericAPIView):
 
@@ -107,15 +107,24 @@ class FollowingListView(GenericAPIView):
 class UnfollowView(GenericAPIView):
     serializer_class = FollowSerializer
 
-    def post(self, request, user_id):
+    def post(self, request, user_id, follower_id=None):
         user_id = self.kwargs['user_id']
+        follower_id = self.kwargs['follower_id'] if 'follower_id' in self.kwargs else None
+        if follower_id:
+            try:
+                print("HAS A FOLLOWER ID")
+                follower = Author.objects.get(id=follower_id)
+            except ObjectDoesNotExist:
+                return response.Response({"error":"no author with id " + str(follower_id) + " exists."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            follower = request.user
         user_obj = Author.objects.get(id=user_id)
         name = user_obj.username
-        if not Follow.objects.filter(follower=request.user.id, followee=user_obj.id).exists():
-            return response.Response({"error": "invalid follow object - you are not following a user with that id"},
+        if not Follow.objects.filter(follower=follower.id, followee=user_obj.id).exists():
+            return response.Response({"error": "invalid follow object - follower " + follower.username + " is not following a user with that id"},
                                      status=status.HTTP_400_BAD_REQUEST)
-        Follow.objects.filter(follower=request.user.id, followee=user_obj.id).delete()
-        msg_str = name + " has been unfollowed."
+        Follow.objects.filter(follower=follower.id, followee=user_obj.id).delete()
+        msg_str = name + " has been unfollowed by " +follower.username 
         message = {"message": msg_str}
         return response.Response(message, status=status.HTTP_200_OK)
 
