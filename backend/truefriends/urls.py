@@ -49,6 +49,8 @@ foreign_like_router = routers.DefaultRouter()
 foreign_like_router.register(r'likes', PostLikeView, 'foreign-likes')
 post_comment_router = routers.DefaultRouter()
 post_comment_router.register(r'comments', PostCommentView, 'post-comments')
+foreign_comment_router = routers.DefaultRouter()
+foreign_comment_router.register(r'comments', PostCommentView, 'foreign-comments')
 author_comment_router = routers.DefaultRouter()
 author_comment_router.register(r'comments', AuthorCommentView, 'author-comments')
 
@@ -91,6 +93,7 @@ urlpatterns = [
     path('following/', FollowingListView.as_view(), name="following_list"),
     path('unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
     path('unfriend/<uuid:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),
+    path('<uuid:follower_id>/unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="foreign_unfollow_by_user_id"),
     path('withdraw/<uuid:user_id>/', WithdrawView.as_view(), name="withdraw_by_user_id"),
     path('truefriends/', TrueFriendsListView.as_view(), name="true_friends_list"),
     path('posts/<uuid:post_id>/', include(post_comment_router.urls)),  # post-comments-list, post-comments-detail?
@@ -98,6 +101,7 @@ urlpatterns = [
     path('currentauthor/', include(logged_in_post_router.urls)),  # my-posts-list, my-posts-detail?
     path('authors/<uuid:author_id>/<str:author_username>/', include(author_post_router.urls)),
     path('authors/<uuid:author_id>/<str:author_username>/posts/<uuid:post_id>/', include(foreign_like_router.urls)),
+    path('authors/<uuid:author_id>/<str:author_username>/posts/<uuid:post_id>/', include(foreign_comment_router.urls)),
     re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
 

@@ -34,6 +34,7 @@ class PostView(viewsets.ModelViewSet):
             post_author = request.user
         if serializer.is_valid():
             serializer.save(author=post_author)
+            serializer.save(host=post_author.host)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

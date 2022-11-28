@@ -46,3 +46,57 @@ export function Team19SendRequest(foreign_author_id){
         return error
     }) 
 }
+
+export function Team19GetPosts(foreign_author_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/posts`
+    return axios.get(url, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
+
+export function Team19GetPost(foreign_author_id, post_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/posts/${post_id}`
+    return axios.get(url, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
+
+export function Team19GetComments(foreign_author_id, post_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/posts/${post_id}/comments`
+    return axios.get(url, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}

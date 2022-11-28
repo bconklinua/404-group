@@ -3,11 +3,17 @@ import './ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui/material';
 import { refreshToken } from '../../api/User';
 import { unFriend } from '../../api/Friends';
+import { useNavigate } from "react-router-dom";
 
 const FriendCard = (props) => {
+    const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.friend)
-        window.location.href = `/user/${props.friend.friend_id}`
+        //window.location.href = `/user/${props.friend.friend_id}`
+        var team = 12
+        if (props.friend.friend_host === 'https://cmput404-team13.herokuapp.com') team = 13
+        else if (props.friend.friend_host === 'https://social-distribution-404.herokuapp.com') team = 19
+        navigate(`/user/${props.friend.friend_id}/${props.friend.friend_username}/${team}`);
     }
     const handleUnBefriend = ()=> {
 

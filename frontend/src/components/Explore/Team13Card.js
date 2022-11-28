@@ -5,14 +5,12 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
-import { useNavigate } from "react-router-dom";
 
-const ExploreCard = (props) => {
-    const navigate = useNavigate();
+const Team13Card = (props) => {
+
     const handleClick = () =>{
         console.log(props.user.username)
-        //window.location.href = `/user/${props.user.id}/${props.user.username}`
-        navigate(`/user/${props.user.id}/${props.user.username}/12`);
+        window.location.href = `/user/${props.user.id}/${props.user.username}`
     }
     const handleFriendRequest = () =>{
         sendFriendRequest(props.user.id).then((response) =>{
@@ -29,7 +27,7 @@ const ExploreCard = (props) => {
                                 console.log(response.status)        
                             }
                             else if (response.status === 201){
-                                toast.success("Request Sent")
+                                toast.accept("Request Sent")
                                 console.log(response)
                             }else{
                                 toast.error("Something went wrong")
@@ -44,7 +42,7 @@ const ExploreCard = (props) => {
                 })
 
             }else if (response.status === 201){
-                toast.success("Request Sent")
+                toast.accept("Request Sent")
                 console.log(response)
             }else{
                 toast.error("Something went wrong")
@@ -52,28 +50,25 @@ const ExploreCard = (props) => {
             console.log(response.status)
         })
     }
-    let button = null
-    if (localStorage.getItem("username") != props.user.username){
-        button = <Button onClick={handleFriendRequest}>Friend Request</Button>
-    }
+
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={1} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
             <Card sx={{ minWidth:500, maxWidth: 500 }}>
             <CardActionArea onClick={handleClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                    {props.user.username}
+                    {props.user.displayName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                    {props.user.email}
+                    Team 13
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            {button}
+            <Button onClick={handleFriendRequest}>Friend Request</Button>
             </Card>
             
         </Box>
     )
 }
 
-export default ExploreCard;
+export default Team13Card;

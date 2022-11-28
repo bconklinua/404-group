@@ -2,6 +2,7 @@ from django.db import models
 from User.models import Author
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import uuid
 
 # a post will have a container of likes
 class Like(models.Model):

@@ -24,58 +24,70 @@ const PostPost = () => {
             json["visibility"] = "FRIENDS"
         }
         json["unlisted"] = unlisted
-        if (image){
-            json["image"] = image
-        }
+        // if (image){
+        //     json["image"] = image
+        // }
         json["unlisted"] = unlisted
 
         if (image && json.image_url){
             toast.error('cannot have both image link and image')
         }
         else{
-        postPost(json).then((response)=>{
-            if (response.status === 401){
-                refreshToken().then((response)=>{
-                    if (response.status === 200){
-                        console.log("refresh token")
-                        console.log(response.status)
-                        postPost(json).then((response)=>{
-                            if (response.status === 201){
-                                console.log("posted")
-                                toast.success('Posted!')
-                                window.location.href = '/home'; 
-                            }
-                            else if (response.status === 401){
-                                console.log("not authenticated")
-                                localStorage.removeItem("refresh_token")
-                                window.location.reload();
-                                window.location.href = '/login'; 
-                            }
-                            else{
-                                console.log(response)
-                                toast.error('Not Posted')
-                            }
+            if (image){
+                json["image_url"] = image
+            }
+            postPost(json).then((response)=>{
+                if (response.status === 401){
+                    refreshToken().then((response)=>{
+                        if (response.status === 200){
+                            console.log("refresh token")
+                            console.log(response.status)
+                            postPost(json).then((response)=>{
+                                if (response.status === 201){
+                                    console.log("posted")
+                                    toast.success('Posted!')
+                                    window.location.href = '/home'; 
+                                }
+                                else if (response.status === 401){
+                                    console.log("not authenticated")
+                                    localStorage.removeItem("refresh_token")
+                                    window.location.reload();
+                                    window.location.href = '/login'; 
+                                }
+                                else{
+                                    console.log(response)
+                                    toast.error('Not Posted')
+                                }
 
-                        })
-                    }
-                    else{
-                        window.location.reload();
-                        window.location.href = '/login';
-                        
-                    }
-                })
-            }else if (response.status === 201){
-                console.log("posted")
-                toast.success('Posted!')
-                window.location.href = '/home'; 
-            }
-            
-            else{
-                toast.error('Not Posted')
-            }
-            console.log(response)
-        })
-        console.log(json)
+                            })
+                        }
+                        else{
+                            window.location.reload();
+                            window.location.href = '/login';
+                            
+                        }
+                    })
+                }else if (response.status === 201){
+                    console.log("posted")
+                    toast.success('Posted!')
+                    //window.location.href = '/home'; 
+
+                    document.getElementById('title').value=''
+                    document.getElementById('description').value=''
+                    document.getElementById('content').value=''
+                    document.getElementById('image_url').value=''
+                    setImage(null)
+                    setFile(undefined)
+                    console.log('wtf')
+                    console.log(response)
+                }
+                
+                else{
+                    toast.error('Not Posted')
+                }
+                console.log(response)
+            })
+            console.log(json)
         }
     }
     const handleChange = (e) =>{
@@ -83,16 +95,25 @@ const PostPost = () => {
         console.log("visibility")
     }
     const uploadImage = (e) =>{
-    
+
+
         if (e.target.files[0]){
-            setImage(e.target.files[0])
-            setFile(URL.createObjectURL(e.target.files[0]))
+            const img = e.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onloadend = () => {
+                setImage(reader.result.toString());
+                console.log('loaded')
+                console.log(reader.result.toString());
+                setFile(URL.createObjectURL(e.target.files[0]))
+            }
+            reader.readAsDataURL(img)
         }
         else {
             setImage(null)
             setFile(undefined)
         }
-        console.log(e.target.files[0])
+        //console.log(e.target.files[0])
     }
     const handleUnlisted = (e) =>{
         setUnlisted(e.target.checked)
@@ -131,16 +152,16 @@ const PostPost = () => {
                             <h1>Post A post</h1>
                             <br/>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="title" name='title'/>
+                                <input className='input1' placeholder="title" name='title' id='title'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description'/>
+                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description' id='description'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="content" name='content'/>
+                                <input className='input1' placeholder="content" name='content' id='content'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="image link" name='image_url'/>
+                                <input className='input1' placeholder="image link" name='image_url' id='image_url'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <IconButton color="primary" aria-label="upload picture" component="label">

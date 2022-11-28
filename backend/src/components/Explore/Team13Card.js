@@ -6,27 +6,39 @@ import 'react-toastify/dist/ReactToastify.css';
 import { sendRemoteFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { Team13SendRequest } from '../../api/Remote13';
+import { useNavigate } from "react-router-dom";
 
 const Team13Card = (props) => {
-
-    const handleClick = () =>{
+    const navigate = useNavigate();
+    const handleClick = (e) =>{
         console.log(props.user.username)
-        window.location.href = `/user/${props.user.id}/${props.user.username}`
+        //window.location.href = `/user/${props.user.id}/${props.user.username}/13`
+        navigate(`/user/${props.user.id}/${props.user.displayName}/13`);
     }
-    const handleFriendRequest = () =>{
+    const handleFriendRequest = (e) =>{
         Team13SendRequest(props.user.id).then((response) =>{
+            // if (response.status === 200){
+            //     toast.accept("Request Sent to Remote")
+            //     console.log(response)
+            // }else{
+            //     toast.error("Something went wrong")
+            //     console.log(response)
+            // }
             if (response.status === 200){
-                toast.accept("Request Sent to Remote")
-                console.log(response)
-            }else{
                 toast.error("Something went wrong")
-                console.log(response)
             }
-            console.log(response)
+            else{
+                console.log(response)
+                toast.success("Request Sent to Remote")
+                console.log('sent to 13')
+            }
+
         })
         sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
+            console.log('remoterequest')
+            console.log(response)
             if (response.status === 201){
-                toast.accept("Request Sent")
+                toast.success("Request Sent")
             }
             else{
                 console.log(response)
