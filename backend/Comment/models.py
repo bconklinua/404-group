@@ -14,7 +14,6 @@ CONTENT_TYPE_CHOICES = [
 
 # a post will have a container of likes
 class Comment(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, editable=True, primary_key=True)
     type = models.CharField(default="comment", editable=False, max_length=7)
     published = models.DateTimeField(auto_now_add=True)                    # when the comment was made
     author = models.ForeignKey(Author, on_delete=models.CASCADE,null=True, blank=True)  # the author who made the comment
