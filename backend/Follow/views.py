@@ -90,6 +90,7 @@ class FollowingListView(GenericAPIView):
             recipient_email = recipient.email
             recipient_first_name = recipient.first_name
             recipient_last_name = recipient.last_name
+            recipient_host = recipient.host
             f_date = f.date
             f_dict.update({'id:': f_id})
             f_dict.update({'date': f_date})
@@ -98,7 +99,7 @@ class FollowingListView(GenericAPIView):
             f_dict.update({'recipient_email': recipient_email})
             f_dict.update({'recipient_first_name': recipient_first_name})
             f_dict.update({'recipient_last_name': recipient_last_name})
-
+            f_dict.update({'recipient_host': recipient_host})
             f_list.append(f_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
