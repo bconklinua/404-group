@@ -49,7 +49,7 @@ class TrueFriendsListView(GenericAPIView):
     queryset = Author.objects.all()
 
     def get(self, request):
-        if not Author.objects.filter(username=request.user.id).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
         author = request.user.id
         follower_list = Follow.objects.filter(followee=author)
@@ -85,7 +85,7 @@ class FollowingListView(GenericAPIView):
     queryset = Follow.objects.all()
 
     def get(self, request):
-        if not Author.objects.filter(username=request.user.id).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
         author = request.user.id
         follower_list = Follow.objects.filter(follower=author)
