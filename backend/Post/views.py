@@ -12,6 +12,14 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
+def has_remote_followers(team_host, author):
+
+    followers =  Follow.objects.filter(followee=author)
+    for follow in followers:
+        if (follow.follower.host == team_host):
+            return True
+    return False
+
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     parser_classes = (MultiPartParser, FormParser, JSONParser)
@@ -25,17 +33,25 @@ class PostView(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
         author_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         author_username = self.kwargs['author_username'] if 'author_username' in self.kwargs else None
+        response_dict = {}
         if author_id and author_username:
             try:
                 post_author = Author.objects.filter(username=author_username).get(id=author_id)
             except ObjectDoesNotExist:
                 post_author = Author.objects.create(id=author_id, username=author_username, email=author_username + "@gmail.com", password="password123", host=request.user.host)
+            
         else:
             post_author = request.user
+            if post_author.host == "https://true-friends-404.herokuapp.com": 
+                response_dict = {
+                    "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                }
         if serializer.is_valid():
             serializer.save(author=post_author)
             serializer.save(host=post_author.host)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_dict.update(serializer.data)
+            return Response(response_dict, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):
@@ -63,9 +79,28 @@ class PostView(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.author == request.user:
+        if instance.host == "https://cmput404-team13.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
+            authenticated = True
+        elif instance.host == "https://social-distribution-404.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
+            authenticated = True
+        elif instance.author == request.user:
+            authenticated = True
+        else:
+            authenticated = False
+        
+        if authenticated:
             return super().update(request)
         return Response("not authenticated", status=status.HTTP_401_UNAUTHORIZED)
+    
+    def get_serializer_context(self):
+        """
+        Extra context provided to the serializer class.
+        """
+        return {
+            'request': self.request,
+            'format': self.format_kwarg,
+            'view': self
+        }  
         
 
 class LoggedInPostView(viewsets.ModelViewSet):
