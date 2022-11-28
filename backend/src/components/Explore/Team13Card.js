@@ -11,7 +11,7 @@ const Team13Card = (props) => {
 
     const handleClick = () =>{
         console.log(props.user.username)
-        window.location.href = `/user/${props.user.id}/${props.user.username}`
+        window.location.href = `/user/${props.user.id}/${props.user.username}/13`
     }
     const handleFriendRequest = () =>{
         Team13SendRequest(props.user.id).then((response) =>{

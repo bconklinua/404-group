@@ -12,7 +12,10 @@ const FollowerCard = (props) => {
     const handleClick = () =>{
         console.log(props.following)
         //window.location.href = `/user/${props.following.recipient_id}`
-        navigate(`/user/${props.following.recipient_id}`);
+        var team = 12
+        if (props.following.recipient_host === 'https://cmput404-team13.herokuapp.com') team = 13
+        else if (props.following.recipient_host === 'https://social-distribution-404.herokuapp.com') team = 19
+        navigate(`/user/${props.following.recipient_id}/${props.following.recipient_username}/${team}`);
     }
     const handleUnFollow = ()=> {
 

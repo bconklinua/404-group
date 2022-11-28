@@ -57,7 +57,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/post/:post_id"element={<PostView/>}/>
-        <Route path="/user/:user_id/:username"element={<UserView/>}/>
+        <Route path="/user/:user_id/:username/:team"element={<UserView/>}/>
         <Route path="/inbox"element={<Inbox/>}/>
         <Route path="/page-not-found"element={<PageNotFound/>}/>
         <Route path="/edit/:post_id" element={<EditPost/>}/>

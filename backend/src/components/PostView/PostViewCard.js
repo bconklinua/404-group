@@ -169,7 +169,7 @@ const PostViewCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            user: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
+                            Author: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}
