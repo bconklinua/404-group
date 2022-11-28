@@ -10,10 +10,12 @@ from django.core.exceptions import ObjectDoesNotExist
 class FollowersListView(GenericAPIView):
 
     serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(followee=author)
 
         f_list = []
@@ -26,6 +28,7 @@ class FollowersListView(GenericAPIView):
             sender_first_name = sender.first_name
             sender_last_name = sender.last_name
             sender_email = sender.email
+            sender_host = sender.host
             f_date = f.date
             f_dict.update({'id:': f_id})
             f_dict.update({'date': f_date})
@@ -34,7 +37,8 @@ class FollowersListView(GenericAPIView):
             f_dict.update({'sender_email': sender_email})
             f_dict.update({'sender_first_name': sender_first_name})
             f_dict.update({'sender_last_name': sender_last_name})
-
+            f_dict.update({'sender_host': sender_host})
+            
             f_list.append(f_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
@@ -42,10 +46,12 @@ class FollowersListView(GenericAPIView):
 
 class TrueFriendsListView(GenericAPIView):
     serializer_class = AuthorSerializer
+    queryset = Author.objects.all()
+
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(followee=author)
 
         f_list = []
@@ -60,6 +66,7 @@ class TrueFriendsListView(GenericAPIView):
                 tf_first_name = sender.first_name
                 tf_last_name = sender.last_name
                 tf_email = sender.email
+                tf_host = sender.host
                 f_date = f.date
                 tf_dict.update({'id:': f_id})
                 tf_dict.update({'date': f_date})
@@ -68,16 +75,19 @@ class TrueFriendsListView(GenericAPIView):
                 tf_dict.update({'friend_email': tf_email})
                 tf_dict.update({'friend_first_name': tf_first_name})
                 tf_dict.update({'friend_last_name': tf_last_name})
+                tf_dict.update({'friend_host': tf_host})
                 f_list.append(tf_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
 
 class FollowingListView(GenericAPIView):
     serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(follower=author)
 
         f_list = []
@@ -90,6 +100,7 @@ class FollowingListView(GenericAPIView):
             recipient_email = recipient.email
             recipient_first_name = recipient.first_name
             recipient_last_name = recipient.last_name
+            recipient_host = recipient.host
             f_date = f.date
             f_dict.update({'id:': f_id})
             f_dict.update({'date': f_date})
@@ -98,7 +109,7 @@ class FollowingListView(GenericAPIView):
             f_dict.update({'recipient_email': recipient_email})
             f_dict.update({'recipient_first_name': recipient_first_name})
             f_dict.update({'recipient_last_name': recipient_last_name})
-
+            f_dict.update({'recipient_host': recipient_host})
             f_list.append(f_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
@@ -112,7 +123,6 @@ class UnfollowView(GenericAPIView):
         follower_id = self.kwargs['follower_id'] if 'follower_id' in self.kwargs else None
         if follower_id:
             try:
-                print("HAS A FOLLOWER ID")
                 follower = Author.objects.get(id=follower_id)
             except ObjectDoesNotExist:
                 return response.Response({"error":"no author with id " + str(follower_id) + " exists."}, status=status.HTTP_400_BAD_REQUEST)
