@@ -29,7 +29,7 @@ const ExploreCard = (props) => {
                                 console.log(response.status)        
                             }
                             else if (response.status === 201){
-                                toast.accept("Request Sent")
+                                toast.success("Request Sent")
                                 console.log(response)
                             }else{
                                 toast.error("Something went wrong")
@@ -44,7 +44,7 @@ const ExploreCard = (props) => {
                 })
 
             }else if (response.status === 201){
-                toast.accept("Request Sent")
+                toast.success("Request Sent")
                 console.log(response)
             }else{
                 toast.error("Something went wrong")
