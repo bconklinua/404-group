@@ -1,10 +1,13 @@
 import React from 'react';
 import { Box, Typography, Card, CardContent, CardActionArea } from '@mui/material';
 import Favorite from '@mui/icons-material/Favorite';
+import { useNavigate } from "react-router-dom";
 
 export default function PostCard(props) {
+    const navigate = useNavigate();
     const handleClick = (e) =>{
-        window.location.href = `/posts/${props.post.id}`
+        //window.location.href = `/posts/${props.post.id}`
+        navigate(`/post/${props.post.id}`, {state: props.post});
     }
 
     return (
