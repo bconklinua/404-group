@@ -121,7 +121,7 @@ export function editPost(param = {}){
     const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
 
     let form_data = new FormData();
-    if (param.image) form_data.append("image", param.image, param.image.name)
+    //if (param.image) form_data.append("image", param.image, param.image.name)
     form_data.append("title", param.title)
     form_data.append("description", param.description)
     form_data.append("content", param.content)
