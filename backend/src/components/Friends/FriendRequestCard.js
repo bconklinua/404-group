@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { acceptFollower, rejectFollower } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
+import { Team13AcceptRequest, Team13RejectRequest } from '../../api/Remote13';
 
 const FriendRequestCard = (props) => {
     const accept = (e) => {
@@ -33,7 +34,6 @@ const FriendRequestCard = (props) => {
                         window.location.href = '/login';
                     }
                 })
-
             }else{
                 props.removeRequest(props.request)
                 console.log(response)
@@ -41,6 +41,13 @@ const FriendRequestCard = (props) => {
             console.log(response.status)
         })
 
+        if (props.request.network === "team13_to_truefriends"){
+            Team13AcceptRequest(props.request.id).then((response) =>{
+                console.log('team13 accept request response')
+                console.log(response)
+            })
+        }
+        
     
     }
     const reject = (e) => {
@@ -74,7 +81,13 @@ const FriendRequestCard = (props) => {
                 console.log(response)
             }
             console.log(response.status)
-        })
+        })        
+        if (props.request.network === "team13_to_truefriends"){
+            Team13RejectRequest(props.request.id).then((response) =>{
+                console.log('team13 reject request response')
+                console.log(response)
+            })
+        }
     }
 
     return (

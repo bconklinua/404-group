@@ -62,7 +62,7 @@ export function Team13AcceptRequest(foreign_author_id){
     return axios.put(url, {}, {
         headers:{
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
         }
     }).then((response)=>{
         return response
@@ -77,7 +77,7 @@ export function Team13RejectRequest(foreign_author_id){
     return axios.delete(url, {
         headers:{
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin":"*",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
         }
     }).then((response)=>{
         return response
@@ -86,3 +86,17 @@ export function Team13RejectRequest(foreign_author_id){
     }) 
 }
 
+export function Team13Unfollow(foreign_author_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/followers/${foreign_author_id}`
+
+    return axios.delete(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}
