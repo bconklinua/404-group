@@ -10,6 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 class FollowersListView(GenericAPIView):
 
     serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
@@ -26,6 +28,7 @@ class FollowersListView(GenericAPIView):
             sender_first_name = sender.first_name
             sender_last_name = sender.last_name
             sender_email = sender.email
+            sender_host = sender.host
             f_date = f.date
             f_dict.update({'id:': f_id})
             f_dict.update({'date': f_date})
@@ -34,7 +37,8 @@ class FollowersListView(GenericAPIView):
             f_dict.update({'sender_email': sender_email})
             f_dict.update({'sender_first_name': sender_first_name})
             f_dict.update({'sender_last_name': sender_last_name})
-
+            f_dict.update({'sender_host': sender_host})
+            
             f_list.append(f_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
@@ -42,6 +46,8 @@ class FollowersListView(GenericAPIView):
 
 class TrueFriendsListView(GenericAPIView):
     serializer_class = AuthorSerializer
+    queryset = Author.objects.all()
+
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
@@ -60,6 +66,7 @@ class TrueFriendsListView(GenericAPIView):
                 tf_first_name = sender.first_name
                 tf_last_name = sender.last_name
                 tf_email = sender.email
+                tf_host = sender.host
                 f_date = f.date
                 tf_dict.update({'id:': f_id})
                 tf_dict.update({'date': f_date})
@@ -68,12 +75,15 @@ class TrueFriendsListView(GenericAPIView):
                 tf_dict.update({'friend_email': tf_email})
                 tf_dict.update({'friend_first_name': tf_first_name})
                 tf_dict.update({'friend_last_name': tf_last_name})
+                tf_dict.update({'friend_host': tf_host})
                 f_list.append(tf_dict)
 
         return response.Response(f_list, status=status.HTTP_200_OK)
 
 class FollowingListView(GenericAPIView):
     serializer_class = FollowSerializer
+    queryset = Follow.objects.all()
+
     def get(self, request):
         if not Author.objects.filter(username=request.user.username).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
