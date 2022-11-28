@@ -12,8 +12,8 @@ const Team13Card = (props) => {
     const navigate = useNavigate();
     const handleClick = (e) =>{
         console.log(props.user.username)
-        window.location.href = `/user/${props.user.id}/${props.user.username}/13`
-        navigate(`/user/${props.user.id}/${props.user.username}/13`);
+        //window.location.href = `/user/${props.user.id}/${props.user.username}/13`
+        navigate(`/user/${props.user.id}/${props.user.displayName}/13`);
     }
     const handleFriendRequest = (e) =>{
         Team13SendRequest(props.user.id).then((response) =>{
