@@ -34,7 +34,10 @@ class PostLikeView(viewsets.ModelViewSet):
                 like_author = Author.objects.create(id=author_id, username=author_username, email=author_username + "@gmail.com", password="password123", host=request.user.host)
         else:
             like_author = request.user
-        post_obj = Post.objects.get(id=liked_post_id)
+        try:
+            post_obj = Post.objects.get(id=liked_post_id)
+        except:
+            return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
         if post_obj.visibility == 'FRIENDS':
             liker = like_author
             post_owner = post_obj.author
