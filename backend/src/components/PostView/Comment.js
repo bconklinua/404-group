@@ -8,6 +8,7 @@ import { postComment, getComments } from '../../api/Comments';
 import { Box, TextField, Divider, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Team13GetComments } from '../../api/Remote13';
 
 
 const Comments = (props) => {
@@ -18,39 +19,59 @@ const Comments = (props) => {
         setComments({
             data: null,
         })
+       
         getComments(props.id).then((response)=>{
-            if (response.status === 401){
-                refreshToken().then((response)=>{
+            if (props.object.host === 'https://true-friends-404.herokuapp.com'){
+                if (response.status === 401){
+                    refreshToken().then((response)=>{
+                        if (response.status === 200){
+                            console.log("success")
+                            console.log(response.status)
+                            getComments(props.id).then((response)=>{
+                                if (response.status === 200){
+                                    setComments({
+                                        data: response.data,
+                                    })
+                                }
+                                else{
+                                    localStorage.removeItem("refresh_token")
+                                    window.location.reload();
+                                    window.location.href = '/login'; 
+                                }
+                                console.log("true");
+                            })
+                        }
+                        else{
+                            window.location.reload();
+                            window.location.href = '/login';
+                            
+                        }
+                    })
+                }else if (response.status === 200){
+                    console.log(response)
+                    setComments({
+                        data: response.data,
+                    })
+                }   
+            }else if (props.object.origin === 'https://cmput404-team13.herokuapp.com/'){
+                Team13GetComments(props.object.author, props.object.id).then((response)=>{
                     if (response.status === 200){
-                        console.log("success")
-                        console.log(response.status)
-                        getComments(props.id).then((response)=>{
-                            if (response.status === 200){
-                                setComments({
-                                    data: response.data,
-                                })
-                            }
-                            else{
-                                localStorage.removeItem("refresh_token")
-                                window.location.reload();
-                                window.location.href = '/login'; 
-                            }
-                            console.log("true");
+                        console.log('comments')
+                        console.log(response)
+                        setComments({
+                            data: response.data,
                         })
                     }
                     else{
-                        window.location.reload();
-                        window.location.href = '/login';
-                        
+                        toast.error("Error Loading comments")
                     }
+
                 })
-            }else if (response.status === 200){
-                console.log(response)
-                setComments({
-                    data: response.data,
-                })
+
             }
+
         })
+        
     }, [])
 
     function CommentForm() {

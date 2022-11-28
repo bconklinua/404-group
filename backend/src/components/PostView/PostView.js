@@ -12,61 +12,83 @@ import PostCard from '../Post/PostCard';
 import PostViewCard from './PostViewCard';
 import Comments from './Comment';
 import { postComment } from '../../api/Comments';
-
+import { useLocation } from 'react-router-dom';
+import { Team13GetPost } from '../../api/Remote13';
+import { toast } from 'react-toastify';
 
 
 export default function PostView() {
 
     // check if post belongs to user who is someone u folllow
     // ...
+    const {post_id} = useParams();
+    const location = useLocation();
+    console.log(location)
     const [postContent, setPostContent] = useState({
         data: null,
     })
     const [comment, setComment] = useState(null)
     const TestPostID = () => {
-        const {post_id} = useParams();
+        
         return (
             <h1> post_id: { post_id } </h1>
         );
     };
-    const {post_id} = useParams();
     useEffect(()=>{
         setPostContent({
             data: null,
         })
-        getPostByID(post_id).then((response)=>{
-            if (response.status === 401) {
-                refreshToken().then((response)=>{
-                    if (response.status === 200) {
-                        console.log("got a post")
-                        console.log(response.status)
-                        getPostByID(post_id).then((response)=>{
-                            if (response.status === 200){
-                                setPostContent({
-                                    data: response.data,
-                                })
-                            }
-                            console.log("...");
-                        })
-                    }
-                    else {
-                        window.location.reload();
-                        window.location.href = '/login';
-                    }
-                })
-            } else if (response.status === 200) {
-                setPostContent({
-                    data: response.data,
-                })
-            } else if (response.status === 404) {
-                setPostContent({
-                    data: "404"
-                })
-                console.log('404')
-                window.location.reload();
-                window.location.href='/page-not-found';
-            }
-        })
+        if (location.state.host === 'https://true-friends-404.herokuapp.com'){
+            getPostByID(post_id).then((response)=>{
+                if (response.status === 401) {
+                    refreshToken().then((response)=>{
+                        if (response.status === 200) {
+                            console.log("got a post")
+                            console.log(response.status)
+                            getPostByID(post_id).then((response)=>{
+                                if (response.status === 200){
+                                    setPostContent({
+                                        data: response.data,
+                                    })
+                                }
+                                console.log("...");
+                            })
+                        }
+                        else {
+                            window.location.reload();
+                            window.location.href = '/login';
+                        }
+                    })
+                } else if (response.status === 200) {
+                    setPostContent({
+                        data: response.data,
+                    })
+                } else if (response.status === 404) {
+                    setPostContent({
+                        data: "404"
+                    })
+                    console.log('404')
+                    window.location.reload();
+                    window.location.href='/page-not-found';
+                }
+            })
+        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com/'){
+            Team13GetPost(location.state.author, location.state.id).then((response) => {
+                if (response.status === 200){
+                    console.log('posts')
+                    console.log(response)
+                    setPostContent({
+                        data: response.data,
+                    })
+                }
+                else{
+                    toast.error("Error Loading Post")
+                }
+
+            })
+
+        }
+
     }, [])
     const PostContent = () => {
         const {post_id} = useParams();
@@ -111,10 +133,10 @@ export default function PostView() {
             {content}
 
                 
-            <Comments id={post_id} />
+            <Comments id={post_id} object={location.state} />
                 
 
-            <TestPostID />
+            {/* <TestPostID /> */}
             {/* <PostContent /> */}
         </div>
         

@@ -115,3 +115,33 @@ export function Team13GetPosts(foreign_author_id){
         return error
     }) 
 }
+
+export function Team13GetPost(foreign_author_id, post_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${foreign_author_id}/posts/${post_id}`
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}
+
+export function Team13GetComments(foreign_author_id, post_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${foreign_author_id}/posts/${post_id}/comments`
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo"
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}

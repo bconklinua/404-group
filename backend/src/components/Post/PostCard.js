@@ -32,7 +32,8 @@ const PostCard = (props) => {
 
     const handleClick = (e) =>{
         //window.location.href = `/post/${props.post.id}`
-        navigate(`/post/${props.post.id}`);
+        console.log(props.post)
+        navigate(`/post/${props.post.id}`, {state: props.post});
     }
 
     const [likes, setLikes] = useState(props.post.count);
