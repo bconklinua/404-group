@@ -6,12 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { sendRemoteFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { Team13SendRequest } from '../../api/Remote13';
+import { useNavigate } from "react-router-dom";
 
 const Team13Card = (props) => {
-
+    const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.user.username)
         window.location.href = `/user/${props.user.id}/${props.user.username}/13`
+        navigate(`/user/${props.user.id}/${props.user.username}/13`);
     }
     const handleFriendRequest = () =>{
         Team13SendRequest(props.user.id).then((response) =>{
