@@ -11,10 +11,10 @@ import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { BASE_URL } from '../../api/api';
-
+import { useNavigate } from "react-router-dom";
 
 const PostCard = (props) => {
-    
+    const navigate = useNavigate();
     let content = null
     
     if (props.post.image_url != ""){
@@ -31,7 +31,8 @@ const PostCard = (props) => {
     }  
 
     const handleClick = (e) =>{
-        window.location.href = `/post/${props.post.id}`
+        //window.location.href = `/post/${props.post.id}`
+        navigate(`/post/${props.post.id}`);
     }
 
     const [likes, setLikes] = useState(props.post.count);

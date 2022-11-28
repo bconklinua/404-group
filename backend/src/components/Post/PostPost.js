@@ -70,7 +70,16 @@ const PostPost = () => {
                 }else if (response.status === 201){
                     console.log("posted")
                     toast.success('Posted!')
-                    window.location.href = '/home'; 
+                    //window.location.href = '/home'; 
+
+                    document.getElementById('title').value=''
+                    document.getElementById('description').value=''
+                    document.getElementById('content').value=''
+                    document.getElementById('image_url').value=''
+                    setImage(null)
+                    setFile(undefined)
+                    console.log('wtf')
+                    console.log(response)
                 }
                 
                 else{
@@ -143,16 +152,16 @@ const PostPost = () => {
                             <h1>Post A post</h1>
                             <br/>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="title" name='title'/>
+                                <input className='input1' placeholder="title" name='title' id='title'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description'/>
+                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description' id='description'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="content" name='content'/>
+                                <input className='input1' placeholder="content" name='content' id='content'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="image link" name='image_url'/>
+                                <input className='input1' placeholder="image link" name='image_url' id='image_url'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <IconButton color="primary" aria-label="upload picture" component="label">
