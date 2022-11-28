@@ -13,9 +13,9 @@ class FollowersListView(GenericAPIView):
     queryset = Follow.objects.all()
 
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(id=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(followee=author)
 
         f_list = []
@@ -49,9 +49,9 @@ class TrueFriendsListView(GenericAPIView):
     queryset = Author.objects.all()
 
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(username=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(followee=author)
 
         f_list = []
@@ -85,9 +85,9 @@ class FollowingListView(GenericAPIView):
     queryset = Follow.objects.all()
 
     def get(self, request):
-        if not Author.objects.filter(username=request.user.username).exists():
+        if not Author.objects.filter(username=request.user.id).exists():
             return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = Author.objects.get(username=request.user.username).id
+        author = request.user.id
         follower_list = Follow.objects.filter(follower=author)
 
         f_list = []
@@ -123,7 +123,6 @@ class UnfollowView(GenericAPIView):
         follower_id = self.kwargs['follower_id'] if 'follower_id' in self.kwargs else None
         if follower_id:
             try:
-                print("HAS A FOLLOWER ID")
                 follower = Author.objects.get(id=follower_id)
             except ObjectDoesNotExist:
                 return response.Response({"error":"no author with id " + str(follower_id) + " exists."}, status=status.HTTP_400_BAD_REQUEST)
