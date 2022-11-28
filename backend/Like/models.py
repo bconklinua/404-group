@@ -2,9 +2,11 @@ from django.db import models
 from User.models import Author
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import uuid
 
 # a post will have a container of likes
 class Like(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, editable=True, primary_key=True)
     type = models.CharField(default="like", editable=False, max_length=4)
     date = models.DateTimeField(auto_now_add=True)                    # when the like was done
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)  # the author who liked this
