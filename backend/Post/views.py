@@ -79,7 +79,16 @@ class PostView(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.author == request.user:
+        if instance.host == "https://cmput404-team13.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
+            authenticated = True
+        elif instance.host == "https://social-distribution-404.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
+            authenticated = True
+        elif instance.author == request.user:
+            authenticated = True
+        else:
+            authenticated = False
+        
+        if authenticated:
             return super().update(request)
         return Response("not authenticated", status=status.HTTP_401_UNAUTHORIZED)
     
