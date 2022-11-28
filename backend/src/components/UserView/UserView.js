@@ -7,13 +7,15 @@ import { refreshToken } from '../../api/User'
 import { getUserPost } from '../../api/Post'
 import PostCard from '../Post/PostCard'
 import { Team13GetPosts } from '../../api/Remote13'
+import { Team19GetPosts } from '../../api/Remote19'
 
 const UserView = () =>{
-
+    
     const {user_id, username, team} = useParams();
     const [userPost, setUserPost] = useState({
         data: null,
     })
+    console.log(username)
     useEffect(()=>{
         setUserPost({
             data: null,
@@ -61,7 +63,16 @@ const UserView = () =>{
                 }
                 
             })
+        }else if (team === '19'){
+            Team19GetPosts(user_id).then((response)=>{
+                console.log(response)
+                if (response.status === 200){
+                    setUserPost({data: response.data.items})
+                }
+                console.log(response.data.items)
+            })
         }
+
     }, [])
     let content = null;
     console.log(userPost.data)

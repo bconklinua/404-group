@@ -9,15 +9,16 @@ import { sendRemoteFriendRequest } from '../../api/Friends';
 import { useNavigate } from "react-router-dom";
 
 const Team19Card = (props) => {
+    var urlID = props.user.id.split('/');
+    var id = urlID[urlID.length - 1];
     const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.user.username)
-        window.location.href = `/user/${props.user.id}/${props.user.username}/19`
-        navigate(`/user/${props.user.id}/${props.user.username}/19`);
+        //window.location.href = `/user/${props.user.id}/${props.user.username}/19`
+        navigate(`/user/${id}/${props.user.displayName}/19`);
     }
     const handleFriendRequest = () =>{
-        var urlID = props.user.id.split('/');
-        var id = urlID[urlID.length - 1];
+
         Team19SendRequest(id).then((response) =>{
             if (response.status === 401){
 

@@ -16,7 +16,15 @@ import { useNavigate } from "react-router-dom";
 const PostCard = (props) => {
     const navigate = useNavigate();
     let content = null
-    
+    var authorID = props.post.author
+    if (typeof props.post.author === 'string') {
+        
+    }else{
+        var urlID = props.post.author.id.split('/');
+        var id = urlID[urlID.length - 1];
+        authorID = id
+    }
+
     if (props.post.image_url != ""){
         content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
@@ -32,8 +40,10 @@ const PostCard = (props) => {
 
     const handleClick = (e) =>{
         //window.location.href = `/post/${props.post.id}`
+        var urlID = props.post.id.split('/');
+        var id = urlID[urlID.length - 1];
         console.log(props.post)
-        navigate(`/post/${props.post.id}`, {state: props.post});
+        navigate(`/post/${id}`, {state: props.post});
     }
 
     const [likes, setLikes] = useState(props.post.count);
@@ -101,8 +111,9 @@ const PostCard = (props) => {
             </IconButton>
             {likes}
         </div>
-        ) 
-        if ('' + props.post.author === localStorage.getItem("username")){
+        )
+
+        if ('' + authorID === localStorage.getItem("username")){
         }else{
             extraContent = (    
                 <div className='card1'>
@@ -135,7 +146,7 @@ const PostCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        Author: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
+                        Author: <Box fontWeight='bold' display='inline'>{authorID}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}

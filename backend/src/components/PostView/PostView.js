@@ -15,6 +15,7 @@ import { postComment } from '../../api/Comments';
 import { useLocation } from 'react-router-dom';
 import { Team13GetPost } from '../../api/Remote13';
 import { toast } from 'react-toastify';
+import { Team19GetPost } from '../../api/Remote19';
 
 
 export default function PostView() {
@@ -87,6 +88,24 @@ export default function PostView() {
 
             })
 
+        }else{
+            var urlID_author = location.state.author.id.split('/');
+            var id_author = urlID_author[urlID_author.length - 1];
+            var urlID_post = location.state.id.split('/');
+            var id_post = urlID_post[urlID_post.length - 1];
+            Team19GetPost(id_author, id_post).then((response) => {
+                if (response.status === 200){
+                    console.log('posts')
+                    console.log(response)
+                    setPostContent({
+                        data: response.data,
+                    })
+                }
+                else{
+                    toast.error("Error Loading Post")
+                }
+
+            }) 
         }
 
     }, [])

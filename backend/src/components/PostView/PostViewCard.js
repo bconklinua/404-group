@@ -17,7 +17,15 @@ import { BASE_URL } from '../../api/api';
 const PostViewCard = (props) => {
     
     let content = null
-    
+    var authorID = props.post.author
+    if (typeof props.post.author === 'string') {
+        
+    }else{
+        var urlID = props.post.author.id.split('/');
+        var id = urlID[urlID.length - 1];
+        authorID = id
+    }
+
     if (props.post.image_url != ""){
 
         console.log(props.post.image_url)
@@ -135,7 +143,7 @@ const PostViewCard = (props) => {
         {likes}
     </div>
     ) 
-    if ('' + props.post.author === localStorage.getItem("username")){
+    if ('' + authorID === localStorage.getItem("username")){
         
         extraContent = (    
         <div className='card1'>
@@ -188,7 +196,7 @@ const PostViewCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Author: <Box fontWeight='bold' display='inline'>{props.post.author}</Box>
+                            Author: <Box fontWeight='bold' display='inline'>{authorID}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}
