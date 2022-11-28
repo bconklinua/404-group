@@ -1,10 +1,13 @@
 import React from 'react'
 import './ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 const FollowerCard = (props) => {
+    const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.follower)
-        window.location.href = `/user/${props.follower.sender_id}`
+        //window.location.href = `/user/${props.follower.sender_id}`
+        navigate(`/user/${props.follower.sender_id}`);
     }
 
     return (

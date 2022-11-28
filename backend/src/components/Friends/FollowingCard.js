@@ -3,11 +3,15 @@ import './ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui/material';
 import { unFollow } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
+import { useNavigate } from "react-router-dom";
+
 
 const FollowerCard = (props) => {
+    const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.following)
-        window.location.href = `/user/${props.following.recipient_id}`
+        //window.location.href = `/user/${props.following.recipient_id}`
+        navigate(`/user/${props.following.recipient_id}`);
     }
     const handleUnFollow = ()=> {
 

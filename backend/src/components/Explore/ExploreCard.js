@@ -5,12 +5,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
+import { useNavigate } from "react-router-dom";
 
 const ExploreCard = (props) => {
-
+    const navigate = useNavigate();
     const handleClick = () =>{
         console.log(props.user.username)
-        window.location.href = `/user/${props.user.id}/${props.user.username}`
+        //window.location.href = `/user/${props.user.id}/${props.user.username}`
+        navigate(`/user/${props.user.id}/${props.user.username}`);
     }
     const handleFriendRequest = () =>{
         sendFriendRequest(props.user.id).then((response) =>{
