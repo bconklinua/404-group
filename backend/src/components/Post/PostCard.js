@@ -90,6 +90,36 @@ const PostCard = (props) => {
         console.log(props.post.id)
     }
 
+    const handleShare = (e) =>{
+        console.log('share')
+    }
+
+    let extraContent = (
+        <div>
+            <IconButton onClick={handleLike} size="small" color="secondary">
+                <Favorite/>
+            </IconButton>
+            {likes}
+        </div>
+        ) 
+        if ('' + props.post.author === localStorage.getItem("username")){
+        }else{
+            extraContent = (    
+                <div className='card1'>
+                    <div className='box2'>
+                    <div>
+                        <IconButton onClick={handleLike} size="small" color="secondary">
+                            <Favorite/>
+                        </IconButton>
+                        {likes}
+                    </div>
+                    
+                    <div>
+                        <Button onClick={handleShare}>Share</Button>
+                    </div>
+                    </div>
+                </div>)   
+        }
     return (
 
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
@@ -113,10 +143,7 @@ const PostCard = (props) => {
                     </CardContent>
                 </CardActionArea>
 
-                <IconButton onClick={handleLike} size="small" color="secondary">
-                <Favorite/>
-                </IconButton>
-                {likes}
+                {extraContent}
 
             </Card>
 

@@ -123,6 +123,9 @@ const PostViewCard = (props) => {
         })
         console.log(props.post.id)
     }
+    const handleShare = (e) =>{
+        console.log('share')
+    }
 
     let extraContent = (
     <div>
@@ -150,6 +153,22 @@ const PostViewCard = (props) => {
             </div>
             </div>
         </div>)
+    }else{
+        extraContent = (    
+            <div className='card1'>
+                <div className='box2'>
+                <div>
+                    <IconButton onClick={handleLike} size="small" color="secondary">
+                        <Favorite/>
+                    </IconButton>
+                    {likes}
+                </div>
+                
+                <div>
+                    <Button onClick={handleShare}>Share</Button>
+                </div>
+                </div>
+            </div>)   
     }
 
 

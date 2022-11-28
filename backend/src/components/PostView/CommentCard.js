@@ -1,8 +1,15 @@
 import React from 'react'
 import '../Friends/ProfileCard.css'
-import { Box, CardContent, Typography, Card } from '@mui/material'
+import { Box, CardContent, Typography, Card, IconButton } from '@mui/material'
+import Favorite from '@mui/icons-material/Favorite';
+import { useState } from 'react';
 
 const CommentCard = (props) => {
+    const [likes, setLikes] = useState(0);
+    const handleLike = (e) =>{
+        setLikes(likes + 1)
+        console.log('liked')
+    }
 
     return (
         // <div className='card'>
@@ -20,7 +27,12 @@ const CommentCard = (props) => {
                         user: <Box fontWeight='bold' display='inline'>{props.comment.author}  </Box>
                     </Typography>
                 </CardContent>
+                <IconButton onClick={handleLike} size="small" color="secondary">
+                <Favorite/>
+                </IconButton>
+                {likes}
             </Card>
+
         </Box>
     )
 }
