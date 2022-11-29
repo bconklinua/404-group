@@ -11,6 +11,13 @@ from User.models import Author
 from django.core.exceptions import ObjectDoesNotExist
 import os
 
+def has_remote_followers(team_host, author):
+    followers =  Follow.objects.filter(followee=author)
+    for follow in followers:
+        if (follow.follower.host == team_host):
+            return True
+    return False
+
 class PostCommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
@@ -24,8 +31,15 @@ class PostCommentView(viewsets.ModelViewSet):
         liked_post_id = self.kwargs['post_id'] if 'post_id' in self.kwargs else None
         author_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         author_username = self.kwargs['author_username'] if 'author_username' in self.kwargs else None
+        response_dict = {}
         try:
             post_obj = Post.objects.get(id=liked_post_id)
+            post_author = post_obj.author
+            if post_author.host == "https://true-friends-404.herokuapp.com": 
+                response_dict = {
+                    "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                }
         except:
             return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
         if author_id and author_username:
@@ -48,7 +62,8 @@ class PostCommentView(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save(post_id=liked_post_id)
             serializer.save(author=comment_author)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_dict.update(serializer.data)
+            return Response(response_dict, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AuthorCommentView(viewsets.ModelViewSet):

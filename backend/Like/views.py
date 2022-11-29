@@ -64,7 +64,8 @@ class PostLikeView(viewsets.ModelViewSet):
             existing_like = Like.objects.filter(post_id = liked_post_id).filter(author=like_author)
             if existing_like:
                 existing_like.delete()
-                return Response("Existing like deleted", status=status.HTTP_202_ACCEPTED)
+                response_dict.update({"message":"Existing like deleted"})
+                return Response(response_dict, status=status.HTTP_202_ACCEPTED)
             serializer.save(post_id=liked_post_id)
             serializer.save(author=like_author)
             response_dict.update(serializer.data)
