@@ -13,9 +13,11 @@ import { deletePost } from '../../api/Post';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from '../../api/api';
+import { Team13DeletePost } from '../../api/Remote13';
+import { useNavigate } from "react-router-dom";
 
 const PostViewCard = (props) => {
-    
+    const navigate = useNavigate();
     let content = null
     var authorID = props.post.author
     if (typeof props.post.author === 'string') {
@@ -80,13 +82,24 @@ const PostViewCard = (props) => {
                     }
                 })
             }else if(response.status === 204){
-                window.location.reload();
-                window.location.href = '/profile'; 
+                // window.location.reload();
+                // window.location.href = '/profile'; 
+                navigate('/profile')
             }else{
                 toast.error('something went wrong');
             }
             console.log(response)
         })
+        Team13DeletePost(props.post.id).then((response=>{
+            console.log(response)
+            if (response.status === 400){
+                console.log('post not deleted on their end')
+            } 
+            else{
+                console.log('post deleted')
+            }
+        }))
+
     }
     const handleLike = (e) =>{
         e.preventDefault();
