@@ -46,6 +46,8 @@ const FriendRequestCard = (props) => {
                 console.log('team13 accept request response')
                 console.log(response)
             })
+        }else if (props.request.network === "team19_to_truefriends"){
+            console.log('team 19 accept')
         }
         
     
@@ -87,6 +89,8 @@ const FriendRequestCard = (props) => {
                 console.log('team13 reject request response')
                 console.log(response)
             })
+        }else if (props.request.network === "team19_to_truefriends"){
+            console.log('team 19 reject')
         }
     }
 

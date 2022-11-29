@@ -90,10 +90,11 @@ const PostCard = (props) => {
                 })
             }
             else if (response.status === 201){
-                console.log("liked")
+                console.log(response)
                 incrementLikes()
             }
             else if (response.status === 202){
+                console.log(response)
                 decrementLikes()
             }
         })

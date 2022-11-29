@@ -7,6 +7,7 @@ import { refreshToken } from '../../api/User'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
+import { Team19PostPost } from '../../api/Remote19'
 
 
 const PostPost = () => {
@@ -89,7 +90,9 @@ const PostPost = () => {
                         })
                     }else console.log('no team 13 followers')
                     if (response.data.team19_followers === true){
-                        console.log('team 19 followers')
+                        Team19PostPost(response.data).then((response)=>{
+                            console.log(response)
+                        })
                     }else console.log('no team 19 followers')
 
                     console.log("posted")
