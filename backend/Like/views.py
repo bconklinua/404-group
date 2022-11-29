@@ -9,8 +9,10 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.core.exceptions import ObjectDoesNotExist
 
-def is_remote_post(team_host,post):
-    if (post.host == team_host):
+def has_remote_followers(team_host, author):
+    followers =  Follow.objects.filter(followee=author)
+    for follow in followers:
+        if (follow.follower.host == team_host):
             return True
     return False
 
@@ -41,10 +43,11 @@ class PostLikeView(viewsets.ModelViewSet):
             like_author = request.user
         try:
             post_obj = Post.objects.get(id=liked_post_id)
-            if like_author.host == "https://true-friends-404.herokuapp.com":
+            post_author = post_obj.author
+            if post_author.host == "https://true-friends-404.herokuapp.com": 
                 response_dict = {
-                    "team13_post": is_remote_post("https://cmput404-team13.herokuapp.com", post_obj),
-                    "team19_post": is_remote_post("https://social-distribution-404.herokuapp.com", post_obj)
+                    "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
                 }
         except:
             return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
