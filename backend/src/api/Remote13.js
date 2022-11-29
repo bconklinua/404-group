@@ -189,12 +189,12 @@ export function Team13PostPost(post_id, json){
 }
 
 export function Team13SendInbox(post_id, visibility){
-    const url = `https://cmput404-team13.herokuapp.com/inbox/public/${localStorage.getItem('authorID')}/${post_id}`
+    var url = `https://cmput404-team13.herokuapp.com/inbox/public/${localStorage.getItem('authorID')}/${post_id}`
     if (visibility === 'FRIENDS'){
         url = `https://cmput404-team13.herokuapp.com/inbox/friend/${localStorage.getItem('authorID')}/${post_id}`
     }
     const body = {}
-    return axios.post_id(url, body, {
+    return axios.post(url, body, {
         headers:{
             "Content-Type": "application/json",
             "Authorization": `Bearer ${Team13Token}`

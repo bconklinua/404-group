@@ -12,6 +12,7 @@ import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { BASE_URL } from '../../api/api';
 import { useNavigate } from "react-router-dom";
+import { Team13AddLike } from '../../api/Remote13';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -92,6 +93,16 @@ const PostCard = (props) => {
             else if (response.status === 201){
                 console.log(response)
                 incrementLikes()
+                if (response.data.team13_followers === true){
+                    Team13AddLike("nothing", props.post.id).then((response)=>{
+                        console.log("team13 like")
+                        console.log(response)
+                    })
+                }
+                if (response.data.team19_followers === true){
+                    console.log("send a like to team 19")
+                }
+                
             }
             else if (response.status === 202){
                 console.log(response)
