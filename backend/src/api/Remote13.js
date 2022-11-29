@@ -242,3 +242,20 @@ export function Team13AddLike(author_id, post_id){
         return error
     }) 
 }
+
+export function Team13DeleteLike(author_id, post_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${author_id}/posts/${post_id}/likes/${localStorage.getItem('authorID')}
+
+    `
+
+    return axios.delete(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}

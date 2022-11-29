@@ -12,7 +12,8 @@ import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { BASE_URL } from '../../api/api';
 import { useNavigate } from "react-router-dom";
-import { Team13AddLike } from '../../api/Remote13';
+import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
+import { toast } from 'react-toastify';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -107,6 +108,19 @@ const PostCard = (props) => {
             else if (response.status === 202){
                 console.log(response)
                 decrementLikes()
+                if (response.data.team13_followers === true){
+                    Team13DeleteLike("nothing", props.post.id).then((response)=>{
+                        console.log("team19 like")
+                        console.log(response)
+                    })
+                }
+                if (response.data.team19_followers === true){
+                    console.log("remove displike team 19")
+                }
+            }else if (response.status === 403){
+                toast.error("cannot like foreign posts that you do not follow")
+            }else{
+                toast.error("failed to like")
             }
         })
         console.log(props.post.id)
