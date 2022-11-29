@@ -22,9 +22,12 @@ class PostCommentView(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         liked_post_id = self.kwargs['post_id'] if 'post_id' in self.kwargs else None
-        post_obj = Post.objects.get(id=liked_post_id)
         author_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         author_username = self.kwargs['author_username'] if 'author_username' in self.kwargs else None
+        try:
+            post_obj = Post.objects.get(id=liked_post_id)
+        except:
+            return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
         if author_id and author_username:
             try:
                 comment_author = Author.objects.filter(username=author_username).get(id=author_id)

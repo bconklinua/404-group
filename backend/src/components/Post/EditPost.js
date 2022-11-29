@@ -31,9 +31,13 @@ const EditPost = () => {
             setUrlImage(`http://localhost:8000${data.image}`)
         }
             
-        else if (data.image_url != "")
-            document.getElementById('image_url').value=data.image_url
-            setUrlImage(data.image_url)
+        else if (data.image_url != ""){
+            setFile(data.image_url)
+            setImage(data.image_url)
+        }
+            // document.getElementById('image_url').value=data.image_url
+            // setUrlImage(data.image_url)
+            
 
     }
 
@@ -141,8 +145,16 @@ const EditPost = () => {
     const uploadImage = (e) =>{
     
         if (e.target.files[0]){
-            setImage(e.target.files[0])
-            setFile(URL.createObjectURL(e.target.files[0]))
+            const img = e.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onloadend = () => {
+                setImage(reader.result.toString());
+                console.log('loaded')
+                console.log(reader.result.toString());
+                setFile(URL.createObjectURL(e.target.files[0]))
+            }
+            reader.readAsDataURL(img)
         }
         else {
             setImage(null)
@@ -192,7 +204,7 @@ const EditPost = () => {
                             <FormControlLabel label="public" control={<Switch checked={visibility} color='primary' onChange={handleChange}/>}/>
                             <FormControlLabel label="unlisted" control={<Switch checked={unlisted} color="primary" onChange={handleUnlisted}/>}/>
                             <Typography gutterBottom variant="h5" component="div">
-                                <Button type="submit" onSubmit={handleSubmit} color='primary'>Submit</Button>
+                                <Button type="submit" onSubmit={handleSubmit} color='primary'>Edit</Button>
                             </Typography>
                             
                             </div>

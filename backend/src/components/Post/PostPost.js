@@ -6,6 +6,7 @@ import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, T
 import { refreshToken } from '../../api/User'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 
 
 const PostPost = () => {
@@ -68,17 +69,40 @@ const PostPost = () => {
                         }
                     })
                 }else if (response.status === 201){
+                    if (response.data.team13_followers === true){
+                        Team13PostPost(response.data.id, response.data).then((response)=>{
+                            if (response.status === 200){
+                                if (typeof response.data === 'object'){
+                                    Team13SendInbox(response.data.id, response.data.visibility).then((response)=>{
+                                        console.log('team 13 inbox')
+                                        console.log(response)
+                                    })
+
+                                    console.log('team 13 followers')
+                                    console.log(response)
+                                }else{
+                                    console.log('error')
+                                }
+
+                            }
+
+                        })
+                    }else console.log('no team 13 followers')
+                    if (response.data.team19_followers === true){
+                        console.log('team 19 followers')
+                    }else console.log('no team 19 followers')
+
                     console.log("posted")
                     toast.success('Posted!')
                     //window.location.href = '/home'; 
-
+                    console.log(response)
                     document.getElementById('title').value=''
                     document.getElementById('description').value=''
                     document.getElementById('content').value=''
                     document.getElementById('image_url').value=''
                     setImage(null)
                     setFile(undefined)
-                    console.log('wtf')
+
                     console.log(response)
                 }
                 
