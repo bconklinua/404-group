@@ -113,16 +113,17 @@ export function Team19PostPost(post, remoteID){
         origin: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
         contentType: contentType,
         content: content,
-        actor: {
+        author: {
             type: "author",
             id: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
             displayName: localStorage.getItem('username'),
             url: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
             host: "https://true-friends-404.herokuapp.com/",
         },
-        categories: [],
+        categories: JSON.stringify([]),
         visibility: post.visibility,
         unlisted: post.unlisted,
+        title: post.title,
     }
     return axios.post(url, body, {
         auth: {

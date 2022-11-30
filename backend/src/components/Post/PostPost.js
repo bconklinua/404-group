@@ -114,11 +114,12 @@ const PostPost = () => {
             })
             getFollowers().then((response)=>{
                 for (let i = 0; i < response.data.length; i++){
-                    if (response.data[i].sender_host === "https://true-friends-404.herokuapp.com"){
+                    if (response.data[i].sender_host === "https://social-distribution-404.herokuapp.com"){
                         console.log('team 19 follower')
-                        // Team19PostPost(json, response.data[i].sender_id).then((response)=>{
-                        //     console.log(response)
-                        // })
+                        Team19PostPost(json, response.data[i].sender_id).then((response)=>{
+                            console.log(response.data[i].sender_username)
+                            console.log(response)
+                        })
                     }
                 }
                 console.log("creatine")
