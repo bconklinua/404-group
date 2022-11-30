@@ -101,8 +101,8 @@ export function Team19GetComments(foreign_author_id, post_id){
     })
 }
 
-export function Team19PostPost(post){
-    const url = `https://social-distribution-404.herokuapp.com/authors/${localStorage.getItem("authorID")}/inbox/posts`
+export function Team19PostPost(post, remoteID){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${remoteID}/inbox/posts`
 
     var contentType = 'text/plain'
     var content = post.content

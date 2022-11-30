@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 import { Team19PostPost } from '../../api/Remote19'
-
+import { getFollowers } from '../../api/Friends'
 
 const PostPost = () => {
     const [visibility, setVisibility] = useState(false)
@@ -89,10 +89,8 @@ const PostPost = () => {
 
                         })
                     }else console.log('no team 13 followers')
-                    if (response.data.team19_followers === true){
-                        Team19PostPost(response.data).then((response)=>{
-                            console.log(response)
-                        })
+                    if (response.data.team19_followers === false){
+
                     }else console.log('no team 19 followers')
 
                     console.log("posted")
@@ -114,6 +112,23 @@ const PostPost = () => {
                 }
                 console.log(response)
             })
+            getFollowers().then((response)=>{
+                for (let i = 0; i < response.data.length; i++){
+                    if (response.data[i].sender_host === "https://true-friends-404.herokuapp.com"){
+                        console.log('team 19 follower')
+                        // Team19PostPost(json, response.data[i].sender_id).then((response)=>{
+                        //     console.log(response)
+                        // })
+                    }
+                }
+                console.log("creatine")
+                console.log(response)
+                // Team19PostPost(response.data).then((response)=>{
+                //     console.log(response)
+                // })
+            })
+
+
             console.log(json)
         }
     }
