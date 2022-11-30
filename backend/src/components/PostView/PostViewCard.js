@@ -15,11 +15,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from '../../api/api';
 import { Team13DeletePost } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
+import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
+
 
 const PostViewCard = (props) => {
     const navigate = useNavigate();
     let content = null
     var authorID = props.post.author
+    console.log("postview")
+    console.log(props.post.author)
+    
     if (typeof props.post.author === 'string') {
         
     }else{
@@ -28,9 +33,9 @@ const PostViewCard = (props) => {
         authorID = id
     }
 
-    if (props.post.image_url != ""){
+    if (props.post.image_url != "" && props.post.image_url != undefined){
 
-        console.log(props.post.image_url)
+        console.log("image url being called")
         content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
     else if (props.post.image){
@@ -42,7 +47,21 @@ const PostViewCard = (props) => {
             // <img src={imgurl} alt="Girl in a jacket" ></img>
         )
     }else{
-        content = (<h4>{props.post.content}</h4>)
+        if (props.post.host === "https://true-friends-404.herokuapp.com")
+            content = (<h4>{props.post.content}</h4>)
+        else {
+            if (props.post.contentType === 'image'){
+                content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
+                
+            }else{
+                content = (<h4>{props.post.content}</h4>)
+            }
+            
+        }
+        console.log("just content being called")
+        console.log(props.post.host)
+        
+        
     }  
     const [likes, setLikes] = useState(props.post.count);
     const incrementLikes = () => {
@@ -136,11 +155,40 @@ const PostViewCard = (props) => {
                         
                     }
                 })
-            }else if (response.status === 201)
+            }
+            else if (response.status === 201){
+                console.log("test 1")
+                console.log(response)
                 incrementLikes()
-            else if (response.status === 202)
+                if (response.data.team13_followers === true || response.data.team13_followers === undefined){
+                    Team13AddLike("nothing", props.post.id).then((response)=>{
+                        console.log("team13 like")
+                        console.log(response)
+                    })
+                }
+                if (response.data.team19_followers === true){
+                    console.log("send a like to team 19")
+                }
+                
+            }
+            else if (response.status === 202){
+                console.log("test 2")
+                console.log(response)
                 decrementLikes()
-            console.log(response)
+                if (response.data.team13_followers === true || response.data.team13_followers === undefined){
+                    Team13DeleteLike("nothing", props.post.id).then((response)=>{
+                        console.log("team19 like")
+                        console.log(response)
+                    })
+                }
+                if (response.data.team19_followers === true){
+                    console.log("remove displike team 19")
+                }
+            }else if (response.status === 403){
+                toast.error("cannot like foreign posts that you do not follow")
+            }else{
+                toast.error("failed to like")
+            }
         })
         console.log(props.post.id)
     }

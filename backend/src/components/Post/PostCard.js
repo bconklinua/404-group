@@ -27,23 +27,39 @@ const PostCard = (props) => {
         authorID = id
     }
 
-    if (props.post.image_url != ""){
+    if (props.post.image_url != "" && props.post.image_url != undefined){
+
+
         content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
     else if (props.post.image){
+        
+
         let imgurl = `${BASE_URL}${props.post.image}`
         content = (
             <CardMedia height="20%" component='img' image={imgurl}/>
             // <img src={imgurl} alt="Girl in a jacket" ></img>
         )
     }else{
-        content = (<h4>{props.post.content}</h4>)
-    }  
+        if (props.post.host === "https://true-friends-404.herokuapp.com")
+            content = (<h4>{props.post.content}</h4>)
+        else {
+            if (props.post.contentType === 'image'){
+                content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
+                
+            }else{
+                content = (<h4>{props.post.content}</h4>)
+            }
+            
+        }
+
+    } 
 
     const handleClick = (e) =>{
         //window.location.href = `/post/${props.post.id}`
         var urlID = props.post.id.split('/');
         var id = urlID[urlID.length - 1];
+        console.log("abcdef")
         console.log(props.post)
         navigate(`/post/${id}`, {state: props.post});
     }
@@ -92,9 +108,10 @@ const PostCard = (props) => {
                 })
             }
             else if (response.status === 201){
+                console.log("test 1")
                 console.log(response)
                 incrementLikes()
-                if (response.data.team13_followers === true){
+                if (response.data.team13_followers === true || response.data.team13_followers === undefined){
                     Team13AddLike("nothing", props.post.id).then((response)=>{
                         console.log("team13 like")
                         console.log(response)
@@ -106,9 +123,10 @@ const PostCard = (props) => {
                 
             }
             else if (response.status === 202){
+                console.log("test 2")
                 console.log(response)
                 decrementLikes()
-                if (response.data.team13_followers === true){
+                if (response.data.team13_followers === true || response.data.team13_followers === undefined){
                     Team13DeleteLike("nothing", props.post.id).then((response)=>{
                         console.log("team19 like")
                         console.log(response)

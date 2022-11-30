@@ -259,3 +259,44 @@ export function Team13DeleteLike(author_id, post_id){
         return error
     }) 
 }
+
+export function Team13EditPost(post_id, json){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts/${post_id}`
+    var content = json.content
+    var contentType = 'text/plain'
+    if (json.image_url){
+        content = json.image_url
+        contentType = 'image'
+    }
+    const body = {
+        type: "post",
+        title: json.title,
+        source: 'https://true-friends-404.herokuapp.com/',
+        origin: 'https://true-friends-404.herokuapp.com/',
+        description: json.description,
+        contentType: contentType,
+        content: content,
+        visibility: json.visibility,
+        published: json.published,
+        author: {
+            id: localStorage.getItem('authorID'),
+            displayName: localStorage.getItem('username')
+        },
+        originalAuthor: {
+            id: localStorage.getItem('authorID'),
+            displayName: localStorage.getItem('username')
+        },
+        id: post_id
+    }
+    console.log(body)
+    return axios.put(url, body, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })  
+}
