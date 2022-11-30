@@ -10,6 +10,10 @@ const CommentCard = (props) => {
         setLikes(likes + 1)
         console.log('liked')
     }
+    var username = props.comment.author
+    if (typeof username != "string"){
+        username = props.comment.author.displayName
+    }
 
     return (
         // <div className='card'>
@@ -24,7 +28,7 @@ const CommentCard = (props) => {
                         {props.comment.comment}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        user: <Box fontWeight='bold' display='inline'>{props.comment.author}  </Box>
+                        user: <Box fontWeight='bold' display='inline'>{username}  </Box>
                     </Typography>
                 </CardContent>
                 <IconButton onClick={handleLike} size="small" color="secondary">

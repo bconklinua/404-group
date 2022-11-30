@@ -244,9 +244,7 @@ export function Team13AddLike(author_id, post_id){
 }
 
 export function Team13DeleteLike(author_id, post_id){
-    const url = `https://cmput404-team13.herokuapp.com/authors/${author_id}/posts/${post_id}/likes/${localStorage.getItem('authorID')}
-
-    `
+    const url = `https://cmput404-team13.herokuapp.com/authors/${author_id}/posts/${post_id}/likes/${localStorage.getItem('authorID')}`
 
     return axios.delete(url, {
         headers:{
@@ -299,4 +297,30 @@ export function Team13EditPost(json){
     }).catch((error)=>{
         return error
     })  
+}
+
+export function Team13PostComment(comment, id, post_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts/${post_id}/comments`
+    var body = {
+        comment: comment.comment,
+        author: {
+            id: localStorage.getItem('authorID'),
+            displayName: localStorage.getItem('username')
+        },
+    }
+    if (id != ""){
+        body["id"] = id
+    }
+
+
+    return axios.post(url, body, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
 }

@@ -74,7 +74,8 @@ const PostViewCard = (props) => {
         console.log("true")
     }
     const handleEdit = (e) =>{
-        window.location.href = `/edit/${props.post.id}`
+        navigate(`/edit/${props.post.id}`)
+        //window.location.href = `/edit/${props.post.id}`
     }
     const handleDeletePost = (e) =>{
         console.log("delete")
