@@ -83,6 +83,7 @@ class FRAcceptView(GenericAPIView):
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
+        response_dict = {}
         if f_req.recipient.id != request.user.id:
             return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,10 +96,10 @@ class FRAcceptView(GenericAPIView):
             return response.Response({"error": "already being followed"}, status=status.HTTP_409_CONFLICT)
 
         follow = Follow(follower=follower_author, followee=followee_author)
+        response_dict.update({"network": f_req.network})
         f_req.delete()
         follow.save()
 
-        response_dict = {}
         response_dict.update({"message": "you accepted " + follower_author.username + " as a follower"})
 
         followed_back = Follow.objects.filter(follower=followee_author, followee=follower_author)
@@ -116,10 +117,11 @@ class FRRejectView(GenericAPIView):
     def post(self, request, fr_id):
         fr_id = self.kwargs['fr_id']
         f_req = FriendRequest.objects.get(id=fr_id)
+        response_dict = {}
         if f_req.recipient.id != request.user.id:
             return response.Response({"error": "invalid friend request for user"}, status=status.HTTP_400_BAD_REQUEST)
         follower_author = Author.objects.get(id=f_req.sender.id)
-        response_dict = {}
+        response_dict.update({"network": f_req.network})
         response_dict.update({"message": "you rejected " + follower_author.username + " as a follower"})
         f_req.delete()
 
