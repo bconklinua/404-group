@@ -19,6 +19,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import EditPost from './components/Post/EditPost';
 import axios from 'axios';
+import ImprovedNavbar from './components/Navbar/ImprovedNavBar'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
