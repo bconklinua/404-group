@@ -36,7 +36,7 @@ const FriendRequestCard = (props) => {
                     }
                 })
             }else if (response.status === 200){
-                if (props.request.network === "team13_to_truefriends"){
+                if (response.data.network === "team13_to_truefriends"){
                     Team13AcceptRequest(props.request.id).then((response) =>{
                         console.log('team13 accept request response')
                         console.log(response)
@@ -83,20 +83,25 @@ const FriendRequestCard = (props) => {
                     }
                 })
 
-            }else{
+            }else if (response.status === 200){
+                if (response.data.network === "team13_to_truefriends"){
+                    Team13RejectRequest(props.request.id).then((response) =>{
+                        console.log('team13 reject request response')
+                        console.log(response)
+                    })
+                }else if (props.request.network === "team19_to_truefriends"){
+                    console.log('team 19 reject')
+                }
+                console.log("reject response")
+                console.log(response)
                 props.removeRequest(props.request)
                 console.log(response)
+            }else{
+                toast.error("error rejecting request")
             }
             console.log(response.status)
         })        
-        if (props.request.network === "team13_to_truefriends"){
-            Team13RejectRequest(props.request.id).then((response) =>{
-                console.log('team13 reject request response')
-                console.log(response)
-            })
-        }else if (props.request.network === "team19_to_truefriends"){
-            console.log('team 19 reject')
-        }
+
     }
 
     return (

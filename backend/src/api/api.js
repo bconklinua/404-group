@@ -1,2 +1,2 @@
 export const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://true-friends-404.herokuapp.com';
-export const Team13Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhlNzU2NzE2ZGRmMjRkZmY4ZmNjMmI4ZDE3ZjM2YmE1IiwiZXhwIjoxNzAwOTgzNzUyLCJpYXQiOjE2Njk0NDc3NTJ9.yHOu-uXtvY7U7HKfCGBxXYCnFDR53I1Wlju7h40bhyo'
+export const Team13Token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUwY2I3YjFlLWEwNWQtNDAzNC1iMDFmLTA1ZGUxYmEwNTcwMCIsImV4cCI6MTcwMTMyNTg1MSwiaWF0IjoxNjY5Nzg5ODUxfQ.5Z8W0_y6XH1XswbBkMf6S46vPbuMqM4C-TfuvCCaCHc'
