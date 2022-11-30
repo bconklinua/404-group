@@ -6,7 +6,7 @@ import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, T
 import { refreshToken } from '../../api/User'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Team13EditPost } from '../../api/Remote13'
 
 const EditPost = () => {
     const [visibility, setVisibility] = useState(false)
@@ -127,12 +127,17 @@ const EditPost = () => {
             }else if (response.status === 200){
                 console.log("posted")
                 toast.success('Edited')
-                window.location.href = '/home'; 
+                //window.location.href = '/home'; 
             }
             
             else{
                 toast.error('Not Posted')
             }
+            console.log(response)
+        })
+
+        Team13EditPost(json).then((response)=>{
+            console.log("team13 edit")
             console.log(response)
         })
         console.log(json)
