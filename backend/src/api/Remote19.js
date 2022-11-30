@@ -100,3 +100,43 @@ export function Team19GetComments(foreign_author_id, post_id){
         return error
     })
 }
+
+export function Team19PostPost(post, remoteID){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${remoteID}/inbox/posts`
+
+    var contentType = 'text/plain'
+    var content = post.content
+    const body = {
+        type: "post",
+        id: localStorage.getItem("authorID"),
+        source: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+        origin: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+        contentType: contentType,
+        content: content,
+        author: {
+            type: "author",
+            id: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+            displayName: localStorage.getItem('username'),
+            url: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+            host: "https://true-friends-404.herokuapp.com/",
+        },
+        categories: JSON.stringify([]),
+        visibility: post.visibility,
+        unlisted: post.unlisted,
+        title: post.title,
+    }
+    return axios.post(url, body, {
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+        }
+
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}

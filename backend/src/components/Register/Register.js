@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import { NavLink } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { postUser } from '../../api/User';
 import "./Register.css"
+import { useNavigate } from "react-router-dom";
+
 
 
 const Register = () => {
-
+    const navigate = useNavigate();
     const handleSubmit = (e) =>{
         e.preventDefault();
         const data = new FormData(e.target)
@@ -13,9 +16,12 @@ const Register = () => {
         postUser(json).then((response) =>{
             if (response.status === 400){
                 console.log("400")
+                toast.error("User with that email or username already exists")
             }
             else if (response.status === 201){
-                console.log("201")
+                console.log(response)
+                toast.success("created user!")
+                navigate("/login")
             }
         })
         // console.log(json)

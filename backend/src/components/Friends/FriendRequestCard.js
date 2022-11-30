@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { acceptFollower, rejectFollower } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { Team13AcceptRequest, Team13RejectRequest } from '../../api/Remote13';
+import { toast } from 'react-toastify';
 
 const FriendRequestCard = (props) => {
     const accept = (e) => {
@@ -34,19 +35,25 @@ const FriendRequestCard = (props) => {
                         window.location.href = '/login';
                     }
                 })
-            }else{
+            }else if (response.status === 200){
+                if (response.data.network === "team13_to_truefriends"){
+                    Team13AcceptRequest(props.request.id).then((response) =>{
+                        console.log('team13 accept request response')
+                        console.log(response)
+                    })
+                }else if (props.request.network === "team19_to_truefriends"){
+                    console.log('team 19 accept')
+                }
                 props.removeRequest(props.request)
                 console.log(response)
+            }else{
+                toast.error("error accepting request")
             }
-            console.log(response.status)
+            console.log("accept response")
+            console.log(response)
         })
 
-        if (props.request.network === "team13_to_truefriends"){
-            Team13AcceptRequest(props.request.id).then((response) =>{
-                console.log('team13 accept request response')
-                console.log(response)
-            })
-        }
+
         
     
     }
@@ -76,18 +83,25 @@ const FriendRequestCard = (props) => {
                     }
                 })
 
-            }else{
+            }else if (response.status === 200){
+                if (response.data.network === "team13_to_truefriends"){
+                    Team13RejectRequest(props.request.id).then((response) =>{
+                        console.log('team13 reject request response')
+                        console.log(response)
+                    })
+                }else if (props.request.network === "team19_to_truefriends"){
+                    console.log('team 19 reject')
+                }
+                console.log("reject response")
+                console.log(response)
                 props.removeRequest(props.request)
                 console.log(response)
+            }else{
+                toast.error("error rejecting request")
             }
             console.log(response.status)
         })        
-        if (props.request.network === "team13_to_truefriends"){
-            Team13RejectRequest(props.request.id).then((response) =>{
-                console.log('team13 reject request response')
-                console.log(response)
-            })
-        }
+
     }
 
     return (

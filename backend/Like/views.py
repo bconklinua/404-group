@@ -9,6 +9,12 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django.core.exceptions import ObjectDoesNotExist
 
+def has_remote_followers(team_host, author):
+    followers =  Follow.objects.filter(followee=author)
+    for follow in followers:
+        if (follow.follower.host == team_host):
+            return True
+    return False
 
 class PostLikeView(viewsets.ModelViewSet):
     serializer_class = LikeSerializer
@@ -27,6 +33,7 @@ class PostLikeView(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
         author_id = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         author_username = self.kwargs['author_username'] if 'author_username' in self.kwargs else None
+        response_dict = {}
         if author_id and author_username:
             try:
                 like_author = Author.objects.filter(username=author_username).get(id=author_id)
@@ -36,6 +43,12 @@ class PostLikeView(viewsets.ModelViewSet):
             like_author = request.user
         try:
             post_obj = Post.objects.get(id=liked_post_id)
+            post_author = post_obj.author
+            if post_author.host == "https://true-friends-404.herokuapp.com": 
+                response_dict = {
+                    "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                }
         except:
             return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
         if post_obj.visibility == 'FRIENDS':
@@ -51,10 +64,12 @@ class PostLikeView(viewsets.ModelViewSet):
             existing_like = Like.objects.filter(post_id = liked_post_id).filter(author=like_author)
             if existing_like:
                 existing_like.delete()
-                return Response("Existing like deleted", status=status.HTTP_202_ACCEPTED)
+                response_dict.update({"message":"Existing like deleted"})
+                return Response(response_dict, status=status.HTTP_202_ACCEPTED)
             serializer.save(post_id=liked_post_id)
             serializer.save(author=like_author)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            response_dict.update(serializer.data)
+            return Response(response_dict, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):

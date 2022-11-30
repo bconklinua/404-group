@@ -24,12 +24,14 @@ const Team13Card = (props) => {
             //     toast.error("Something went wrong")
             //     console.log(response)
             // }
+            console.log("team 13 friend request")
+            console.log(response)
             if (response.status === 200){
-                toast.error("Something went wrong")
+                toast.success("Request Sent to Remote")
             }
             else{
                 console.log(response)
-                toast.success("Request Sent to Remote")
+                toast.error("Failed to send to remote, probably already sent")
                 console.log('sent to 13')
             }
 
@@ -39,6 +41,9 @@ const Team13Card = (props) => {
             console.log(response)
             if (response.status === 201){
                 toast.success("Request Sent")
+            }else if (response.status === 409){
+                toast.warn("Already Sent")
+
             }
             else{
                 console.log(response)

@@ -8,7 +8,7 @@ import { postComment, getComments } from '../../api/Comments';
 import { Box, TextField, Divider, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Team13GetComments } from '../../api/Remote13';
+import { Team13GetComments, Team13PostComment } from '../../api/Remote13';
 
 
 const Comments = (props) => {
@@ -53,11 +53,12 @@ const Comments = (props) => {
                         data: response.data,
                     })
                 }   
-            }else if (props.object.origin === 'https://cmput404-team13.herokuapp.com/'){
+            }else if (props.object.host === 'https://cmput404-team13.herokuapp.com'){
                 Team13GetComments(props.object.author, props.object.id).then((response)=>{
+                    console.log("team13 comments")
+                    console.log(response)
                     if (response.status === 200){
-                        console.log('comments')
-                        console.log(response)
+                        
                         setComments({
                             data: response.data,
                         })
@@ -66,8 +67,12 @@ const Comments = (props) => {
                         toast.error("Error Loading comments")
                     }
 
+
                 })
 
+            }else{
+                console.log("no comments")
+                console.log(props.object)
             }
 
         })
@@ -83,53 +88,78 @@ const Comments = (props) => {
             const json = Object.fromEntries(data.entries())
             json["post_id"] = props.id
             json["author"] = localStorage.getItem("username")
-            postComment(json).then((response)=>{
-                console.log(response.status)
-                if (response.status === 401) {
-                    refreshToken().then((response)=>{
-                        if (response.status === 200) {
-                            console.log("refresh token")
-                            console.log(response.status)
-                            postComment(json).then((response)=>{
-                                if (response.status === 201){
-                                    comments.data.push(json)
-                                    setComments({
-                                      data:comments.data  
-                                    })
-                                    toast.success("comment posted")
-                                }else if (response.status === 401){
-                                    console.log("not authenticated")
-                                    localStorage.removeItem("refresh_token")
-                                    window.location.reload();
-                                    window.location.href = '/login'; 
-                                }
-                                else{
-                                    toast.error("comment NOT posted")
-                                }
-                                console.log("...");
-                            })
-                        }
-                        else {
-                            window.location.reload();
-                            window.location.href = '/login';
-                        }
-                    })
-                } else if (response.status === 201) {
+            console.log("comment post view")
+            console.log(props)
+            if (props.object.host === "https://cmput404-team13.herokuapp.com"){
+                Team13PostComment(json, "", props.id).then((response)=>{
+                    console.log("team13 comment")
+                    console.log(response)
                     comments.data.push(json)
                     setComments({
-                      data:comments.data  
+                    data:comments.data  
                     })
-                    toast.success("comment posted")
-                    
-                    console.log(comments.data.slice())
-                } else if (response.status === 404) {
-                    console.log('404')
-                    window.location.reload();
-                    window.location.href='/page-not-found';
-                }else{
-                    toast.error("comment NOT posted")
-                }
-            })
+                })
+            }else if (props.object.host === "https://true-friends-404.herokuapp.com"){
+
+                postComment(json).then((response)=>{
+                    console.log(response.status)
+                    if (response.status === 401) {
+                        refreshToken().then((response)=>{
+                            if (response.status === 200) {
+                                console.log("refresh token")
+                                console.log(response.status)
+                                postComment(json).then((response)=>{
+                                    if (response.status === 201){
+                                        comments.data.push(json)
+                                        setComments({
+                                        data:comments.data  
+                                        })
+                                        toast.success("comment posted")
+                                    }else if (response.status === 401){
+                                        console.log("not authenticated")
+                                        localStorage.removeItem("refresh_token")
+                                        window.location.reload();
+                                        window.location.href = '/login'; 
+                                    }
+                                    else{
+                                        toast.error("comment NOT posted")
+                                    }
+                                    console.log("...");
+                                })
+                            }
+                            else {
+                                window.location.reload();
+                                window.location.href = '/login';
+                            }
+                        })
+                    } else if (response.status === 201) {
+                        if (response.team13_follower === true){
+                            Team13PostComment(response.data, response.data.id, props.id).then((response)=>{
+                                console.log("team13 comment")
+                                console.log(response)
+                            })
+                        }else console.log("no team 13")
+                        if (response.team19_follower === true){
+                            console.log("send team19 the comment")
+                        }
+                        comments.data.push(json)
+                        setComments({
+                        data:comments.data  
+                        })
+                        toast.success("comment posted")
+                        
+                        console.log(comments.data.slice())
+                    } else if (response.status === 404) {
+                        console.log('404')
+                        window.location.reload();
+                        window.location.href='/page-not-found';
+                    }else{
+                        toast.error("comment NOT posted")
+                    }
+                    console.log("comment response")
+                    console.log(response)
+                })
+            }
         }
 
         const handleDelete = (e) =>{

@@ -7,11 +7,11 @@ from . import serializers
 from .serializers import AuthorSerializer
 from .models import Author
 from django.contrib.auth import login
-
+import json
 
 class AuthorView(viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
-    queryset = Author.objects.all()
+    queryset = Author.objects.filter(host="https://true-friends-404.herokuapp.com")
 
 
 class RegisterAPIView(GenericAPIView):

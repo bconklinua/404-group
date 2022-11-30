@@ -73,7 +73,7 @@ export default function PostView() {
                     window.location.href='/page-not-found';
                 }
             })
-        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com/'){
+        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com/' || location.state.host === "https://cmput404-team13.herokuapp.com"){
             Team13GetPost(location.state.author, location.state.id).then((response) => {
                 if (response.status === 200){
                     console.log('posts')
