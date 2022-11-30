@@ -45,7 +45,7 @@ class Post(models.Model):
 
     id = models.UUIDField(default=uuid.uuid4, editable=True, primary_key=True)
     type = models.CharField(default="post", editable=False, max_length=4)
-    title = models.CharField(max_length=30, default="Untitled", unique=True)
+    title = models.CharField(max_length=30, default="Untitled", unique=False)
     source = models.SlugField(max_length=100, editable=False)
     origin = models.SlugField(max_length=100, editable=False)
     description = models.CharField(max_length=200, blank=True)
