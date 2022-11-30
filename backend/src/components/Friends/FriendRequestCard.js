@@ -36,8 +36,9 @@ const FriendRequestCard = (props) => {
                     }
                 })
             }else if (response.status === 200){
+        
                 if (response.data.network === "team13_to_truefriends"){
-                    Team13AcceptRequest(props.request.id).then((response) =>{
+                    Team13AcceptRequest(props.request.sender_id).then((response) =>{
                         console.log('team13 accept request response')
                         console.log(response)
                     })
@@ -51,6 +52,7 @@ const FriendRequestCard = (props) => {
             }
             console.log("accept response")
             console.log(response)
+            console.log(props.request.sender_id)
         })
 
 
@@ -85,7 +87,7 @@ const FriendRequestCard = (props) => {
 
             }else if (response.status === 200){
                 if (response.data.network === "team13_to_truefriends"){
-                    Team13RejectRequest(props.request.id).then((response) =>{
+                    Team13RejectRequest(props.request.sender_id).then((response) =>{
                         console.log('team13 reject request response')
                         console.log(response)
                     })
