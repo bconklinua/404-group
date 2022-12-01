@@ -16,7 +16,7 @@ export default function PostCard(props) {
             <CardActionArea onClick={handleClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                    {props.post.author} posted {props.post.title}
+                    {props.post.author.username} posted {props.post.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                     {props.post.published}

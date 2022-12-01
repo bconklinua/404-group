@@ -19,12 +19,19 @@ const PostCard = (props) => {
     const navigate = useNavigate();
     let content = null
     var authorID = props.post.author
+    var displayName = props.post.author
     if (typeof props.post.author === 'string') {
         
     }else{
         var urlID = props.post.author.id.split('/');
         var id = urlID[urlID.length - 1];
         authorID = id
+        if (props.post.author.displayName){
+            displayName = props.post.author.displayName
+        }
+        else{
+            displayName = props.post.author.username
+        }
     }
 
     if (props.post.image_url != "" && props.post.image_url != undefined){

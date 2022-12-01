@@ -88,7 +88,22 @@ export default function PostView() {
 
             })
 
-        }else{
+        }else if (location.state.host === 'https://social-distribution-404.herokuapp.com'){
+            Team19GetPost(location.state.author, location.state.id).then((response) => {
+                if (response.status === 200){
+                    console.log('posts')
+                    console.log(response)
+                    setPostContent({
+                        data: response.data,
+                    })
+                }
+                else{
+                    toast.error("Error Loading Post")
+                }
+
+            }) 
+        }
+        else{
             var urlID_author = location.state.author.id.split('/');
             var id_author = urlID_author[urlID_author.length - 1];
             var urlID_post = location.state.id.split('/');
