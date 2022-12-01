@@ -193,7 +193,8 @@ CORS_ORIGIN_WHITELIST = [
      'https://true-friends-404.herokuapp.com',
      'https://cmput404-team13.herokuapp.com',
      'https://social-distribution-404.herokuapp.com',
-     'http://localhost:8000'
+     'http://localhost:8000',
+     'https://socioecon.herokuapp.com'
 ]
 
 ALLOWED_HOSTS=[     
@@ -201,7 +202,8 @@ ALLOWED_HOSTS=[
     'https://true-friends-404.herokuapp.com',
     'http://localhost:8000',
     'https://cmput404-team13.herokuapp.com',
-    'https://social-distribution-404.herokuapp.com'
+    'https://social-distribution-404.herokuapp.com',
+    'https://socioecon.herokuapp.com'
 ]
 
 CORS_ALLOW_HEADERS = [
