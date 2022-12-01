@@ -20,7 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         if not isinstance(instance, OrderedDict):
-            rep["author"] = AuthorSerializer(instance.author).data["username"]
+            rep["author"] = AuthorSerializer(instance.author).data
             rep["categories"] = [cat['name'] for cat in CategorySerializer(instance.categories.all(), many=True).data]
         return rep
 
