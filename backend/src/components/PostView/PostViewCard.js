@@ -211,7 +211,7 @@ const PostViewCard = (props) => {
         {likes}
     </div>
     ) 
-    if ('' + authorID === localStorage.getItem("username")){
+    if ('' + authorID === localStorage.getItem("authorID")){
         
         extraContent = (    
         <div className='card1'>

@@ -164,7 +164,7 @@ const PostCard = (props) => {
         </div>
         )
 
-        if ('' + authorID === localStorage.getItem("username")){
+        if ('' + authorID === localStorage.getItem("authorID")){
         }else{
             extraContent = (    
                 <div className='card1'>
