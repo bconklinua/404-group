@@ -178,7 +178,7 @@ class FRSendFromExternalView(GenericAPIView):
     @csrf_exempt
     def post(self, request, network_id, snd_uuid, snd_username, rec_uuid):
 
-        if network_id != 13 and network_id != 19:
+        if network_id != 13 and network_id != 19 and network_id != 10:
             return response.Response({"error": "invalid network ID: " + network_id}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
@@ -195,6 +195,9 @@ class FRSendFromExternalView(GenericAPIView):
             if network_id == 19:
                 sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
                                                password="password123", host='https://social-distribution-404.herokuapp.com')
+            if network_id == 10:
+                sender = Author.objects.create(id=snd_uuid, username=snd_username, email=snd_username + "@gmail.com",
+                                               password="password123", host='https://socioecon.herokuapp.com')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
@@ -212,6 +215,8 @@ class FRSendFromExternalView(GenericAPIView):
             updated_request.update({'network': 'team13_to_truefriends'})
         if network_id == 19:
             updated_request.update({'network': 'team19_to_truefriends'})
+        if network_id == 10:
+            updated_request.update({'network': 'team10_to_truefriends'})
         serializer = self.serializer_class(data=updated_request)
         if serializer.is_valid():
             serializer.save()
@@ -225,7 +230,7 @@ class FRSendToExternalView(GenericAPIView):
     @csrf_exempt
     def post(self, request, network_id, snd_uuid, rec_username, rec_uuid):
 
-        if network_id != 13 and network_id != 19:
+        if network_id != 13 and network_id != 19 and network_id != 10:
             return response.Response({"error": "invalid network ID: " + network_id}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -244,6 +249,9 @@ class FRSendToExternalView(GenericAPIView):
             if network_id == 19:
                 recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
                                                   password="password123", host='https://social-distribution-404.herokuapp.com')
+            if network_id == 10:
+                recipient = Author.objects.create(id=rec_uuid, username=rec_username, email=rec_username + "@gmail.com",
+                                                  password="password123", host='https://socioecon.herokuapp.com')
 
         # noinspection DuplicatedCode
         fr_list = FriendRequest.objects.filter(sender=sender, recipient=recipient)
@@ -263,12 +271,13 @@ class FRSendToExternalView(GenericAPIView):
             updated_request.update({'network': 'truefriends_to_team13'})
         if network_id == 19:
             updated_request.update({'network': 'truefriends_to_team19'})
+        if network_id == 10:
+            updated_request.update({'network': 'truefriends_to_team10'})
         serializer = self.serializer_class(data=updated_request)
         if serializer.is_valid():
             serializer.save()
             return response.Response(serializer.data, status=status.HTTP_201_CREATED)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class FRRejectExternalView(GenericAPIView):
 

@@ -45,7 +45,8 @@ class PostView(viewsets.ModelViewSet):
             if post_author.host == "https://true-friends-404.herokuapp.com": 
                 response_dict = {
                     "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
-                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author),
+                    "team_10_followers": has_remote_followers("https://socioecon.herokuapp.com", post_author)
                 }
         if serializer.is_valid():
             serializer.save(author=post_author)
@@ -82,6 +83,8 @@ class PostView(viewsets.ModelViewSet):
         if instance.host == "https://cmput404-team13.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
             authenticated = True
         elif instance.host == "https://social-distribution-404.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
+            authenticated = True
+        elif instance.host == "https://socioecon.herokuapp.com" and request.user.host == "https://socioecon.herokuapp.com":
             authenticated = True
         elif instance.author == request.user:
             authenticated = True

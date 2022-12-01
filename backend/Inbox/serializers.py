@@ -23,11 +23,18 @@ class InboxSerializer(serializers.ModelSerializer):
     
     def get_likes(self, obj):
         #Get posts made by the author
-        authors_posts = Post.objects.filter(author=obj.author)
+        authors_posts = Post.objects.filter(author=obj.author).filter(comment__isnull=True)
+
+        #get comments made by the author
+        authors_comments = Comment.objects.filter(author=obj.author)
         
         #add likes on author's posts
         likes = []
         for like in LikeSerializer(Like.objects.filter(post__in=authors_posts), many=True).data:
+            likes.append(like)
+
+        #add likes on author's comments
+        for like in LikeSerializer(Like.objects.filter(comment__in=authors_comments), many=True).data:
             likes.append(like)
 
         return likes
