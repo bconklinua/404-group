@@ -66,6 +66,12 @@ class PostCommentView(viewsets.ModelViewSet):
             return Response(response_dict, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = CommentSerializer(instance=instance)
+        serializer.data['count'] = instance.count
+        return Response(serializer.data)
+
 class AuthorCommentView(viewsets.ModelViewSet):
 
     serializer_class = CommentSerializer

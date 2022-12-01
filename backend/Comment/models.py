@@ -1,6 +1,7 @@
 from django.db import models
 from User.models import Author
 import uuid
+from Like.models import Like
 
 
 CONTENT_TYPE_CHOICES = [
@@ -21,3 +22,8 @@ class Comment(models.Model):
     comment = models.CharField(max_length=5000)
     post = models.ForeignKey('Post.Post', on_delete=models.CASCADE, null=True, blank=True)
     contentType = models.CharField(choices = CONTENT_TYPE_CHOICES, max_length=100, default="text/plain")
+    count = models.IntegerField(default=0)
+
+    @property
+    def count(self):
+        return Like.objects.filter(comment_id = self.id).count()
