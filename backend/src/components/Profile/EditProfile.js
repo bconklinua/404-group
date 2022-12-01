@@ -6,6 +6,7 @@ import './Profile.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PhotoCamera } from '@mui/icons-material'
 import { editUser } from '../../api/User'
+import { toast } from 'react-toastify'
 
 const EditProfile = () =>{
     const location = useLocation()
@@ -55,6 +56,12 @@ const EditProfile = () =>{
         console.log("profile edit")
         console.log(object)
         editUser(object).then((response)=>{
+            if (response.status === 200){
+                window.location.href = '/home'
+            }
+            else{
+                toast.error("failed to change profile")
+            }
             console.log(response)
         })
     }

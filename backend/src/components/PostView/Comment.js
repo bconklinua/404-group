@@ -111,7 +111,7 @@ const Comments = (props) => {
                                 console.log(response.status)
                                 postComment(json).then((response)=>{
                                     if (response.status === 201){
-                                        comments.data.push(json)
+                                        comments.data.push(response.data)
                                         setComments({
                                         data:comments.data  
                                         })
