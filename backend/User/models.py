@@ -32,7 +32,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, unique=False, default="")
     last_name = models.CharField(max_length=30, unique=False, default="")
     host = models.CharField(choices=HOST_CHOICES, default="https://true-friends-404.herokuapp.com", max_length = 50)
-    profile_image = models.CharField(default="", null=True, blank=True, max_length=3000)
+    profile_image = models.TextField(default="", null=True, blank=True)
     github = models.CharField(default="", null=True, blank=True, max_length=3000)
 
     #friend_requests = models.ManyToOneRel()
