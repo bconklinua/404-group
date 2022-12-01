@@ -11,9 +11,10 @@ import Explore from '../Explore/Explore'
 import Team13 from '../Explore/Team13'
 import Team19 from '../Explore/Team19'
 import './Profile.css'
+import { useLocation } from 'react-router-dom'
 
 const Profile = () =>{
-
+    const location = useLocation()
     const [value, setValue]= useState('1')
 
     const [profile, setProfile] = useState({
@@ -23,7 +24,8 @@ const Profile = () =>{
     const handleChange = (e, newValue) =>{
         setValue(newValue)
     }
-
+    console.log('location.state')
+    console.log(location.state)
     return (
         <main>
             <h1 className='profileName'>{profile.username}</h1>

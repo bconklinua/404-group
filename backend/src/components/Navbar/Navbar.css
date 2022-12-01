@@ -104,3 +104,22 @@ h3 {
 .active::before{
     width: 100%  
    }
+
+.homeLink{
+    font-size: 20px;
+    margin: 0 20px;
+    position: relative;
+    text-decoration: none;
+    opacity: 0.9;
+    text-transform: capitalize;
+    color: white;
+}
+.menuLink{
+    font-size: 20px;
+    margin: 0 20px;
+    position: relative;
+    text-decoration: none;
+    opacity: 0.9;
+    text-transform: capitalize;
+    color: black;
+}

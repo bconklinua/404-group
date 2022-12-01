@@ -97,3 +97,18 @@ export function getAllUsers(){
         return error
     })
 }
+
+export function getCurrentUser(){
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/`
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}

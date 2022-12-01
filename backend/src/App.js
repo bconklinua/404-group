@@ -50,7 +50,7 @@ function App() {
 
      </nav> */}
 
-     <Navbar/>
+     <ImprovedNavbar/>
      
      <Routes>
         <Route path="/home" element={<Home/>}/>

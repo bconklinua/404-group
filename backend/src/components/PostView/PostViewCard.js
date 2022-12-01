@@ -110,7 +110,7 @@ const PostViewCard = (props) => {
             }else if(response.status === 204){
                 // window.location.reload();
                 // window.location.href = '/profile'; 
-                navigate('/profile')
+                navigate('/home')
             }else{
                 toast.error('something went wrong');
             }
