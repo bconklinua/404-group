@@ -48,6 +48,7 @@ const Comments = (props) => {
                         }
                     })
                 }else if (response.status === 200){
+                    console.log("comments")
                     console.log(response)
                     setComments({
                         data: response.data,
@@ -142,7 +143,7 @@ const Comments = (props) => {
                         if (response.team19_follower === true){
                             console.log("send team19 the comment")
                         }
-                        comments.data.push(json)
+                        comments.data.push(response.data)
                         setComments({
                         data:comments.data  
                         })
