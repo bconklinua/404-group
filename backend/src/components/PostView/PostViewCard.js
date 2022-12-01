@@ -24,13 +24,19 @@ const PostViewCard = (props) => {
     var authorID = props.post.author
     console.log("postview")
     console.log(props.post.author)
-    
+    var displayName = props.post.author
     if (typeof props.post.author === 'string') {
         
     }else{
         var urlID = props.post.author.id.split('/');
         var id = urlID[urlID.length - 1];
         authorID = id
+        if (props.post.author.displayName){
+            displayName = props.post.author.displayName
+        }
+        else{
+            displayName = props.post.author.username
+        }
     }
 
     if (props.post.image_url != "" && props.post.image_url != undefined){
@@ -258,7 +264,7 @@ const PostViewCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Author: <Box fontWeight='bold' display='inline'>{authorID}</Box>
+                            Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}

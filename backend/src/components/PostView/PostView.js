@@ -73,7 +73,7 @@ export default function PostView() {
                     window.location.href='/page-not-found';
                 }
             })
-        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com/' || location.state.host === "https://cmput404-team13.herokuapp.com"){
+        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com' || location.state.host === "https://cmput404-team13.herokuapp.com"){
             Team13GetPost(location.state.author, location.state.id).then((response) => {
                 if (response.status === 200){
                     console.log('posts')
@@ -89,7 +89,7 @@ export default function PostView() {
             })
 
         }else if (location.state.host === 'https://social-distribution-404.herokuapp.com'){
-            Team19GetPost(location.state.author, location.state.id).then((response) => {
+            Team19GetPost(location.state.author.id, location.state.id).then((response) => {
                 if (response.status === 200){
                     console.log('posts')
                     console.log(response)

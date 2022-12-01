@@ -197,7 +197,7 @@ const PostCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        Author: <Box fontWeight='bold' display='inline'>{authorID}</Box>
+                        Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}
