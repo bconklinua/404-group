@@ -110,7 +110,7 @@ const PostViewCard = (props) => {
             }else if(response.status === 204){
                 // window.location.reload();
                 // window.location.href = '/profile'; 
-                navigate('/profile')
+                navigate('/home')
             }else{
                 toast.error('something went wrong');
             }
@@ -211,7 +211,7 @@ const PostViewCard = (props) => {
         {likes}
     </div>
     ) 
-    if ('' + authorID === localStorage.getItem("username")){
+    if ('' + authorID === localStorage.getItem("authorID")){
         
         extraContent = (    
         <div className='card1'>

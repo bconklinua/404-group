@@ -10,6 +10,7 @@ import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 import { Team19PostPost } from '../../api/Remote19'
 import { getFollowers } from '../../api/Friends'
 
+
 const PostPost = () => {
     const [visibility, setVisibility] = useState(false)
     const [image, setImage] = useState(null)
@@ -212,7 +213,6 @@ const PostPost = () => {
                                     <PhotoCamera />
                                 </IconButton>
                             </Typography>
-
 
 
                             <FormControlLabel label="public" control={<Switch checked={visibility} color='primary' onChange={handleChange}/>}/>

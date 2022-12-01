@@ -9,6 +9,7 @@ const CommentCard = (props) => {
     const handleLike = (e) =>{
         setLikes(likes + 1)
         console.log('liked')
+        console.log(props)
     }
     var username = props.comment.author
     if (typeof username != "string"){

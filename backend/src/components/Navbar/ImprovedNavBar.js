@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,13 +13,16 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { getCurrentUser } from '../../api/User';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ImprovedNavbar = () => {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [image, setImage] = React.useState(<Avatar src={null} />);
+    const [profile, setProfile] = React.useState(null);
   
     const handleOpenNavMenu = (event) => {
       setAnchorElNav(event.currentTarget);
@@ -35,17 +38,60 @@ const ImprovedNavbar = () => {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
-  
+    const handleProfile = () => {
+      setAnchorElUser(null);
+      console.log(profile)
+      navigate('/profile', {state: profile})
+    };
+    const handleHome = () => {
+      setAnchorElNav(null);
+      navigate('/home')
+    };
+    const handlePost = () => {
+      setAnchorElNav(null);
+      navigate('/post')
+    };
+    const handleInbox = () => {
+      setAnchorElNav(null);
+      navigate('/inbox')
+    };
+    const handleSearch = () => {
+      
+      setAnchorElNav(null);
+      navigate('/search')
+    };
+    React.useEffect(()=>{
+      setImage(<Avatar src={null} />)
+      getCurrentUser().then((response)=>{
+        setProfile(response.data)
+
+          console.log('setimage')
+          setImage(<Avatar src={response.data.profile_image}/>)
+
+
+        
+        console.log("current user")
+        console.log(response)
+      })
+    }, [])
+    const handleSignOut =()=>{
+      setAnchorElUser(null);
+      localStorage.clear();
+      window.location.href ="/login"
+    }
+
+
     return (
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: '#1F1B24' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Diversity3Icon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <NavLink to='/home' className="homeLink">
             <Typography
               variant="h6"
               noWrap
               component="a"
-              href="/"
+
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -56,9 +102,10 @@ const ImprovedNavbar = () => {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              True Friends
             </Typography>
-  
+            
+            </NavLink>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             
               <IconButton
@@ -89,19 +136,31 @@ const ImprovedNavbar = () => {
                 display: { xs: 'block', md: 'none' },
             }}
             >
-                {pages.map((page) => (
+                {/* {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
-                ))}
+                ))} */}
+                <MenuItem key='home' onClick={handleHome}>
+                  <Typography textAlign="center">Home</Typography>
+                </MenuItem>
+                <MenuItem key='post' onClick={handlePost}>
+                  <Typography textAlign="center">Post</Typography>
+                </MenuItem>
+                <MenuItem key='inbox' onClick={handleInbox}>
+                  <Typography textAlign="center">Inbox</Typography>
+                </MenuItem>
+                <MenuItem key='search' onClick={handleSearch}>
+                  <Typography textAlign="center">Search</Typography>
+                </MenuItem>
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Diversity3Icon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
               component="a"
-              href=""
+
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -113,16 +172,16 @@ const ImprovedNavbar = () => {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              True Friends
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                <NavLink to='/home' className="link">
-                    <Button key="home" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button>
+                <NavLink to='/post' className="link">
+                    <Button key="post" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Post</Button>
                 </NavLink>
                 <NavLink to='/inbox' className="link">
                     <Button key="inbox" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Inbox</Button>
                 </NavLink>
-                <NavLink>
+                <NavLink to='/Search' className="link">
                     <Button key="search" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Search</Button>
                 </NavLink>
 
@@ -141,7 +200,7 @@ const ImprovedNavbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  {image}
                 </IconButton>
               </Tooltip>
               <Menu
@@ -160,11 +219,13 @@ const ImprovedNavbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+
+                  <MenuItem key='profile' onClick={handleProfile}>
+                    <Typography textAlign="center">profile</Typography>
                   </MenuItem>
-                ))}
+                  <MenuItem key='sign out' onClick={handleSignOut}>
+                    <Typography color="red" textAlign="center">Sign Out</Typography>
+                  </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

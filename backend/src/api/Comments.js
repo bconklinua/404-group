@@ -41,3 +41,27 @@ export function postComment(param = {}){
         return error.response;
     })
 }
+export function likeComment(comment){
+    const url = `${BASE_URL}/comments/${comment.id}/likes/`
+
+    const body = {
+        author: localStorage.getItem("authorID"),
+        comment: comment.id,
+        post: comment.post_id,
+        
+    }
+
+    return axios.post(url, body, {
+        headers:{
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response) =>{
+        return response;
+    }).catch((error)=>{
+        
+        return error.response;
+    })
+
+}
