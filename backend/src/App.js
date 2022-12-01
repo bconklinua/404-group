@@ -21,6 +21,8 @@ import EditPost from './components/Post/EditPost';
 import axios from 'axios';
 import ImprovedNavbar from './components/Navbar/ImprovedNavBar'
 import EditProfile from './components/Profile/EditProfile'
+import Search from './components/Search/Search'
+
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -64,7 +66,7 @@ function App() {
         <Route path="/page-not-found"element={<PageNotFound/>}/>
         <Route path="/edit/:post_id" element={<EditPost/>}/>
         <Route path="/editProfile" element={<EditProfile/>}/>
-
+        <Route path="/search" element={<Search/>}/>
 
      </Routes>
      

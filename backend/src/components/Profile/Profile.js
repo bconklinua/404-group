@@ -22,8 +22,8 @@ const Profile = () =>{
     const handleChange = (e, newValue) =>{
         setValue(newValue)
     }
-    console.log('location.state')
-    console.log(profile.profile_image)
+    // console.log('location.state')
+    // console.log(profile.profile_image)
 
     const handleClick = () => {
         navigate('/editProfile', {state: profile})

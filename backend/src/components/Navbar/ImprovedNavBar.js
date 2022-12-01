@@ -16,9 +16,6 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { getCurrentUser } from '../../api/User';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 
 const ImprovedNavbar = () => {
     const navigate = useNavigate();
@@ -58,6 +55,11 @@ const ImprovedNavbar = () => {
       setAnchorElNav(null);
       navigate('/inbox')
     };
+    const handleSearch = () => {
+      
+      setAnchorElNav(null);
+      navigate('/search')
+    };
     React.useEffect(()=>{
       setImage(<Avatar src={null} />)
       getCurrentUser().then((response)=>{
@@ -72,7 +74,11 @@ const ImprovedNavbar = () => {
         console.log(response)
       })
     }, [])
-
+    const handleSignOut =()=>{
+      setAnchorElUser(null);
+      localStorage.clear();
+      window.location.href ="/login"
+    }
 
 
     return (
@@ -144,6 +150,9 @@ const ImprovedNavbar = () => {
                 <MenuItem key='inbox' onClick={handleInbox}>
                   <Typography textAlign="center">Inbox</Typography>
                 </MenuItem>
+                <MenuItem key='search' onClick={handleSearch}>
+                  <Typography textAlign="center">Search</Typography>
+                </MenuItem>
               </Menu>
             </Box>
             <Diversity3Icon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -172,7 +181,7 @@ const ImprovedNavbar = () => {
                 <NavLink to='/inbox' className="link">
                     <Button key="inbox" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Inbox</Button>
                 </NavLink>
-                <NavLink to='/profile' className="link">
+                <NavLink to='/Search' className="link">
                     <Button key="search" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Search</Button>
                 </NavLink>
 
@@ -214,7 +223,7 @@ const ImprovedNavbar = () => {
                   <MenuItem key='profile' onClick={handleProfile}>
                     <Typography textAlign="center">profile</Typography>
                   </MenuItem>
-                  <MenuItem key='sign out' onClick={handleCloseUserMenu}>
+                  <MenuItem key='sign out' onClick={handleSignOut}>
                     <Typography color="red" textAlign="center">Sign Out</Typography>
                   </MenuItem>
               </Menu>
