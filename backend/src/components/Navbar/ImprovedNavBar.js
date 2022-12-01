@@ -62,12 +62,12 @@ const ImprovedNavbar = () => {
       setImage(<Avatar src={null} />)
       getCurrentUser().then((response)=>{
         setProfile(response.data)
-        if (response.data.profile_image === ''){
+
           console.log('setimage')
-          setImage(<Avatar src={null}/>)
-        }else{
-          setImage(<Avatar src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318" />)
-        }
+          setImage(<Avatar src={response.data.profile_image}/>)
+
+
+        
         console.log("current user")
         console.log(response)
       })

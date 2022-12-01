@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import EditPost from './components/Post/EditPost';
 import axios from 'axios';
 import ImprovedNavbar from './components/Navbar/ImprovedNavBar'
+import EditProfile from './components/Profile/EditProfile'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -62,6 +63,7 @@ function App() {
         <Route path="/inbox"element={<Inbox/>}/>
         <Route path="/page-not-found"element={<PageNotFound/>}/>
         <Route path="/edit/:post_id" element={<EditPost/>}/>
+        <Route path="/editProfile" element={<EditProfile/>}/>
 
 
      </Routes>

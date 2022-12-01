@@ -1,6 +1,6 @@
 import react, { useState } from 'react'
 
-import {Box, Tab} from '@mui/material'
+import {Box, Tab, Card, CardContent, Typography, Avatar, Grid, Button} from '@mui/material'
 import {TabContext, TabList, TabPanel} from '@mui/lab'
 import Followers from '../Friends/Followers'
 import FriendRequestPage from '../Friends/FriendRequestPage'
@@ -11,26 +11,60 @@ import Explore from '../Explore/Explore'
 import Team13 from '../Explore/Team13'
 import Team19 from '../Explore/Team19'
 import './Profile.css'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 
 const Profile = () =>{
     const location = useLocation()
     const [value, setValue]= useState('1')
-
-    const [profile, setProfile] = useState({
-        username: localStorage.getItem("username"),
-        email: localStorage.getItem("email")
-    })
+    const navigate = useNavigate();
+    const [profile, setProfile] = useState(location.state)
     const handleChange = (e, newValue) =>{
         setValue(newValue)
     }
     console.log('location.state')
-    console.log(location.state)
+    console.log(profile.profile_image)
+
+    const handleClick = () => {
+        navigate('/editProfile', {state: profile})
+    }
+
     return (
         <main>
-            <h1 className='profileName'>{profile.username}</h1>
-            <body className='profileName'>{profile.email} </body>
             <div>
+            <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
+
+            {/* <Card sx={{ minWidth:200, maxWidth: 300 }}> */}
+
+
+                <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+                <Avatar style={{ justifyContent: "center", display: "flex" }} src={profile.profile_image} sx={{ width: 200, height: 200 }}/>
+                </Box>
+                <Box justifyContent="center" alignItems="center" p={2}>
+                <Typography gutterBottom variant="h5" component="div">
+                    {profile.username}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    description: {profile.email}
+                </Typography>
+                <br/>
+                <Button onClick={handleClick}>Edit Profile</Button>
+                </Box>
+                
+                {/* <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+
+                </Box> */}
+                {/* <Typography variant="body2" color="text.secondary">
+                Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {props.post.published}
+                </Typography> */}
+
+
+            {/* </Card> */}
+
+            </Box>
             <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList  textColor='secondary' onChange={handleChange} aria-label="tabs example" centered>

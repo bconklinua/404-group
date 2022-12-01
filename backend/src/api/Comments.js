@@ -41,3 +41,7 @@ export function postComment(param = {}){
         return error.response;
     })
 }
+export function likeComment(comment_id){
+    const url = `${BASE_URL}/comments/${comment_id}/likes/`
+    
+}

@@ -112,3 +112,20 @@ export function getCurrentUser(){
         return error
     })
 }
+
+
+export function editUser(object){
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/`
+
+    return axios.patch(url, object,{
+        headers:{
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}
