@@ -22,6 +22,7 @@ const Profile = () =>{
     const handleChange = (e, newValue) =>{
         setValue(newValue)
     }
+
     // console.log('location.state')
     // console.log(profile.profile_image)
 
@@ -45,7 +46,10 @@ const Profile = () =>{
                     {profile.username}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    description: {profile.email}
+                    {profile.email}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {profile.github}
                 </Typography>
                 <br/>
                 <Button onClick={handleClick}>Edit Profile</Button>

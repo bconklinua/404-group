@@ -23,7 +23,7 @@ const ImprovedNavbar = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [image, setImage] = React.useState(<Avatar src={null} />);
     const [profile, setProfile] = React.useState(null);
-  
+    const [icon, setIcon] = React.useState(<Diversity3Icon sx={{ color: "white", display: { xs: 'none', md: 'flex' }, mr: 1 }} />);
     const handleOpenNavMenu = (event) => {
       setAnchorElNav(event.currentTarget);
     };
@@ -45,6 +45,7 @@ const ImprovedNavbar = () => {
     };
     const handleHome = () => {
       setAnchorElNav(null);
+      setIcon(<Diversity3Icon sx={{ color: "grey", display: { xs: 'none', md: 'flex' }, mr: 1 }} />)
       navigate('/home')
     };
     const handlePost = () => {
@@ -85,7 +86,7 @@ const ImprovedNavbar = () => {
       <AppBar position="static" style={{ background: '#1F1B24' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Diversity3Icon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            {icon}
             <NavLink to='/home' className="homeLink">
             <Typography
               variant="h6"

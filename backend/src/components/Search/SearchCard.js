@@ -23,8 +23,20 @@ const SearchCard = (props) => {
     }
     const handleClick = (e) =>{
         console.log(props.user.username)
-        //window.location.href = `/user/${props.user.id}/${props.user.username}/13`
-        navigate(`/user/${props.user.id}/${props.user.displayName}/13`);
+        if (team === "team 10"){
+            navigate(`/user/${props.user.id}/${username}/10`);
+        }else if (team === "team 12"){
+            navigate(`/user/${props.user.id}/${username}/12`);
+        }else if (team === "team 13"){
+
+            navigate(`/user/${props.user.id}/${username}/13`);
+        }else if (team === "team 19"){
+
+            navigate(`/user/${props.user.id}/${username}/19`);
+        }else{
+            toast.error("Something Terrible happened!")
+        }
+        
     }
     const handleFriendRequest = (e) =>{
         console.log(team)

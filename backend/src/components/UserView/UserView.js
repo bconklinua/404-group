@@ -9,6 +9,7 @@ import PostCard from '../Post/PostCard'
 import { Team13GetPosts } from '../../api/Remote13'
 import { Team19GetPosts } from '../../api/Remote19'
 import ProfileCardView from './ProfileCardView'
+import { Divider } from '@mui/material'
 
 const UserView = () =>{
     
@@ -91,9 +92,9 @@ const UserView = () =>{
     }
     return (
         <main>
-            <h1 className='profileName'>{username}</h1>
             <ProfileCardView/>
-
+            <Divider/>
+            <br/>
             {content}
         </main>
     )
