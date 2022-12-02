@@ -38,7 +38,7 @@ const Search = () =>{
             console.log(team12.data)
             console.log(team13.data)
             console.log(team19.data)
-            const children = team10.data.items.concat(team13.data.authorsPage, team19.data.items);
+            const children = team10.data.items.concat(team13.data.authorsPage, team12.data, team19.data.items);
             setUsers({data: children, loading: false})
         }
         fetchData();
@@ -48,22 +48,11 @@ const Search = () =>{
         setSearch(e.target.value)
     }
 
-    let content = ( 
-                <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+    let content = ( <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <CircularProgress size="7rem" color="inherit"/>
                     </Box>)
+                    
     if (users.data){
         if (users.data.length === 0){
             content = (<div className="none">No Users</div>)

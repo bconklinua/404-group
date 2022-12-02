@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getFollowings } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FollowingCard from './FollowingCard'
+import { CircularProgress, Box } from '@mui/material'
 
 const Followings = () => {
     const [followings, setFollowings] = useState({
@@ -51,7 +52,10 @@ const Followings = () => {
         })
     }
 
-    let content = null;
+    let content = ( <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <CircularProgress size="7rem" color="inherit"/>
+                    </Box>)
     console.log(followings.data)
     if (followings.data){
         if (followings.data.length === 0){

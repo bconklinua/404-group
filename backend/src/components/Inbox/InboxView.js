@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LikesCard from './LikesCard';
 import CommentCard from './CommentCard'
 import PostCard from "./PostCard"
+import { CircularProgress, Box } from '@mui/material';
 
 const InboxView = (props) =>{
     const [posts, setPosts] = useState({
@@ -49,7 +50,10 @@ const InboxView = (props) =>{
         })
     }, [])
 
-    let content = null;
+    let content = ( <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <CircularProgress size="7rem" color="inherit"/>
+                    </Box>)
 
     if (posts.data){
         if (posts.data.length === 0){

@@ -27,21 +27,7 @@ const SearchCard = (props) => {
         navigate(`/user/${props.user.id}/${props.user.displayName}/13`);
     }
     const handleFriendRequest = (e) =>{
-        console.log("team 10 request")
-        // sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
-        //     console.log('remoterequest')
-        //     console.log(response)
-        //     if (response.status === 201){
-        //         toast.success("Request Sent")
-        //     }else if (response.status === 409){
-        //         toast.warn("Already Sent")
-
-        //     }
-        //     else{
-        //         console.log(response)
-        //         toast.error("Something went wrong on our server")
-        //     }
-        // })
+        console.log(team)
 
     }
 

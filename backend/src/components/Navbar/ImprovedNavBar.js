@@ -151,7 +151,7 @@ const ImprovedNavbar = () => {
                   <Typography textAlign="center">Inbox</Typography>
                 </MenuItem>
                 <MenuItem key='search' onClick={handleSearch}>
-                  <Typography textAlign="center">Search</Typography>
+                  <Typography textAlign="center">Explore</Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -182,7 +182,7 @@ const ImprovedNavbar = () => {
                     <Button key="inbox" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Inbox</Button>
                 </NavLink>
                 <NavLink to='/Search' className="link">
-                    <Button key="search" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Search</Button>
+                    <Button key="search" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>Explore</Button>
                 </NavLink>
 
 
