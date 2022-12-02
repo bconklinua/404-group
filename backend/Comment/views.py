@@ -38,10 +38,11 @@ class PostCommentView(viewsets.ModelViewSet):
             if post_author.host == "https://true-friends-404.herokuapp.com": 
                 response_dict = {
                     "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
-                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author),
+                    "team_10_followers": has_remote_followers("https://socioecon.herokuapp.com", post_author)
                 }
         except:
-            return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
+            return Response("Cannot comment on post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
         if author_id and author_username:
             try:
                 comment_author = Author.objects.filter(username=author_username).get(id=author_id)
@@ -88,3 +89,9 @@ class AuthorCommentView(viewsets.ModelViewSet):
                 else:
                     return Comment.objects.filter(author_id=-1)
         return Comment.objects.filter(author_id=-1)
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = CommentSerializer(instance=instance)
+        serializer.data['count'] = instance.count
+        return Response(serializer.data)
