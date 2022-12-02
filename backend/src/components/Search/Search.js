@@ -59,22 +59,22 @@ const Search = () =>{
         }
         else{
             content = users.data.filter((item)=>{
-                if (search === ''){
+                if (search.toLowerCase() === ''){
                     return item
-                }else if (search === 'team 10'){
+                }else if (search.toLowerCase() === 'team 10'){
                     return item
-                }else if (search === 'team 12'){
+                }else if (search.toLowerCase() === 'team 12'){
                     return item.host.toLowerCase().includes("https://true-friends-404.herokuapp.com")
-                }else if (search === 'team 13'){
+                }else if (search.toLowerCase() === 'team 13'){
                     return item.host.toLowerCase().includes("https://cmput404-team13.herokuapp.com")
-                }else if (search === 'team 19'){
+                }else if (search.toLowerCase() === 'team 19'){
                     return item.host.toLowerCase().includes("https://social-distribution-404.herokuapp.com/")
                 }
                 else{
                     if (item.displayName !== undefined){
-                        return item.displayName.toLowerCase().includes(search)
+                        return item.displayName.toLowerCase().includes(search.toLowerCase())
                     }else{
-                        return item.username.toLowerCase().includes(search)
+                        return item.username.toLowerCase().includes(search.toLowerCase())
                     }
 
                 }
@@ -99,6 +99,7 @@ const Search = () =>{
             >      
             <TextField
                 sx={{ width: '50%' }}
+                helperText="Let's say you want to view only team 12. Type 'team 12'"
                 id="text"
                 label="Search"
                 onChange={handleSearch}
