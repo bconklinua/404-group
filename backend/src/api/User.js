@@ -129,3 +129,18 @@ export function editUser(object){
         return error
     }) 
 }
+
+export function getUser(id){
+    const url = `${BASE_URL}/authors/${id}/`
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin":"*",
+            Authorization: `JWT ${localStorage.getItem("access_token")}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}

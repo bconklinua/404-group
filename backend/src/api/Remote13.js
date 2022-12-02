@@ -331,3 +331,18 @@ export function Team13PostComment(comment, id, post_id){
         return error
     }) 
 }
+
+export function Team13GetUser(foreign_author_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${foreign_author_id}`
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })     
+}

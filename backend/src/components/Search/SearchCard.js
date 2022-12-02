@@ -28,6 +28,17 @@ const SearchCard = (props) => {
     }
     const handleFriendRequest = (e) =>{
         console.log(team)
+        if (team === "team 10"){
+            toast.success(team)
+        }else if (team === "team 12"){
+            toast.success(team)
+        }else if (team === "team 13"){
+            toast.success(team)
+        }else if (team === "team 19"){
+            toast.success(team)
+        }else{
+            toast.error("Something Terrible happened!")
+        }
 
     }
 
