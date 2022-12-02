@@ -281,8 +281,8 @@ const PostPost = () => {
                                 <TextField
                                     {...params}
                                     variant="filled"
-                                    label="freeSolo"
-                                    placeholder="Favorites"
+                                    label="Tags"
+                                    placeholder="Categories"
                                 />
                                 )}
                                 onChange={handleTags}
