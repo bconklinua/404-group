@@ -151,7 +151,7 @@ export function Team13GetComments(foreign_author_id, post_id){
 export function Team13PostPost(post_id, json){
     const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts`
     var content = json.content
-    var contentType = 'text/plain'
+    var contentType = json.contentType
     if (json.image_url){
         content = json.image_url
         contentType = 'image'

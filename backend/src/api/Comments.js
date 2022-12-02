@@ -43,7 +43,8 @@ export function postComment(param = {}){
 }
 export function likeComment(comment){
     const url = `${BASE_URL}/comments/${comment.id}/likes/`
-
+    console.log("in the axios comment like")
+    console.log(comment)
     const body = {
         author: localStorage.getItem("authorID"),
         comment: comment.id,

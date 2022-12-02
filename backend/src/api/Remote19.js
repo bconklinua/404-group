@@ -108,7 +108,7 @@ export function Team19PostPost(post, remoteID){
     var content = post.content
     const body = {
         type: "post",
-        id: localStorage.getItem("authorID"),
+        id: post.id,
         source: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
         origin: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
         contentType: contentType,

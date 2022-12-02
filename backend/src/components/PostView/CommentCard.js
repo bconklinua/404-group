@@ -10,7 +10,7 @@ const CommentCard = (props) => {
     const handleLike = (e) =>{
         setLikes(likes + 1)
         
-        likeComment(props).then((response)=>{
+        likeComment(props.comment).then((response)=>{
             console.log('liked')
             console.log(response)
         })
