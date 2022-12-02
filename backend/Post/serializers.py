@@ -22,7 +22,5 @@ class PostSerializer(serializers.ModelSerializer):
         if not isinstance(instance, OrderedDict):
             rep["author"] = AuthorSerializer(instance.author).data
             rep["categories"] = [cat['name'] for cat in CategorySerializer(instance.categories.all(), many=True).data]
-            if instance.original_author:
-                rep["original_author"] = AuthorSerializer(instance.original_author).data
         return rep
 
