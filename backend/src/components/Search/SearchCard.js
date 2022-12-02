@@ -1,6 +1,6 @@
 import React from 'react'
 import '../Friends/ProfileCard.css'
-import { Box, Typography, Card, CardContent, CardActionArea, Button } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardActionArea, Button, Avatar } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendRemoteFriendRequest } from '../../api/Friends';
@@ -58,13 +58,21 @@ const SearchCard = (props) => {
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={1} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
             <Card sx={{ minWidth:500, maxWidth: 500 }}>
             <CardActionArea onClick={handleClick}>
+
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                    {username}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                    {team}
-                    </Typography>
+                    <Box display="flex" sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
+                        <Box display="flex" justifyContent="center" alignItems="center" p={2}>
+                        <Avatar style={{ justifyContent: "center", display: "flex" }} src={props.user.profile_image} sx={{ width: 50, height: 50 }}/>
+                        </Box>
+                        <Box justifyContent="center" alignItems="center" p={2}>
+                        <Typography gutterBottom variant="h5" component="div">
+                        {username}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        {team}
+                        </Typography>
+                        </Box>
+                    </Box>
                 </CardContent>
             </CardActionArea>
             <Button onClick={handleFriendRequest}>Friend Request</Button>

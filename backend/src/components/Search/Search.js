@@ -38,7 +38,7 @@ const Search = () =>{
             console.log(team12.data)
             console.log(team13.data)
             console.log(team19.data)
-            const children = team10.data.items.concat(team13.data.authorsPage, team12.data, team19.data.items);
+            const children = team12.data.concat(team13.data.authorsPage, team10.data.items, team19.data.items);
             setUsers({data: children, loading: false})
         }
         fetchData();
@@ -52,7 +52,7 @@ const Search = () =>{
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <CircularProgress size="7rem" color="inherit"/>
                     </Box>)
-                    
+
     if (users.data){
         if (users.data.length === 0){
             content = (<div className="none">No Users</div>)

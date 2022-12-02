@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { getCurrentUser } from '../../api/User';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-
+import SearchIcon from '@mui/icons-material/Search';
 
 const ImprovedNavbar = () => {
     const navigate = useNavigate();
