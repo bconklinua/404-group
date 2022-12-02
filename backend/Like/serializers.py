@@ -1,4 +1,5 @@
 from Post.serializers import PostSerializer
+from Comment.serializers import CommentSerializer
 from rest_framework import serializers
 from .models import Like
 from User.serializers import AuthorSerializer

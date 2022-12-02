@@ -15,16 +15,29 @@ import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
 
+let ConvertStringToHTML = function (str) {
+    let parser = new DOMParser();
+    let doc = parser.parseFromString(str, 'text/html');
+    return doc;
+ };
+
 const PostCard = (props) => {
     const navigate = useNavigate();
     let content = null
     var authorID = props.post.author
+    var displayName = props.post.author
     if (typeof props.post.author === 'string') {
         
     }else{
         var urlID = props.post.author.id.split('/');
         var id = urlID[urlID.length - 1];
         authorID = id
+        if (props.post.author.displayName){
+            displayName = props.post.author.displayName
+        }
+        else{
+            displayName = props.post.author.username
+        }
     }
 
     if (props.post.image_url != "" && props.post.image_url != undefined){
@@ -41,14 +54,23 @@ const PostCard = (props) => {
             // <img src={imgurl} alt="Girl in a jacket" ></img>
         )
     }else{
-        if (props.post.host === "https://true-friends-404.herokuapp.com")
-            content = (<h4>{props.post.content}</h4>)
+        if (props.post.host === "https://true-friends-404.herokuapp.com"){
+            var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+            console.log(contentStuff)
+            //content = (<h4 id="content">{contentStuff}</h4>)
+            
+            content = (<h4>{contentStuff}</h4>)
+        }
+
         else {
             if (props.post.contentType === 'image'){
                 content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
                 
             }else{
-                content = (<h4>{props.post.content}</h4>)
+                var contentStuff = props.post.content
+                contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+                content = (<h4>{contentStuff}</h4>)
+
             }
             
         }
@@ -157,7 +179,7 @@ const PostCard = (props) => {
         </div>
         )
 
-        if ('' + authorID === localStorage.getItem("username")){
+        if ('' + authorID === localStorage.getItem("authorID")){
         }else{
             extraContent = (    
                 <div className='card1'>
@@ -181,6 +203,8 @@ const PostCard = (props) => {
 
             <Card sx={{ minWidth:500, maxWidth: 500 }}>
                 <CardActionArea onClick={handleClick}>
+                    <h4 id="content"></h4>
+
                     {content}
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -190,7 +214,7 @@ const PostCard = (props) => {
                             description: {props.post.description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        Author: <Box fontWeight='bold' display='inline'>{authorID}</Box>
+                        Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}

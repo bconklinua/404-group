@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import PostCard from "../Post/PostCard";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CircularProgress, Box } from '@mui/material';
+
 const MyPosts = () => {
     const [posts, setPosts] = useState({
         data: null,
@@ -48,7 +50,22 @@ const MyPosts = () => {
         })
     }, [])
 
-    let content = null;
+    let content = ( 
+        <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        <CircularProgress size="7rem" color="inherit"/>
+        </Box>)
 
     if (posts.data){
         if (posts.data.length === 0){

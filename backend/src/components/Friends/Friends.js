@@ -4,6 +4,7 @@ import { refreshToken } from '../../api/User'
 import FriendCard from './FriendCard'
 import PostCard from '../Post/PostCard'
 import { getPosts } from '../../api/Post'
+import { CircularProgress, Box } from '@mui/material'
 
 const Friends = () => {
     const [friends, setFriends] = useState({
@@ -49,7 +50,10 @@ const Friends = () => {
         })
     }
 
-    let content = null;
+    let content = ( <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <CircularProgress size="7rem" color="inherit"/>
+                    </Box>)
     console.log(friends.data)
     if (friends.data){
         if (friends.data.length === 0){

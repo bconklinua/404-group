@@ -2,24 +2,44 @@ import react, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { postPost } from '../../api/Post'
 import {PhotoCamera} from '@mui/icons-material'
-import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, Typography, TextareaAutosize } from '@mui/material'
+import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, Typography, TextareaAutosize, Autocomplete, Stack, Chip, TextField } from '@mui/material'
 import { refreshToken } from '../../api/User'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 import { Team19PostPost } from '../../api/Remote19'
-import { getFollowers } from '../../api/Friends'
+import { getFollowers, getFriends } from '../../api/Friends'
 
+const top100Films = [
+    { title: 'Funny' },
+    { title: 'Joy' },
+    { title: 'Happy' },
+    { title: 'Serious' },
+    { title: 'Dark' },
+    { title: 'Gross' },
+    { title: "Anxiety" },
+    { title: 'Depression' },
+
+]
 const PostPost = () => {
     const [visibility, setVisibility] = useState(false)
     const [image, setImage] = useState(null)
     const [unlisted, setUnlisted] = useState(false)
     const [file, setFile] = useState(undefined)
+    const [categories, setCategories] = useState([])
+    const [markDown, setMarkDown] = useState(false)
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
+        console.log('hello')
+        console.log(JSON.stringify(categories))
+        if (markDown){
+            json["contentType"] = "text/markdown"
+        }else{
+            json["contentType"] = "text/plain"
+        }
         if (visibility){
             json["visibility"] = "PUBLIC"
         }else{
@@ -70,6 +90,7 @@ const PostPost = () => {
                         }
                     })
                 }else if (response.status === 201){
+                    const post = response.data
                     if (response.data.team13_followers === true){
                         Team13PostPost(response.data.id, response.data).then((response)=>{
                             if (response.status === 200){
@@ -89,9 +110,41 @@ const PostPost = () => {
 
                         })
                     }else console.log('no team 13 followers')
-                    if (response.data.team19_followers === false){
+                    if (post.unlisted === true){
 
-                    }else console.log('no team 19 followers')
+                    }
+                    else if (post.visibility === "PUBLIC"){
+                        getFollowers().then((response)=>{
+                            for (let i = 0; i < response.data.length; i++){
+                                if (response.data[i].sender_host === "https://social-distribution-404.herokuapp.com"){
+                                    console.log('team 19 follower')
+                                    Team19PostPost(post, response.data[i].sender_id).then((response)=>{
+                                        console.log(response.data[i].sender_username)
+                                        console.log(response)
+                                    })
+                                }
+                            }
+                            console.log("creatine")
+                            console.log(response)
+                            // Team19PostPost(response.data).then((response)=>{
+                            //     console.log(response)
+                            // })
+                        })
+                    }
+                    else if (post.visibility === "FRIENDS"){
+                        getFriends().then((response)=>{
+                            for (let i = 0; i < response.data.length; i++){
+                                if (response.data[i].friend_host === "https://social-distribution-404.herokuapp.com"){
+                                    console.log('team 19 friend')
+                                    Team19PostPost(post, response.data[i].friend_id).then((response)=>{
+                                        console.log(response.data[i].friend_username)
+                                        console.log(response)
+                                    })
+                                }
+                            }
+                        })
+        
+                    }
 
                     console.log("posted")
                     toast.success('Posted!')
@@ -112,22 +165,7 @@ const PostPost = () => {
                 }
                 console.log(response)
             })
-            getFollowers().then((response)=>{
-                for (let i = 0; i < response.data.length; i++){
-                    if (response.data[i].sender_host === "https://social-distribution-404.herokuapp.com"){
-                        console.log('team 19 follower')
-                        Team19PostPost(json, response.data[i].sender_id).then((response)=>{
-                            console.log(response.data[i].sender_username)
-                            console.log(response)
-                        })
-                    }
-                }
-                console.log("creatine")
-                console.log(response)
-                // Team19PostPost(response.data).then((response)=>{
-                //     console.log(response)
-                // })
-            })
+
 
 
             console.log(json)
@@ -163,6 +201,16 @@ const PostPost = () => {
         console.log("unlisted")
     }
 
+    const handleTags = (e, value) =>{
+        console.log(e)
+        console.log(value)
+        setCategories(value)
+    }
+
+    const handleMarkDown = (e) =>{
+        setMarkDown(e.target.checked)
+        console.log(e.target.checked)
+    }
 
     return (
         // <main>
@@ -201,7 +249,7 @@ const PostPost = () => {
                                 <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description' id='description'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <input className='input1' placeholder="content" name='content' id='content'/>
+                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="content" name='content' id='content'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <input className='input1' placeholder="image link" name='image_url' id='image_url'/>
@@ -214,13 +262,38 @@ const PostPost = () => {
                             </Typography>
 
 
-
                             <FormControlLabel label="public" control={<Switch checked={visibility} color='primary' onChange={handleChange}/>}/>
                             <FormControlLabel label="unlisted" control={<Switch checked={unlisted} color="primary" onChange={handleUnlisted}/>}/>
+                            <FormControlLabel label="Mark Down" control={<Switch checked={markDown} color="primary" onChange={handleMarkDown}/>}/>
+                            <Stack spacing={3} sx={{ width: 500 }}>
+                            <Autocomplete
+                                multiple
+                                id="tags"
+                                name='tags'
+                                freeSolo
+                                options={top100Films.map((option) => option.title)}
+                                renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                                ))
+                                }
+                                renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="filled"
+                                    label="Tags"
+                                    placeholder="Categories"
+                                />
+                                )}
+                                onChange={handleTags}
+                            />
+                            </Stack>
+
                             <Typography gutterBottom variant="h5" component="div">
                                 <Button type="submit" onSubmit={handleSubmit} color='primary'>Submit</Button>
                             </Typography>
                             
+            
                             </div>
                         </form>
                     </main>

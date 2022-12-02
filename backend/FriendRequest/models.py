@@ -10,7 +10,9 @@ class FriendRequest(models.Model):
         ('truefriends_to_team13', _('Friend Request From TrueFriends to the Team 13 Network')),
         ('team13_to_truefriends', _('Friend Request From the Team 13 Network to TrueFriends')),
         ('truefriends_to_team19', _('Friend Request From TrueFriends to the Team 19 Network')),
-        ('team19_to_truefriends', _('Friend Request From the Team 19 Network to TrueFriends'))
+        ('team19_to_truefriends', _('Friend Request From the Team 19 Network to TrueFriends')),
+        ('truefriends_to_team10', _('Friend Request From TrueFriends to the Team 10 Network')),
+        ('team10_to_truefriends', _('Friend Request From the Team 10 Network to TrueFriends'))
     )
 
     objects = models.manager

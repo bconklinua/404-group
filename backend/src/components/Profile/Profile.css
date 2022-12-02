@@ -2,3 +2,15 @@
     height: 5vh;
     text-align: center;
 }
+
+.profileInput {
+
+    height: 2em;
+    width: 100%;
+    border-radius: 0.25em;
+
+    padding: 2em;
+    outline-color: rgb(49, 53, 143);
+    border-radius: 1em;
+    
+}

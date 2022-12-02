@@ -108,7 +108,7 @@ export function Team19PostPost(post, remoteID){
     var content = post.content
     const body = {
         type: "post",
-        id: localStorage.getItem("authorID"),
+        id: post.id,
         source: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
         origin: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
         contentType: contentType,
@@ -139,4 +139,22 @@ export function Team19PostPost(post, remoteID){
     }).catch((error)=>{
         return error
     }) 
+}
+
+export function Team19GetUser(foreign_author_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}`
+    return axios.get(url, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
 }

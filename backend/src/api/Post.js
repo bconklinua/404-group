@@ -84,6 +84,7 @@ export function postPost(param = {}){
     form_data.append("visibility", param.visibility)
     form_data.append("unlisted", param.unlisted)
     form_data.append("image_url", param.image_url)
+    form_data.append("contentType", param.contentType)
 
     return axios.post(url, form_data, {
         headers:{

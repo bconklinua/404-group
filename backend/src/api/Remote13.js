@@ -42,6 +42,7 @@ export function Team13SendRequest(foreign_author_id){
         author:{
             id: `${localStorage.getItem('authorID')}`,
             displayName: `${localStorage.getItem('username')}`,
+            host: 'https://true-friends-404.herokuapp.com',
         }
     }
     console.log(url)
@@ -150,7 +151,7 @@ export function Team13GetComments(foreign_author_id, post_id){
 export function Team13PostPost(post_id, json){
     const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts`
     var content = json.content
-    var contentType = 'text/plain'
+    var contentType = json.contentType
     if (json.image_url){
         content = json.image_url
         contentType = 'image'
@@ -167,11 +168,13 @@ export function Team13PostPost(post_id, json){
         published: json.published,
         author: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         },
         originalAuthor: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         },
         id: post_id
     }
@@ -227,7 +230,8 @@ export function Team13AddLike(author_id, post_id){
     const body = {
         author: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         }
     }
 
@@ -278,11 +282,13 @@ export function Team13EditPost(json){
         published: json.published,
         author: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         },
         originalAuthor: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         },
         id: json.post_id
     }
@@ -305,7 +311,8 @@ export function Team13PostComment(comment, id, post_id){
         comment: comment.comment,
         author: {
             id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username')
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
         },
     }
     if (id != ""){
@@ -323,4 +330,19 @@ export function Team13PostComment(comment, id, post_id){
     }).catch((error)=>{
         return error
     }) 
+}
+
+export function Team13GetUser(foreign_author_id){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${foreign_author_id}`
+
+    return axios.get(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })     
 }

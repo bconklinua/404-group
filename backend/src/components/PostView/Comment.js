@@ -48,12 +48,13 @@ const Comments = (props) => {
                         }
                     })
                 }else if (response.status === 200){
+                    console.log("comments")
                     console.log(response)
                     setComments({
                         data: response.data,
                     })
                 }   
-            }else if (props.object.host === 'https://cmput404-team13.herokuapp.com'){
+            }else if (props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
                 Team13GetComments(props.object.author, props.object.id).then((response)=>{
                     console.log("team13 comments")
                     console.log(response)
@@ -90,8 +91,10 @@ const Comments = (props) => {
             json["author"] = localStorage.getItem("username")
             console.log("comment post view")
             console.log(props)
-            if (props.object.host === "https://cmput404-team13.herokuapp.com"){
+            if (props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
+                toast.info('called')
                 Team13PostComment(json, "", props.id).then((response)=>{
+                    toast.info('team 13 sent')
                     console.log("team13 comment")
                     console.log(response)
                     comments.data.push(json)
@@ -110,7 +113,7 @@ const Comments = (props) => {
                                 console.log(response.status)
                                 postComment(json).then((response)=>{
                                     if (response.status === 201){
-                                        comments.data.push(json)
+                                        comments.data.push(response.data)
                                         setComments({
                                         data:comments.data  
                                         })
@@ -142,7 +145,7 @@ const Comments = (props) => {
                         if (response.team19_follower === true){
                             console.log("send team19 the comment")
                         }
-                        comments.data.push(json)
+                        comments.data.push(response.data)
                         setComments({
                         data:comments.data  
                         })
