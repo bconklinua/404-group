@@ -99,7 +99,7 @@ const Search = () =>{
             >      
             <TextField
                 sx={{ width: '50%' }}
-                helperText="Let's say you want to view only team 12. Type 'team 12'"
+                helperText="Let's say you want to view all team 12 users. Type 'team 12'"
                 id="text"
                 label="Search"
                 onChange={handleSearch}
