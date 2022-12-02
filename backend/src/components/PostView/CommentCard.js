@@ -4,15 +4,21 @@ import { Box, CardContent, Typography, Card, IconButton } from '@mui/material'
 import Favorite from '@mui/icons-material/Favorite';
 import { useState } from 'react';
 import { likeComment } from '../../api/Comments';
+import { toast } from 'react-toastify';
 
 const CommentCard = (props) => {
-    const [likes, setLikes] = useState(0);
+    const [likes, setLikes] = useState(props.comment.count);
     const handleLike = (e) =>{
-        setLikes(likes + 1)
         
         likeComment(props.comment).then((response)=>{
             console.log('liked')
-            console.log(response)
+            if (response.status === 201){
+                setLikes(likes + 1)
+            }else if (response.status === 202){
+                setLikes(likes - 1)
+            }else{
+                toast.error("Something Terrible has Happened")
+            }
         })
     }
     var username = props.comment.author
