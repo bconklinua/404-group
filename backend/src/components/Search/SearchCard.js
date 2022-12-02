@@ -3,10 +3,11 @@ import '../Friends/ProfileCard.css'
 import { Box, Typography, Card, CardContent, CardActionArea, Button, Avatar } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendRemoteFriendRequest } from '../../api/Friends';
+import { sendRemoteFriendRequest, sendFriendRequest } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { Team13SendRequest } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
+import { Team19SendRequest } from '../../api/Remote19';
 
 const SearchCard = (props) => {
     const navigate = useNavigate();
@@ -41,19 +42,88 @@ const SearchCard = (props) => {
     const handleFriendRequest = (e) =>{
         console.log(team)
         if (team === "team 10"){
-            toast.success(team)
+            toast.info(team)
         }else if (team === "team 12"){
-            toast.success(team)
+            sendFriendRequest(props.user.id).then((response) =>{
+                if (response.status === 201){
+                    toast.success("Request Sent")
+                    console.log(response)
+                }else if (response.status === 409){
+                    toast.warn("Already Sent")
+                }
+                else{
+                    toast.error("Something went wrong")
+                }
+                console.log(response.status)
+            })
         }else if (team === "team 13"){
-            toast.success(team)
+            Team13SendRequest(props.user.id).then((response) =>{
+                console.log("team 13 friend request")
+                console.log(response)
+                if (response.status === 200){
+                    toast.success("Request Sent to Remote")
+                }
+                else{
+                    console.log(response)
+                    toast.error("Failed to send to remote, probably already sent")
+                    console.log('sent to 13')
+                }
+    
+            })
+            sendRemoteFriendRequest(13, props.user.displayName, props.user.id).then((response) =>{
+                console.log('remoterequest')
+                console.log(response)
+                if (response.status === 201){
+                    toast.success("Request Sent")
+                }else if (response.status === 409){
+                    toast.warn("Already Sent")
+                }
+                else{
+                    console.log(response)
+                    toast.error("Something went wrong on our server")
+                }
+            })
         }else if (team === "team 19"){
-            toast.success(team)
+            var urlID = props.user.id.split('/');
+            var id = urlID[urlID.length - 1];
+            Team19SendRequest(id).then((response) =>{
+                if (response.status === 401){
+    
+                }else if (response.status === 201){
+                    toast.success("Request Sent to Remote")
+                    console.log(response)
+                }else if (response.status === 409){
+                    toast.warn("Already Sent to Remote")
+                }
+                else{
+                    toast.error("Something Terrible Happened")
+                    console.log(response.response.data)
+                }
+                
+            })
+    
+            sendRemoteFriendRequest(19, props.user.displayName, id).then((response) =>{
+                console.log(response)
+                if (response.status === 201){
+                    toast.success("Request Sent")
+                }else if (response.status === 409){
+                    toast.warn("Already Sent")
+                }
+                else{
+                    console.log(response)
+                    toast.error("Something went wrong on our server")
+                }
+                
+            })
         }else{
             toast.error("Something Terrible happened!")
         }
 
     }
-
+    let button = null
+    if (localStorage.getItem("username") !== props.user.username){
+        button = <Button onClick={handleFriendRequest}>Friend Request</Button>
+    }
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={1} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
             <Card sx={{ minWidth:500, maxWidth: 500 }}>
@@ -62,7 +132,7 @@ const SearchCard = (props) => {
                 <CardContent>
                     <Box display="flex" sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
                         <Box display="flex" justifyContent="center" alignItems="center" p={2}>
-                        <Avatar style={{ justifyContent: "center", display: "flex" }} src={props.user.profile_image} sx={{ width: 50, height: 50 }}/>
+                        <Avatar style={{ justifyContent: "center", display: "flex" }} src={props.user.profile_image} sx={{ width: 70, height: 70 }}/>
                         </Box>
                         <Box justifyContent="center" alignItems="center" p={2}>
                         <Typography gutterBottom variant="h5" component="div">
@@ -75,7 +145,8 @@ const SearchCard = (props) => {
                     </Box>
                 </CardContent>
             </CardActionArea>
-            <Button onClick={handleFriendRequest}>Friend Request</Button>
+            {button}
+
             </Card>
             
         </Box>

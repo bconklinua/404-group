@@ -21,10 +21,6 @@ const EditProfile = () =>{
     console.log('edit profile object')
     console.log(profile.profile_image)
 
-    const handleClick = () => {
-        navigate('/editProfile', {state: profile})
-    }
-
     const uploadImage = (e) =>{
 
 
@@ -49,6 +45,7 @@ const EditProfile = () =>{
         const data = new FormData(e.target)
         const json = Object.fromEntries(data.entries())
         var object = {}
+        // TODO: change username
         //if (json.username !== profile.username) object['username'] = json.username
         if (json.email !== profile.email) object['email'] = json.email
         if (json.github !== profile.github) object['github'] = json.github

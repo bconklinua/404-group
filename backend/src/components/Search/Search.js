@@ -61,7 +61,16 @@ const Search = () =>{
             content = users.data.filter((item)=>{
                 if (search === ''){
                     return item
-                }else{
+                }else if (search === 'team 10'){
+                    return item
+                }else if (search === 'team 12'){
+                    return item.host.toLowerCase().includes("https://true-friends-404.herokuapp.com")
+                }else if (search === 'team 13'){
+                    return item.host.toLowerCase().includes("https://cmput404-team13.herokuapp.com")
+                }else if (search === 'team 19'){
+                    return item.host.toLowerCase().includes("https://social-distribution-404.herokuapp.com/")
+                }
+                else{
                     if (item.displayName !== undefined){
                         return item.displayName.toLowerCase().includes(search)
                     }else{

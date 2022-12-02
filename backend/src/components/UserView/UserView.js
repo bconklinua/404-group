@@ -9,7 +9,8 @@ import PostCard from '../Post/PostCard'
 import { Team13GetPosts } from '../../api/Remote13'
 import { Team19GetPosts } from '../../api/Remote19'
 import ProfileCardView from './ProfileCardView'
-import { Divider } from '@mui/material'
+import { Divider, CircularProgress, Box } from '@mui/material'
+
 
 const UserView = () =>{
     
@@ -76,7 +77,11 @@ const UserView = () =>{
         }
 
     }, [])
-    let content = null;
+    let content = ( <Box display="flex" justifyContent="center" alignItems="center" sx={{ display: 'flex', color: 'grey.500' }}>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <CircularProgress size="7rem" color="inherit"/>
+                </Box>)
+
     console.log(userPost.data)
     if (userPost.data){
         if (userPost.data.length === 0){

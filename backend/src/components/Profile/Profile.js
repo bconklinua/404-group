@@ -12,7 +12,7 @@ import Team13 from '../Explore/Team13'
 import Team19 from '../Explore/Team19'
 import './Profile.css'
 import { useLocation, useNavigate } from 'react-router-dom'
-
+import Github from '../Github/Github'
 
 const Profile = () =>{
     const location = useLocation()
@@ -73,24 +73,26 @@ const Profile = () =>{
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList  textColor='secondary' onChange={handleChange} aria-label="tabs example" centered>
                         <Tab label="My Post" value="1" />
-                        <Tab label="Friends" value="2"/>
-                        <Tab label="Follower" value="3"/>
-                        <Tab label="Following" value="4"/>
-                        <Tab label="Friend Requests" value="5"/>
-                        <Tab label="Explore" value="6"/>
-                        <Tab label="Team 13" value="7"/>
-                        <Tab label="Team 19" value="8"/>
+                        <Tab label="Github" value="2" />
+                        <Tab label="Friends" value="3"/>
+                        <Tab label="Follower" value="4"/>
+                        <Tab label="Following" value="5"/>
+                        <Tab label="Friend Requests" value="6"/>
+                        <Tab label="Explore" value="7"/>
+                        <Tab label="Team 13" value="8"/>
+                        <Tab label="Team 19" value="9"/>
                     </TabList>
                 </Box>
                 
                 <TabPanel value="1"> <MyPosts/> </TabPanel>
-                <TabPanel value="2"> <Friends/></TabPanel>
-                <TabPanel value="3"> <Followers/></TabPanel>
-                <TabPanel value="4"> <Followings/></TabPanel>
-                <TabPanel value="5"> <FriendRequestPage/></TabPanel>
-                <TabPanel value="6"> <Explore/></TabPanel>
-                <TabPanel value="7"> <Team13/></TabPanel>
-                <TabPanel value="8"> <Team19/></TabPanel>
+                <TabPanel value="2"> <Github/> </TabPanel>
+                <TabPanel value="3"> <Friends/></TabPanel>
+                <TabPanel value="4"> <Followers/></TabPanel>
+                <TabPanel value="5"> <Followings/></TabPanel>
+                <TabPanel value="6"> <FriendRequestPage/></TabPanel>
+                <TabPanel value="7"> <Explore/></TabPanel>
+                <TabPanel value="8"> <Team13/></TabPanel>
+                <TabPanel value="9"> <Team19/></TabPanel>
             </TabContext>
 
             </div>
