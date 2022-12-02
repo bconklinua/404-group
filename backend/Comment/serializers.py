@@ -7,7 +7,7 @@ from User.serializers import AuthorSerializer
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id','type','published','author','comment','post','contentType','count')
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
