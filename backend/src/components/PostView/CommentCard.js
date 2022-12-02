@@ -3,13 +3,17 @@ import '../Friends/ProfileCard.css'
 import { Box, CardContent, Typography, Card, IconButton } from '@mui/material'
 import Favorite from '@mui/icons-material/Favorite';
 import { useState } from 'react';
+import { likeComment } from '../../api/Comments';
 
 const CommentCard = (props) => {
     const [likes, setLikes] = useState(0);
     const handleLike = (e) =>{
         setLikes(likes + 1)
-        console.log('liked')
-        console.log(props)
+        
+        likeComment(props).then((response)=>{
+            console.log('liked')
+            console.log(response)
+        })
     }
     var username = props.comment.author
     if (typeof username != "string"){
