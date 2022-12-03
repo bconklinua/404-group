@@ -222,7 +222,7 @@ const ImprovedNavbar = () => {
               >
 
                   <MenuItem key='profile' onClick={handleProfile}>
-                    <Typography textAlign="center">profile</Typography>
+                    <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
                   <MenuItem key='sign out' onClick={handleSignOut}>
                     <Typography color="red" textAlign="center">Sign Out</Typography>

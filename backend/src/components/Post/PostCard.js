@@ -108,6 +108,7 @@ const PostCard = (props) => {
                             if (response.status === 201){
                                 console.log("liked")
                                 incrementLikes()
+                                
                             }
                             else if (response.status === 202){
                                 decrementLikes()
@@ -135,6 +136,7 @@ const PostCard = (props) => {
                 console.log("test 1")
                 console.log(response)
                 incrementLikes()
+                toast.success("shared")
                 if (response.data.team13_followers === true || response.data.team13_followers === undefined){
                     Team13AddLike("nothing", props.post.id).then((response)=>{
                         console.log("team13 like")
@@ -169,7 +171,8 @@ const PostCard = (props) => {
     }
 
     const handleShare = (e) =>{
-        console.log('share')
+        toast.success("shared")
+        console.log(props)
     }
 
     let extraContent = (
