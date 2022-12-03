@@ -15,12 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
 
-let ConvertStringToHTML = function (str) {
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(str, 'text/html');
-    return doc;
- };
-
 const PostCard = (props) => {
     const navigate = useNavigate();
     let content = null
@@ -55,11 +49,11 @@ const PostCard = (props) => {
         )
     }else{
         if (props.post.host === "https://true-friends-404.herokuapp.com"){
-            var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-            console.log(contentStuff)
+            //var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+            //console.log(contentStuff)
             //content = (<h4 id="content">{contentStuff}</h4>)
             
-            content = (<h4>{contentStuff}</h4>)
+            content = (<pre>{props.post.content}</pre>)
         }
 
         else {
@@ -67,9 +61,9 @@ const PostCard = (props) => {
                 content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
                 
             }else{
-                var contentStuff = props.post.content
-                contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-                content = (<h4>{contentStuff}</h4>)
+                // var contentStuff = props.post.content
+                // contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+                content = (<pre>{props.post.content}</pre>)
 
             }
             

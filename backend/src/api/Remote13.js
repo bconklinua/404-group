@@ -265,7 +265,7 @@ export function Team13DeleteLike(author_id, post_id){
 export function Team13EditPost(json){
     const url = `https://cmput404-team13.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts/${json.post_id}`
     var content = json.content
-    var contentType = 'text/plain'
+    var contentType = json.contentType
     if (json.image_url){
         content = json.image_url
         contentType = 'image'
