@@ -16,8 +16,6 @@ class FollowersListView(GenericAPIView):
         author_uuid = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
         if not author_uuid:
             author_uuid = request.user.id
-        if not Author.objects.filter(id=author_uuid).exists():
-            return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
         author = author_uuid
         follower_list = Follow.objects.filter(followee=author)
 
