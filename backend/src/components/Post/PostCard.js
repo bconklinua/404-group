@@ -14,6 +14,7 @@ import { BASE_URL } from '../../api/api';
 import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
+import ReactMarkdown from 'react-markdown'
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -52,15 +53,22 @@ const PostCard = (props) => {
             //var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
             //console.log(contentStuff)
             //content = (<h4 id="content">{contentStuff}</h4>)
+            if (props.post.contentType === 'text/markdown'){
+                 content = (<ReactMarkdown>{props.post.content}</ReactMarkdown>)
+            }else{
+                content = (<pre>{props.post.content}</pre>)
+            }
             
-            content = (<pre>{props.post.content}</pre>)
         }
 
         else {
             if (props.post.contentType === 'image'){
                 content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
                 
-            }else{
+            }else if (props.post.contentType === 'text/markdown'){
+                content = (<ReactMarkdown>{props.post.content}</ReactMarkdown>)
+            }
+            else{
                 // var contentStuff = props.post.content
                 // contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
                 content = (<pre>{props.post.content}</pre>)

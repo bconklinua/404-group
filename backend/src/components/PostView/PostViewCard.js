@@ -16,7 +16,7 @@ import { BASE_URL } from '../../api/api';
 import { Team13DeletePost } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
-
+import ReactMarkdown from 'react-markdown'
 
 const PostViewCard = (props) => {
     const navigate = useNavigate();
@@ -53,14 +53,30 @@ const PostViewCard = (props) => {
             // <img src={imgurl} alt="Girl in a jacket" ></img>
         )
     }else{
-        if (props.post.host === "https://true-friends-404.herokuapp.com")
-            content = (<h4>{props.post.content}</h4>)
+        if (props.post.host === "https://true-friends-404.herokuapp.com"){
+            //var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+            //console.log(contentStuff)
+            //content = (<h4 id="content">{contentStuff}</h4>)
+            if (props.post.contentType === 'text/markdown'){
+                 content = (<ReactMarkdown>{props.post.content}</ReactMarkdown>)
+            }else{
+                content = (<pre>{props.post.content}</pre>)
+            }
+            
+        }
+
         else {
             if (props.post.contentType === 'image'){
                 content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
                 
-            }else{
-                content = (<h4>{props.post.content}</h4>)
+            }else if (props.post.contentType === 'text/markdown'){
+                content = (<ReactMarkdown>{props.post.content}</ReactMarkdown>)
+            }
+            else{
+                // var contentStuff = props.post.content
+                // contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+                content = (<pre>{props.post.content}</pre>)
+
             }
             
         }
