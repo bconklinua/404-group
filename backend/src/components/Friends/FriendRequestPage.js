@@ -3,7 +3,7 @@ import react, { useEffect, useState } from 'react'
 import { getFriendRequests } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FriendRequestCard from './FriendRequestCard'
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+
 
 const FriendRequestPage = () => {
     const [Requests, setRequests] = useState({
@@ -51,7 +51,7 @@ const FriendRequestPage = () => {
     console.log(Requests.data)
     if (Requests.data){
         if (Requests.data.length === 0){
-            content = (<div className="none">No Requests <SentimentDissatisfiedIcon/></div>)
+            content = (<div className="none">No Requests</div>)
         }
         else{
             content = Requests.data.map((request, key)=>
