@@ -67,7 +67,7 @@ class Post(models.Model):
     
     @property
     def count(self):
-        return Like.objects.filter(post_id = self.id).count()
+        return Like.objects.filter(post_id = self.id).filter(comment__isnull=True).count()
 
     def publish_post(self):
         #Get list of people who are following the author of this post
