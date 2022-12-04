@@ -15,7 +15,7 @@ const Search = () =>{
     useEffect(()=>{
 
         const fetchData = async () => {
-            //const team10 = await axios.get('https://socioecon.herokuapp.com/authors/')
+            const team10 = await axios.get('https://socioecon.herokuapp.com/authors/')
             const team13 = await axios.get('https://cmput404-team13.herokuapp.com/authors?page=1&size=1000000')
             const team12 = await axios.get(`${BASE_URL}/authors/`, {
                 headers:{
@@ -38,7 +38,7 @@ const Search = () =>{
             console.log(team12.data)
             console.log(team13.data)
             console.log(team19.data)
-            const children = team12.data.concat(team13.data.authorsPage, /*team10.data.items,*/ team19.data.items);
+            const children = team12.data.concat(team13.data.authorsPage, team10.data.items, team19.data.items);
             setUsers({data: children, loading: false})
         }
         fetchData();
