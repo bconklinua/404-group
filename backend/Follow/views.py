@@ -12,10 +12,11 @@ class FollowersListView(GenericAPIView):
     serializer_class = FollowSerializer
     queryset = Follow.objects.all()
 
-    def get(self, request):
-        if not Author.objects.filter(id=request.user.id).exists():
-            return response.Response({"error": "invalid author object"}, status=status.HTTP_400_BAD_REQUEST)
-        author = request.user.id
+    def get(self, request, author_id=None):
+        author_uuid = self.kwargs['author_id'] if 'author_id' in self.kwargs else None
+        if not author_uuid:
+            author_uuid = request.user.id
+        author = author_uuid
         follower_list = Follow.objects.filter(followee=author)
 
         f_list = []
