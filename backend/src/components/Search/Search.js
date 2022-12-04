@@ -35,6 +35,7 @@ const Search = () =>{
                 }
             })
             //console.log(team10.data)
+            console.log(team10)
             console.log(team12.data)
             console.log(team13.data)
             console.log(team19.data)
@@ -62,7 +63,7 @@ const Search = () =>{
                 if (search.toLowerCase() === ''){
                     return item
                 }else if (search.toLowerCase() === 'team 10'){
-                    return item
+                    return item.host.toLowerCase().includes("socioecon.herokuapp.com")
                 }else if (search.toLowerCase() === 'team 12'){
                     return item.host.toLowerCase().includes("https://true-friends-404.herokuapp.com")
                 }else if (search.toLowerCase() === 'team 13'){
