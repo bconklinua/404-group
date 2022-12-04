@@ -54,6 +54,10 @@ const EditProfile = () =>{
         console.log(object)
         editUser(object).then((response)=>{
             if (response.status === 200){
+                localStorage.setItem("authorID", response.data.id)
+                localStorage.setItem("username", response.data.username)
+                localStorage.setItem("email", response.data.email)
+                localStorage.setItem("github", response.data.github)
                 window.location.href = '/home'
             }
             else{

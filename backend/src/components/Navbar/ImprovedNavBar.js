@@ -68,7 +68,7 @@ const ImprovedNavbar = () => {
 
           console.log('setimage')
           setImage(<Avatar src={response.data.profile_image}/>)
-
+          localStorage.setItem("github", response.data.github)
 
         
         console.log("current user")
