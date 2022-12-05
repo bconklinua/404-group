@@ -24,9 +24,10 @@ export default function PostView() {
     // ...
     const {post_id} = useParams();
     const location = useLocation();
+    console.log("location")
     console.log(location)
     const [postContent, setPostContent] = useState({
-        data: null,
+        data: location.state,
     })
     const [comment, setComment] = useState(null)
     const TestPostID = () => {
@@ -35,95 +36,95 @@ export default function PostView() {
             <h1> post_id: { post_id } </h1>
         );
     };
-    useEffect(()=>{
-        setPostContent({
-            data: null,
-        })
-        if (location.state.host === 'https://true-friends-404.herokuapp.com'){
-            getPostByID(post_id).then((response)=>{
-                if (response.status === 401) {
-                    refreshToken().then((response)=>{
-                        if (response.status === 200) {
-                            console.log("got a post")
-                            console.log(response.status)
-                            getPostByID(post_id).then((response)=>{
-                                if (response.status === 200){
-                                    setPostContent({
-                                        data: response.data,
-                                    })
-                                }
-                                console.log("...");
-                            })
-                        }
-                        else {
-                            window.location.reload();
-                            window.location.href = '/login';
-                        }
-                    })
-                } else if (response.status === 200) {
-                    setPostContent({
-                        data: response.data,
-                    })
-                } else if (response.status === 404) {
-                    setPostContent({
-                        data: "404"
-                    })
-                    console.log('404')
-                    window.location.reload();
-                    window.location.href='/page-not-found';
-                }
-            })
-        }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com' || location.state.host === "https://cmput404-team13.herokuapp.com"){
-            Team13GetPost(location.state.author, location.state.id).then((response) => {
-                if (response.status === 200){
-                    console.log('posts')
-                    console.log(response)
-                    setPostContent({
-                        data: response.data,
-                    })
-                }
-                else{
-                    toast.error("Error Loading Post")
-                }
+    // useEffect(()=>{
+    //     setPostContent({
+    //         data: null,
+    //     })
+    //     if (location.state.host === 'https://true-friends-404.herokuapp.com'){
+    //         getPostByID(post_id).then((response)=>{
+    //             if (response.status === 401) {
+    //                 refreshToken().then((response)=>{
+    //                     if (response.status === 200) {
+    //                         console.log("got a post")
+    //                         console.log(response.status)
+    //                         getPostByID(post_id).then((response)=>{
+    //                             if (response.status === 200){
+    //                                 setPostContent({
+    //                                     data: response.data,
+    //                                 })
+    //                             }
+    //                             console.log("...");
+    //                         })
+    //                     }
+    //                     else {
+    //                         window.location.reload();
+    //                         window.location.href = '/login';
+    //                     }
+    //                 })
+    //             } else if (response.status === 200) {
+    //                 setPostContent({
+    //                     data: response.data,
+    //                 })
+    //             } else if (response.status === 404) {
+    //                 setPostContent({
+    //                     data: "404"
+    //                 })
+    //                 console.log('404')
+    //                 window.location.reload();
+    //                 window.location.href='/page-not-found';
+    //             }
+    //         })
+    //     }else if (location.state.origin === 'https://cmput404-team13.herokuapp.com' || location.state.host === "https://cmput404-team13.herokuapp.com"){
+    //         Team13GetPost(location.state.author, location.state.id).then((response) => {
+    //             if (response.status === 200){
+    //                 console.log('posts')
+    //                 console.log(response)
+    //                 setPostContent({
+    //                     data: response.data,
+    //                 })
+    //             }
+    //             else{
+    //                 toast.error("Error Loading Post")
+    //             }
 
-            })
+    //         })
 
-        }else if (location.state.host === 'https://social-distribution-404.herokuapp.com'){
-            Team19GetPost(location.state.author.id, location.state.id).then((response) => {
-                if (response.status === 200){
-                    console.log('posts')
-                    console.log(response)
-                    setPostContent({
-                        data: response.data,
-                    })
-                }
-                else{
-                    toast.error("Error Loading Post")
-                }
+    //     }else if (location.state.host === 'https://social-distribution-404.herokuapp.com'){
+    //         Team19GetPost(location.state.author.id, location.state.id).then((response) => {
+    //             if (response.status === 200){
+    //                 console.log('posts')
+    //                 console.log(response)
+    //                 setPostContent({
+    //                     data: response.data,
+    //                 })
+    //             }
+    //             else{
+    //                 toast.error("Error Loading Post")
+    //             }
 
-            }) 
-        }
-        else{
-            var urlID_author = location.state.author.id.split('/');
-            var id_author = urlID_author[urlID_author.length - 1];
-            var urlID_post = location.state.id.split('/');
-            var id_post = urlID_post[urlID_post.length - 1];
-            Team19GetPost(id_author, id_post).then((response) => {
-                if (response.status === 200){
-                    console.log('posts')
-                    console.log(response)
-                    setPostContent({
-                        data: response.data,
-                    })
-                }
-                else{
-                    toast.error("Error Loading Post")
-                }
+    //         }) 
+    //     }
+    //     else{
+    //         var urlID_author = location.state.author.id.split('/');
+    //         var id_author = urlID_author[urlID_author.length - 1];
+    //         var urlID_post = location.state.id.split('/');
+    //         var id_post = urlID_post[urlID_post.length - 1];
+    //         Team19GetPost(id_author, id_post).then((response) => {
+    //             if (response.status === 200){
+    //                 console.log('posts')
+    //                 console.log(response)
+    //                 setPostContent({
+    //                     data: response.data,
+    //                 })
+    //             }
+    //             else{
+    //                 toast.error("Error Loading Post")
+    //             }
 
-            }) 
-        }
+    //         }) 
+    //     }
 
-    }, [])
+    // }, [])
     const PostContent = () => {
         const {post_id} = useParams();
         const [postContent, setPostContent] = useState({
