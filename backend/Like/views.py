@@ -23,7 +23,7 @@ class PostLikeView(viewsets.ModelViewSet):
     def get_queryset(self):
         liked_post_id = self.kwargs['post_id'] if 'post_id' in self.kwargs else None
         if liked_post_id:
-            return Like.objects.filter(post_id=liked_post_id)
+            return Like.objects.filter(post_id=liked_post_id).filter(comment__isnull=True)
         return Like.objects.all()
 
     def create(self, request, *args, **kwargs):

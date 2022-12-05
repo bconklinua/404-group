@@ -2,15 +2,16 @@ import react, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { postPost } from '../../api/Post'
 import {PhotoCamera} from '@mui/icons-material'
-import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, Typography, TextareaAutosize, Autocomplete, Stack, Chip, TextField } from '@mui/material'
+import { Switch, FormControlLabel, Button, IconButton, Box, Card, CardContent, Typography, TextareaAutosize, Autocomplete, Stack, Chip, TextField, CardMedia } from '@mui/material'
 import { refreshToken } from '../../api/User'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 import { Team19PostPost } from '../../api/Remote19'
 import { getFollowers, getFriends } from '../../api/Friends'
+import ReactMarkdown from 'react-markdown'
 
-const top100Films = [
+const category = [
     { title: 'Funny' },
     { title: 'Joy' },
     { title: 'Happy' },
@@ -28,6 +29,8 @@ const PostPost = () => {
     const [file, setFile] = useState(undefined)
     const [categories, setCategories] = useState([])
     const [markDown, setMarkDown] = useState(false)
+    const [markdownText, setMarkdownText] = useState('')
+    const [plain, setPlain] = useState('')
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -210,6 +213,24 @@ const PostPost = () => {
     const handleMarkDown = (e) =>{
         setMarkDown(e.target.checked)
         console.log(e.target.checked)
+        if (e.target.checked === true){
+            setPlain('')
+            setMarkdownText(plain)
+        }else{
+            setMarkdownText('')
+            setPlain(markdownText)
+        }
+    }
+
+    const handleContent = (e) =>{
+        if (markDown === true){
+            setPlain('')
+            setMarkdownText(e.target.value)
+        }else{
+            setMarkdownText('')
+            setPlain(e.target.value)
+        }
+
     }
 
     return (
@@ -231,17 +252,26 @@ const PostPost = () => {
         //         </div>
         //     </form>
         // </main>
+        <div>
+            <center><h1>Post a Post</h1></center>
+        
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
-
-            <Card sx={{ minWidth:500, maxWidth: 1000 }}>
-
+            
+            <br/><br/><br/><br/><br/>
+            <Card sx={{ minWidth:500, maxWidth: 1000 }}>                
+                <ReactMarkdown>{markdownText}</ReactMarkdown>
+                
+                {/* { file && <img src={file}/>} */}
+                {file && <CardMedia height="20%" component='img' image={file}/>}
                 <CardContent>
-                    { file && <img src={file}/>}
+
+                    
                     <main>
                         <form onSubmit={handleSubmit}>
                             <div>
-                            <h1>Post A post</h1>
+                            {/* <h1>Post A post</h1> */}
                             <br/>
+
                             <Typography gutterBottom variant="h5" component="div">
                                 <input className='input1' placeholder="title" name='title' id='title'/>
                             </Typography>
@@ -249,7 +279,7 @@ const PostPost = () => {
                                 <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="description" name='description' id='description'/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
-                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="content" name='content' id='content'/>
+                                <TextareaAutosize className='input1' aria-label="minimum height" minRows={3} style={{ width: 200 }} placeholder="content" name='content' id='content' onChange={handleContent}/>
                             </Typography>
                             <Typography gutterBottom variant="h5" component="div">
                                 <input className='input1' placeholder="image link" name='image_url' id='image_url'/>
@@ -271,7 +301,7 @@ const PostPost = () => {
                                 id="tags"
                                 name='tags'
                                 freeSolo
-                                options={top100Films.map((option) => option.title)}
+                                options={category.map((option) => option.title)}
                                 renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
                                     <Chip variant="outlined" label={option} {...getTagProps({ index })} />
@@ -303,7 +333,7 @@ const PostPost = () => {
             </Card>
 
         </Box>
-
+        </div>
     )
 }
 export default PostPost;

@@ -92,6 +92,7 @@ urlpatterns = [
     path('comments/<uuid:comment_id>/', include(comment_like_router.urls)),  # comments-likes-list, comments-likes-detail?
     path('authors/<uuid:author_id>/inbox/', include('Inbox.urls')),  # inbox-list, inbox-detail?
     path('followers/', FollowersListView.as_view(), name="followers_list"),
+    path('authors/<uuid:author_id>/followers/', FollowersListView.as_view(), name="followers_list"),
     path('following/', FollowingListView.as_view(), name="following_list"),
     path('unfollow/<uuid:user_id>/', UnfollowView.as_view(), name="unfollow_by_user_id"),
     path('unfriend/<uuid:user_id>/', UnfriendView.as_view(), name="unfriend_by_user_id"),

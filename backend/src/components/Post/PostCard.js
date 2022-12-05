@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Favorite from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-import { Box, Button, CardActionArea } from '@mui/material';
+import { Box, Button, CardActionArea, Divider } from '@mui/material';
 import './PostCard.css'
 import { doLike } from '../../api/Likes';
 import { refreshToken } from '../../api/User';
@@ -14,16 +14,12 @@ import { BASE_URL } from '../../api/api';
 import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
-
-let ConvertStringToHTML = function (str) {
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(str, 'text/html');
-    return doc;
- };
+import ReactMarkdown from 'react-markdown'
 
 const PostCard = (props) => {
     const navigate = useNavigate();
     let content = null
+    let imageContent = null
     var authorID = props.post.author
     var displayName = props.post.author
     if (typeof props.post.author === 'string') {
@@ -43,33 +39,40 @@ const PostCard = (props) => {
     if (props.post.image_url != "" && props.post.image_url != undefined){
 
 
-        content = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
+        imageContent = (<CardMedia height="20%" component='img' image={props.post.image_url}/>)
     }
     else if (props.post.image){
         
 
         let imgurl = `${BASE_URL}${props.post.image}`
-        content = (
+        imageContent = (
             <CardMedia height="20%" component='img' image={imgurl}/>
             // <img src={imgurl} alt="Girl in a jacket" ></img>
         )
     }else{
         if (props.post.host === "https://true-friends-404.herokuapp.com"){
-            var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-            console.log(contentStuff)
+            //var contentStuff = props.post.content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+            //console.log(contentStuff)
             //content = (<h4 id="content">{contentStuff}</h4>)
+            if (props.post.contentType === 'text/markdown'){
+                 content = (<div><Typography><ReactMarkdown>{props.post.content}</ReactMarkdown><Divider/></Typography></div>)
+            }else{
+                content = (<div><pre>{props.post.content}</pre><Divider/></div>)
+            }
             
-            content = (<h4>{contentStuff}</h4>)
         }
 
         else {
             if (props.post.contentType === 'image'){
-                content = (<CardMedia height="20%" component='img' image={props.post.content}/>)
+                imageContent = (<CardMedia height="20%" component='img' image={props.post.content}/>)
                 
-            }else{
-                var contentStuff = props.post.content
-                contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-                content = (<h4>{contentStuff}</h4>)
+            }else if (props.post.contentType === 'text/markdown'){
+                content = (<div><Typography><ReactMarkdown>{props.post.content}</ReactMarkdown><Divider/></Typography></div>)
+            }
+            else{
+                // var contentStuff = props.post.content
+                // contentStuff =  contentStuff.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+                content = (<div><Typography><pre>{props.post.content}</pre></Typography><Divider/></div>)
 
             }
             
@@ -106,6 +109,7 @@ const PostCard = (props) => {
                             if (response.status === 201){
                                 console.log("liked")
                                 incrementLikes()
+                                
                             }
                             else if (response.status === 202){
                                 decrementLikes()
@@ -133,6 +137,7 @@ const PostCard = (props) => {
                 console.log("test 1")
                 console.log(response)
                 incrementLikes()
+
                 if (response.data.team13_followers === true || response.data.team13_followers === undefined){
                     Team13AddLike("nothing", props.post.id).then((response)=>{
                         console.log("team13 like")
@@ -167,7 +172,8 @@ const PostCard = (props) => {
     }
 
     const handleShare = (e) =>{
-        console.log('share')
+        toast.success("shared")
+        console.log(props)
     }
 
     let extraContent = (
@@ -205,8 +211,10 @@ const PostCard = (props) => {
                 <CardActionArea onClick={handleClick}>
                     <h4 id="content"></h4>
 
-                    {content}
+                    
+                    {imageContent}
                     <CardContent>
+                        {content}
                         <Typography gutterBottom variant="h5" component="div">
                             {props.post.title}
                         </Typography>

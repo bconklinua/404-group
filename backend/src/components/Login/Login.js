@@ -26,7 +26,7 @@ const Login = () => {
                     if (response.status === 200){
                         toast.success('Logged In!')
                         console.log(response);
-                        window.location.reload();
+                        // window.location.reload();
                         window.location.href = '/home';
                         
 

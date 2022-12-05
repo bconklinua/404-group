@@ -68,7 +68,7 @@ const ImprovedNavbar = () => {
 
           console.log('setimage')
           setImage(<Avatar src={response.data.profile_image}/>)
-
+          localStorage.setItem("github", response.data.github)
 
         
         console.log("current user")
@@ -83,7 +83,7 @@ const ImprovedNavbar = () => {
 
 
     return (
-      <AppBar position="static" style={{ background: '#1F1B24' }}>
+      <AppBar position="sticky" style={{ background: '#1F1B24' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {icon}
@@ -222,7 +222,7 @@ const ImprovedNavbar = () => {
               >
 
                   <MenuItem key='profile' onClick={handleProfile}>
-                    <Typography textAlign="center">profile</Typography>
+                    <Typography textAlign="center">Profile</Typography>
                   </MenuItem>
                   <MenuItem key='sign out' onClick={handleSignOut}>
                     <Typography color="red" textAlign="center">Sign Out</Typography>

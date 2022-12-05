@@ -198,7 +198,7 @@ const Comments = (props) => {
     console.log(comments.data)
     if (comments.data){
         if (comments.data.length === 0){
-            content = (<div className="none">No Comments</div>)
+            content = (<div className="none"><br/><br/>No Comments</div>)
         }
         else{
             // console.log(comments.data[0].type)

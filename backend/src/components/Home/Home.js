@@ -83,7 +83,7 @@ const MyPosts = () => {
 
     return (
         <div>
-            <ToastContainer/>
+
             {content}
         </div>
     )

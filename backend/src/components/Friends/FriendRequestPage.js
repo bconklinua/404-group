@@ -4,6 +4,7 @@ import { getFriendRequests } from '../../api/Friends'
 import { refreshToken } from '../../api/User'
 import FriendRequestCard from './FriendRequestCard'
 
+
 const FriendRequestPage = () => {
     const [Requests, setRequests] = useState({
         data: null,
