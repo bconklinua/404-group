@@ -43,10 +43,29 @@ const SearchCard = (props) => {
     const handleFriendRequest = (e) =>{
         console.log(props.user)
         if (team === "team 10"){
-            toast.info(props.user)
             Team10FriendRequest(props.user.id).then((response) =>{
-                console.log('team 10 sent')
+
+                if (response.status === 201){
+                    
+                    toast.success("Request Sent to Team 10")
+                }else{
+                    toast.error("Failed to send to remote, probably already sent or already following")
+                }
+                console.log('team 10 debug friend request')
                 console.log(response)
+            })
+            sendRemoteFriendRequest(10, props.user.displayName, props.user.id).then((response) =>{
+                console.log('remoterequest')
+                console.log(response)
+                if (response.status === 201){
+                    toast.success("Request Sent")
+                }else if (response.status === 409){
+                    toast.warn("Already Sent or Already Following")
+                }
+                else{
+                    console.log(response)
+                    toast.error("Something went wrong on our server")
+                }
             })
         }else if (team === "team 12"){
             sendFriendRequest(props.user.id).then((response) =>{
@@ -70,7 +89,7 @@ const SearchCard = (props) => {
                 }
                 else{
                     console.log(response)
-                    toast.error("Failed to send to remote, probably already sent")
+                    toast.error("Failed to send to remote, probably already sent or already following")
                     console.log('sent to 13')
                 }
     
@@ -81,7 +100,7 @@ const SearchCard = (props) => {
                 if (response.status === 201){
                     toast.success("Request Sent")
                 }else if (response.status === 409){
-                    toast.warn("Already Sent")
+                    toast.warn("Already Sent or Already Following")
                 }
                 else{
                     console.log(response)
@@ -98,7 +117,7 @@ const SearchCard = (props) => {
                     toast.success("Request Sent to Remote")
                     console.log(response)
                 }else if (response.status === 409){
-                    toast.warn("Already Sent to Remote")
+                    toast.warn("Already Sent to Remote or Already Following")
                 }
                 else{
                     toast.error("Something Terrible Happened")
@@ -112,7 +131,7 @@ const SearchCard = (props) => {
                 if (response.status === 201){
                     toast.success("Request Sent")
                 }else if (response.status === 409){
-                    toast.warn("Already Sent")
+                    toast.warn("Already Sent or Already Following")
                 }
                 else{
                     console.log(response)
