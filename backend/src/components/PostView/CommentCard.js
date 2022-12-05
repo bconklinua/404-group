@@ -5,6 +5,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import { useState } from 'react';
 import { likeComment } from '../../api/Comments';
 import { toast } from 'react-toastify';
+import { Team13CheckLiked, Team13LikeComment, Team13DeleteLikeComment } from '../../api/Remote13';
 
 const CommentCard = (props) => {
     const [likes, setLikes] = useState(props.comment.count);
@@ -12,13 +13,33 @@ const CommentCard = (props) => {
         
         likeComment(props.comment).then((response)=>{
             console.log('liked')
+            console.log(response)
             if (response.status === 201){
-                setLikes(likes + 1)
+                if (props.comment.count !== undefined)
+                    setLikes(likes + 1)
             }else if (response.status === 202){
-                setLikes(likes - 1)
+                if (props.comment.count !== undefined)
+                    setLikes(likes - 1)
             }else{
-                toast.error("Something Terrible has Happened")
+                //toast.error("Something Terrible has Happened")
             }
+        })
+        Team13CheckLiked(props.comment).then((response)=>{
+            if (response.data === false){
+                Team13LikeComment(props.comment).then((response)=>{
+                    toast.success("liked foreign comment")
+                    console.log(response)
+                })
+            }else if (response.data === true){
+                Team13DeleteLikeComment(props.comment).then((response)=>{
+                    toast.success("unliked foreign comment")
+                    console.log(response)
+                })
+            }else{
+                //toast.error('Something Terrible Happened')
+            }
+            console.log("check like")
+            console.log(response)
         })
     }
     var username = props.comment.author

@@ -94,13 +94,19 @@ const Comments = (props) => {
             if (props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
                 toast.info('called')
                 Team13PostComment(json, "", props.id).then((response)=>{
-                    toast.info('team 13 sent')
-                    console.log("team13 comment")
-                    console.log(response)
-                    comments.data.push(json)
-                    setComments({
-                    data:comments.data  
-                    })
+                    if (response.status === 200){
+                        toast.info('team 13 sent')
+                        console.log("team13 comment")
+                        console.log(response)
+                        comments.data.push(json)
+                        setComments({
+                        data:comments.data  
+                        })
+                    }
+                    else{
+                        toast.error('Oh no something terrible happened')
+                    }
+
                 })
             }else if (props.object.host === "https://true-friends-404.herokuapp.com"){
 

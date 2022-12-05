@@ -346,3 +346,57 @@ export function Team13GetUser(foreign_author_id){
         return error
     })     
 }
+
+
+export function Team13CheckLiked(comments){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.post.author.id}/posts/${comments.post.id}/comments/${comments.id}/liked/${localStorage.getItem('authorID')}`
+    return axios.get(url, {
+        
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
+
+export function Team13LikeComment(comments){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.post.author.id}/posts/${comments.post.id}/comments/${comments.id}/likes/${localStorage.getItem('authorID')}`
+
+    const body = {
+        author: {
+            id: localStorage.getItem('authorID'),
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
+        }
+    }
+
+    return axios.post(url, body, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}
+
+export function Team13DeleteLikeComment(comments){
+    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.post.author.id}/posts/${comments.post.id}/comments/${comments.id}/likes/${localStorage.getItem('authorID')}`
+
+    return axios.delete(url, {
+        headers:{
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${Team13Token}`
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    }) 
+}
