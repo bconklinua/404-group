@@ -20,7 +20,7 @@ export function authenticate(param = {}){
         localStorage.setItem("authorID", response.data.id)
         localStorage.setItem("username", response.data.username)
         localStorage.setItem("email", response.data.email)
-        localStorage.setItem("github", response.data.github)
+        
         return response;
     }).catch((error)=>{
         return error.response;

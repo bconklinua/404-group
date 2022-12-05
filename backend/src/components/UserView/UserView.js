@@ -10,7 +10,7 @@ import { Team13GetPosts } from '../../api/Remote13'
 import { Team19GetPosts } from '../../api/Remote19'
 import ProfileCardView from './ProfileCardView'
 import { Divider, CircularProgress, Box } from '@mui/material'
-
+import { Team10GetPosts } from '../../api/Remote10'
 
 const UserView = () =>{
     
@@ -74,6 +74,14 @@ const UserView = () =>{
                 }
                 console.log(response.data.items)
             })
+        }else if (team === '10'){
+            Team10GetPosts(user_id).then((response)=>{
+                console.log("team 10 user posts")
+                console.log(response)
+                if (response.status === 200){
+                    setUserPost({data: response.data.items})
+                }
+            })
         }
 
     }, [])
@@ -88,7 +96,11 @@ const UserView = () =>{
             content = (<div className="none">No Posts</div>)
         }
         else{
-            content = userPost.data.slice().reverse().map((post, key)=>
+            content = userPost.data.slice().reverse().filter((item)=>{
+                return !item.visibility.toLowerCase().includes('friends')
+            }).filter((item)=>{
+                return item.unlisted === false
+            }).map((post, key)=>
 
             <PostCard post={post}/>
 
