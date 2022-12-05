@@ -61,6 +61,7 @@ class Post(models.Model):
     image_url = models.TextField(default="", null=True, blank=True)
     host = models.CharField(choices=HOST_CHOICES, default="https://true-friends-404.herokuapp.com", max_length = 50, blank=True)
     original_author = models.CharField(null=True, blank=True, max_length=200, unique=False)
+    original_author_id = models.UUIDField(null=True, blank=True, unique=False, editable=True)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])
