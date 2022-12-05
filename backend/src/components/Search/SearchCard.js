@@ -33,8 +33,9 @@ const SearchCard = (props) => {
 
             navigate(`/user/${props.user.id}/${username}/13`);
         }else if (team === "team 19"){
-
-            navigate(`/user/${props.user.id}/${username}/19`);
+            var urlID = props.user.id.split('/');
+            var id = urlID[urlID.length - 1];
+            navigate(`/user/${id}/${username}/19`);
         }else{
             toast.error("Something Terrible happened!")
         }

@@ -159,7 +159,7 @@ const PostPost = () => {
                     document.getElementById('image_url').value=''
                     setImage(null)
                     setFile(undefined)
-
+                    setMarkdownText('')
                     console.log(response)
                 }
                 
