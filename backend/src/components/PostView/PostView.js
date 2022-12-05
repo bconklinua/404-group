@@ -163,7 +163,7 @@ export default function PostView() {
 
     return (
         <div>
-            <h1 className='profileName'>PostView</h1>
+            {/* <h1 className='profileName'>PostView</h1> */}
             {content}
 
                 

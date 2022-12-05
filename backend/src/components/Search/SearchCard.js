@@ -8,6 +8,7 @@ import { refreshToken } from '../../api/User';
 import { Team13SendRequest } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
 import { Team19SendRequest } from '../../api/Remote19';
+import { Team10FriendRequest } from '../../api/Remote10';
 
 const SearchCard = (props) => {
     const navigate = useNavigate();
@@ -40,9 +41,13 @@ const SearchCard = (props) => {
         
     }
     const handleFriendRequest = (e) =>{
-        console.log(team)
+        console.log(props.user)
         if (team === "team 10"){
-            toast.info(team)
+            toast.info(props.user)
+            Team10FriendRequest(props.user.id).then((response) =>{
+                console.log('team 10 sent')
+                console.log(response)
+            })
         }else if (team === "team 12"){
             sendFriendRequest(props.user.id).then((response) =>{
                 if (response.status === 201){

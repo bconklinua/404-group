@@ -83,7 +83,7 @@ const ImprovedNavbar = () => {
 
 
     return (
-      <AppBar position="static" style={{ background: '#1F1B24' }}>
+      <AppBar position="sticky" style={{ background: '#1F1B24' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {icon}
