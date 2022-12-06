@@ -16,6 +16,7 @@ import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
 import ReactMarkdown from 'react-markdown'
 import { Team19Like } from '../../api/Remote19';
+import { postPost } from '../../api/Post';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -180,7 +181,89 @@ const PostCard = (props) => {
     }
 
     const handleShare = (e) =>{
-        toast.success("shared")
+        if (props.post.original_author === null || props.post.original_author === undefined){
+            if (props.post.username)
+                props.post['original_author'] = props.post.author.username
+            else props.post['original_author'] = props.post.author.displayName
+        }
+        if (props.post.original_author_id === null || props.post.original_author_id === undefined){
+            props.post['original_author_id'] = props.post.author.id
+        }
+        postPost(props.post).then((response)=>{
+            if (response.status === 201){
+                toast.success("shared")
+                const post = response.data
+                var originalAuthor = {
+                    
+                }
+                if (response.data.team13_followers === true){
+                    Team13PostPost(response.data.id, response.data).then((response)=>{
+                        if (response.status === 200){
+                            if (typeof response.data === 'object'){
+                                Team13SendInbox(response.data.id, response.data.visibility).then((response)=>{
+                                    console.log('team 13 inbox')
+                                    console.log(response)
+                                })
+
+                                console.log('team 13 followers')
+                                console.log(response)
+                            }else{
+                                console.log('error')
+                            }
+
+                        }
+
+                    })
+                }else console.log('no team 13 followers')
+                if (post.unlisted === true){
+
+                }
+                else if (post.visibility === "PUBLIC"){
+                    getFollowers().then((response)=>{
+                        for (let i = 0; i < response.data.length; i++){
+                            if (response.data[i].sender_host === "https://social-distribution-404.herokuapp.com"){
+                                console.log('team 19 follower')
+                                Team19PostPost(post, response.data[i].sender_id).then((response)=>{
+                                    console.log(response.data[i].sender_username)
+                                    console.log(response)
+                                })
+                            }else if (response.data[i].sender_host === "https://socioecon.herokuapp.com"){
+                                Team10PostPost(post, response.data[i].sender_id).then((response)=>{
+                                    console.log('debug: team 10 sent public post')
+                                    console.log(response)
+                                })
+                            }
+                        }
+                        console.log("creatine")
+                        console.log(response)
+                        // Team19PostPost(response.data).then((response)=>{
+                        //     console.log(response)
+                        // })
+                    })
+                }
+                else if (post.visibility === "FRIENDS"){
+                    getFriends().then((response)=>{
+                        for (let i = 0; i < response.data.length; i++){
+                            if (response.data[i].friend_host === "https://social-distribution-404.herokuapp.com"){
+                                console.log('team 19 friend')
+                                Team19PostPost(post, response.data[i].friend_id).then((response)=>{
+                                    console.log(response.data[i].friend_username)
+                                    console.log(response)
+                                })
+                            }else if (response.data[i].friend_host === "https://socioecon.herokuapp.com"){
+                                Team10PostPost(post, response.data[i].friend_id).then((response)=>{
+                                    console.log('debug: team 10 sent friend post')
+                                    console.log(response)
+                                })
+                            }
+                        }
+                    })
+    
+                }
+            }
+            
+        })
+        
         console.log(props)
     }
 

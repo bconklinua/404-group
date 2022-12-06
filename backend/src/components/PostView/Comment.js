@@ -9,7 +9,7 @@ import { Box, TextField, Divider, Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Team13GetComments, Team13PostComment } from '../../api/Remote13';
-
+import { Team19Comment, Team19GetComments } from '../../api/Remote19';
 
 const Comments = (props) => {
     const [comments, setComments] = useState({
@@ -65,13 +65,27 @@ const Comments = (props) => {
                         })
                     }
                     else{
-                        toast.error("Error Loading comments")
+                        toast.error("Where those comments")
                     }
 
 
                 })
 
-            }else{
+            }else if (props.object.host === "https://social-distribution-404.herokuapp.com" || props.object.origin.includes("https://cmput404-team13.herokuapp.com")){
+                Team19GetComments(props.object.author.id, props.id).then((response)=>{
+                    console.log("debug: team19 comments")
+                    console.log(response)
+                    if (response.status === 200){
+                        setComments({
+                            data: response.data.comments,
+                        })
+                    }                    
+                    else{
+                        toast.error("Where those comments")
+                    }
+                })
+            }
+            else{
                 console.log("no comments")
                 console.log(props.object)
             }
@@ -150,6 +164,7 @@ const Comments = (props) => {
                         }else console.log("no team 13")
                         if (response.team19_follower === true){
                             console.log("send team19 the comment")
+                            
                         }
                         comments.data.push(response.data)
                         setComments({
@@ -167,6 +182,19 @@ const Comments = (props) => {
                     }
                     console.log("comment response")
                     console.log(response)
+                })
+            }else if (props.object.host === "https://social-distribution-404.herokuapp.com" || props.object.origin.includes("https://cmput404-team13.herokuapp.com")){
+                Team19Comment(json, props.object.author.id, props.id).then((response)=>{
+                    
+                    if (response.status === 201){
+                        toast.info('team 19 comment sent')
+                        console.log("comment post for team 19")
+                        console.log(response)
+                        comments.data.push(json)
+                        setComments({
+                            data:comments.data  
+                        })
+                    }
                 })
             }
         }
