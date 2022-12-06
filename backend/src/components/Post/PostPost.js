@@ -148,7 +148,7 @@ const PostPost = () => {
                                 if (response.data[i].friend_host === "https://social-distribution-404.herokuapp.com"){
                                     console.log('team 19 friend')
                                     Team19PostPost(post, response.data[i].friend_id).then((response)=>{
-                                        console.log(response.data[i].friend_username)
+                                        console.log('debug: team 19 sent friend post')
                                         console.log(response)
                                     })
                                 }else if (response.data[i].friend_host === "https://socioecon.herokuapp.com"){

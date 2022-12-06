@@ -91,6 +91,9 @@ export function postPost(param = {}){
     if (param.original_author_id){
         form_data.append("original_author_id", param.original_author_id)
     }
+    if (param.original_author_host){
+        form_data.append("original_author_host", param.original_author_host)
+    }
 
     return axios.post(url, form_data, {
         headers:{

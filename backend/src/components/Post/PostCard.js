@@ -12,11 +12,14 @@ import { refreshToken } from '../../api/User';
 import PostView from '../PostView/PostView';
 import { BASE_URL } from '../../api/api';
 import { useNavigate } from "react-router-dom";
-import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
+import { Team13AddLike, Team13DeleteLike, Team13PostPost, Team13SendInbox } from '../../api/Remote13';
 import { toast } from 'react-toastify';
 import ReactMarkdown from 'react-markdown'
 import { Team19Like } from '../../api/Remote19';
 import { postPost } from '../../api/Post';
+import { getFollowers, getFriends } from '../../api/Friends';
+import { Team19PostPost } from '../../api/Remote19';
+import { Team10PostPost } from '../../api/Remote10';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -188,6 +191,11 @@ const PostCard = (props) => {
         }
         if (props.post.original_author_id === null || props.post.original_author_id === undefined){
             props.post['original_author_id'] = props.post.author.id
+        }
+        if (props.post.original_author_host === null || props.post.original_author_host === undefined){
+            if (props.post.host) props.post['original_author_host'] = props.post.host
+            else props.post['original_author_host'] = props.post.origin
+            
         }
         postPost(props.post).then((response)=>{
             if (response.status === 201){
