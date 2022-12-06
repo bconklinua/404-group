@@ -10,6 +10,7 @@ import { Team13PostPost, Team13SendInbox } from '../../api/Remote13'
 import { Team19PostPost } from '../../api/Remote19'
 import { getFollowers, getFriends } from '../../api/Friends'
 import ReactMarkdown from 'react-markdown'
+import { Team10PostPost } from '../../api/Remote10'
 
 const category = [
     { title: 'Funny' },
@@ -125,6 +126,11 @@ const PostPost = () => {
                                         console.log(response.data[i].sender_username)
                                         console.log(response)
                                     })
+                                }else if (response.data[i].sender_host === "https://socioecon.herokuapp.com"){
+                                    Team10PostPost(post, response.data[i].sender_id).then((response)=>{
+                                        console.log('debug: team 10 sent public post')
+                                        console.log(response)
+                                    })
                                 }
                             }
                             console.log("creatine")
@@ -141,6 +147,11 @@ const PostPost = () => {
                                     console.log('team 19 friend')
                                     Team19PostPost(post, response.data[i].friend_id).then((response)=>{
                                         console.log(response.data[i].friend_username)
+                                        console.log(response)
+                                    })
+                                }else if (response.data[i].friend_host === "https://socioecon.herokuapp.com"){
+                                    Team10PostPost(post, response.data[i].friend_id).then((response)=>{
+                                        console.log('debug: team 10 sent friend post')
                                         console.log(response)
                                     })
                                 }

@@ -17,6 +17,7 @@ import { Team13DeletePost } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import ReactMarkdown from 'react-markdown'
+import { Team19DeletePost } from '../../api/Remote19';
 
 const PostViewCard = (props) => {
     const navigate = useNavigate();
@@ -142,7 +143,10 @@ const PostViewCard = (props) => {
                 console.log('post deleted')
             }
         }))
-
+        // Team19DeletePost(props.post.id).then((response)=>{
+        //     console.log('team 19 delete post')
+        //     console.log(response)
+        // })
     }
     const handleLike = (e) =>{
         e.preventDefault();

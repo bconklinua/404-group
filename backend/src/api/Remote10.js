@@ -57,3 +57,56 @@ export function Team10GetPosts(foreign_author_id){
         return error
     })
 }
+
+
+export function Team10PostPost(json, foreign_author_id){
+    const url = `https://socioecon.herokuapp.com/author/${foreign_author_id}/inbox`
+    var content = json.content
+    var contentType = json.contentType
+    var authorID = localStorage.getItem('authorID')
+    if (json.image_url){
+        content = json.image_url
+
+        contentType = json.image_url.split(',')[0].split(':')[1]
+    }
+    const body = {
+        type: "post",
+        //"actor": `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/`,
+        title: json.title,
+        source: 'https://true-friends-404.herokuapp.com/',
+        origin: 'https://true-friends-404.herokuapp.com/',
+        description: json.description,
+        contentType: contentType,
+        content: content,
+        visibility: json.visibility,
+        published: json.published,
+        author: {
+            type: 'author',
+            id: authorID,
+            displayName: localStorage.getItem('username'),
+            host: 'https://true-friends-404.herokuapp.com',
+            url: `https://true-friends-404.herokuapp.com/authors/${authorID}`,
+            github: '',
+            profileImage: '',
+
+        },
+        // originalAuthor: {
+        //     id: localStorage.getItem('authorID'),
+        //     displayName: localStorage.getItem('username'),
+        //     host: 'https://true-friends-404.herokuapp.com',
+        // },
+        count: 0,
+        id: json.id
+    }
+    console.log(body)
+    return axios.post(url, body, {
+        headers: { 
+            'Authorization': 'Basic dGVhbTEyOnRlYW0xMg==', // base64 encoded team12:team12 basic auth for your convenience; maybe just use this token
+            'Content-Type': 'application/json'
+          },
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
