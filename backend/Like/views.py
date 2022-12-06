@@ -45,7 +45,8 @@ class PostLikeView(viewsets.ModelViewSet):
             if post_author.host == "https://true-friends-404.herokuapp.com": 
                 response_dict = {
                     "team13_followers": has_remote_followers("https://cmput404-team13.herokuapp.com", post_author),
-                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author)
+                    "team19_followers": has_remote_followers("https://social-distribution-404.herokuapp.com", post_author),
+                    "team10_followers": has_remote_followers("https://socioecon.herokuapp.com", post_author)
                 }
         except:
             return Response("Cannot like post since no post with id " + str(liked_post_id) + " exists", status=status.HTTP_202_ACCEPTED)
