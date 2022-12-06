@@ -159,7 +159,11 @@ const ProfileCardView = () =>{
             toast.error("Something Terrible happened!")
         }
     }
+    var requestButton = null
 
+    if (user_id !== localStorage.getItem('authorID')){
+        requestButton = (<Button onClick={handleClick}>Friend Request</Button>)
+    }
     return (
         <main>
             <div>
@@ -180,7 +184,7 @@ const ProfileCardView = () =>{
                     {github}
                 </Typography>
                 <br/>
-                <Button onClick={handleClick}>Friend Request</Button>
+                    {requestButton}
                 <br/>
                 </Box>
                 

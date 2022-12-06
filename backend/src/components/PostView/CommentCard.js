@@ -44,7 +44,12 @@ const CommentCard = (props) => {
     }
     var username = props.comment.author
     if (typeof username != "string"){
-        username = props.comment.author.displayName
+        if (props.comment.author.displayName !== undefined){
+            username = props.comment.author.displayName
+        }else{
+            username = props.comment.author.username
+        }
+        
     }
 
     return (
