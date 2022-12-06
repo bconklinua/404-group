@@ -198,6 +198,38 @@ export function Team19Like(summary, object, foreign_author_id){
     })
 }
 
+export function Team19Comment(comment, foreign_author_id, post_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/inbox/comments`
+
+    const body = {
+        comment: comment.comment,
+        post: post_id,
+        published: comment.published,
+        contentType: 'text/plain',
+        author: {
+            type: "author",
+            id: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+            displayName: localStorage.getItem('username'),
+            url: `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}`,
+            host: "https://true-friends-404.herokuapp.com/",
+        },
+    }
+    return axios.post(url, body, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}
+
 // export function Team19DeletePost(post_id){
 //     const url = `https://social-distribution-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts/${post_id}`
 //     return axios.delete(url, {        

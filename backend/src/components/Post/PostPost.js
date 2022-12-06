@@ -95,6 +95,8 @@ const PostPost = () => {
                     })
                 }else if (response.status === 201){
                     const post = response.data
+                    console.log('posting a post')
+                    console.log(post)
                     if (response.data.team13_followers === true){
                         Team13PostPost(response.data.id, response.data).then((response)=>{
                             if (response.status === 200){

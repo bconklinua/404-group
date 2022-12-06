@@ -25,6 +25,29 @@ const CommentCard = (props) => {
                 //toast.error("Something Terrible has Happened")
             }
         })
+        if (props.comment.id.includes('https://social-distribution-404.herokuapp.com/')){
+            let authorID = props.comment.author.id.split('/')
+            authorID = authorID[authorID.length - 1]
+    
+            let object = props.comment.id
+            let summary = `${localStorage.getItem('username')} likes your comment '${props.comment.comment}'`
+            Team19Like(summary, object, authorID).then((response)=>{
+                console.log("team19 like comment")
+                console.log(response)
+                if (response.status === 201){
+                    toast.success('comment liked!')
+                }else if (response.response.status === 409){
+                    toast.info('already liked')
+                }else if (response.response.status === 404){
+                    
+                }
+                
+                else{
+                    toast.info('already liked')
+                }
+            })
+        }
+
         Team13CheckLiked(props.comment).then((response)=>{
             if (response.data === false){
                 Team13LikeComment(props.comment).then((response)=>{
@@ -42,12 +65,7 @@ const CommentCard = (props) => {
             console.log("check like")
             console.log(response)
         })
-        let object = `https://social-distribution-404.herokuapp.com/authors/${props.comment.post.author.id}/posts/${props.comment.post.id}/comments/${props.comment.id}`
-        let summary = `${localStorage.getItem('username')} likes your post titled ${props.comment.post.title}`
-        Team19Like(summary, object, props.comment.author.id).then((response)=>{
-            console.log("team19 like post")
-            console.log(response)
-        })
+
     }
     var username = props.comment.author
     if (typeof username != "string"){
