@@ -268,9 +268,9 @@ const PostViewCard = (props) => {
                     {likes}
                 </div>
                 
-                <div>
+                {/* <div>
                     <Button onClick={handleShare}>Share</Button>
-                </div>
+                </div> */}
                 </div>
             </div>)   
     }

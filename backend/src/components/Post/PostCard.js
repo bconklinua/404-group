@@ -197,13 +197,23 @@ const PostCard = (props) => {
             else props.post['original_author_host'] = props.post.origin
             
         }
+        if (props.post.contentType === 'UTF-8'){
+            if (props.post.image_url){
+                props.post.contentType = null
+            }else{
+                props.post.contentType = 'text/plain'
+            }
+        }
         postPost(props.post).then((response)=>{
             if (response.status === 201){
                 toast.success("shared")
                 const post = response.data
                 var originalAuthor = {
-                    
+                    id: response.data.original_data,
+                    displayName: response.data.original_author,
+                    host: response.data.original_author_host,
                 }
+
                 if (response.data.team13_followers === true){
                     Team13PostPost(response.data.id, response.data).then((response)=>{
                         if (response.status === 200){
@@ -232,8 +242,8 @@ const PostCard = (props) => {
                             if (response.data[i].sender_host === "https://social-distribution-404.herokuapp.com"){
                                 console.log('team 19 follower')
                                 Team19PostPost(post, response.data[i].sender_id).then((response)=>{
-                                    console.log(response.data[i].sender_username)
-                                    console.log(response)
+                                    // console.log(response.data[i].sender_username)
+                                    // console.log(response)
                                 })
                             }else if (response.data[i].sender_host === "https://socioecon.herokuapp.com"){
                                 Team10PostPost(post, response.data[i].sender_id).then((response)=>{

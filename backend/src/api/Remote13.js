@@ -156,6 +156,14 @@ export function Team13PostPost(post_id, json){
         content = json.image_url
         contentType = 'image'
     }
+    var originalAuthor = {
+        id: localStorage.getItem('authorID'),
+        displayName: localStorage.getItem('username'),
+        host: 'https://true-friends-404.herokuapp.com',
+    }
+    if (json.originalAuthor){
+        originalAuthor = json.originalAuthor
+    }
     const body = {
         type: "post",
         title: json.title,
@@ -171,11 +179,7 @@ export function Team13PostPost(post_id, json){
             displayName: localStorage.getItem('username'),
             host: 'https://true-friends-404.herokuapp.com',
         },
-        originalAuthor: {
-            id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username'),
-            host: 'https://true-friends-404.herokuapp.com',
-        },
+        originalAuthor: originalAuthor,
         id: post_id
     }
     console.log(body)
