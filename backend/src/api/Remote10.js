@@ -110,3 +110,7 @@ export function Team10PostPost(json, foreign_author_id){
         return error
     })
 }
+
+export function Team10Comment(){
+    
+}

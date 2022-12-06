@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { likeComment } from '../../api/Comments';
 import { toast } from 'react-toastify';
 import { Team13CheckLiked, Team13LikeComment, Team13DeleteLikeComment } from '../../api/Remote13';
+import { Team19Like } from '../../api/Remote19';
 
 const CommentCard = (props) => {
     const [likes, setLikes] = useState(props.comment.count);
@@ -39,6 +40,12 @@ const CommentCard = (props) => {
                 //toast.error('Something Terrible Happened')
             }
             console.log("check like")
+            console.log(response)
+        })
+        let object = `https://social-distribution-404.herokuapp.com/authors/${props.comment.post.author.id}/posts/${props.comment.post.id}/comments/${props.comment.id}`
+        let summary = `${localStorage.getItem('username')} likes your post titled ${props.comment.post.title}`
+        Team19Like(summary, object, props.comment.author.id).then((response)=>{
+            console.log("team19 like post")
             console.log(response)
         })
     }

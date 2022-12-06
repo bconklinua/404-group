@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import { toast } from 'react-toastify';
 import ReactMarkdown from 'react-markdown'
+import { Team19Like } from '../../api/Remote19';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -144,8 +145,14 @@ const PostCard = (props) => {
                         console.log(response)
                     })
                 }
-                if (response.data.team19_followers === true){
+                if (response.data.team19_followers === true || response.data.team19_followers === undefined){
                     console.log("send a like to team 19")
+                    let object = `https://social-distribution-404.herokuapp.com/authors/${props.post.author.id}/posts/${props.post.id}`
+                    let summary = `${localStorage.getItem('username')} likes your post titled ${props.post.title}`
+                    Team19Like(summary, object, props.post.author.id).then((response)=>{
+                        console.log("team19 like post")
+                        console.log(response)
+                    })
                 }
                 
             }
@@ -155,12 +162,13 @@ const PostCard = (props) => {
                 decrementLikes()
                 if (response.data.team13_followers === true || response.data.team13_followers === undefined){
                     Team13DeleteLike("nothing", props.post.id).then((response)=>{
-                        console.log("team19 like")
+                        console.log("team19 like okok")
                         console.log(response)
                     })
                 }
                 if (response.data.team19_followers === true){
                     console.log("remove displike team 19")
+
                 }
             }else if (response.status === 403){
                 toast.error("cannot like foreign posts that you do not follow")
