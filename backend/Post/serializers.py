@@ -15,7 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('type','author', 'title', 'id', 'source', 'origin', 'description', 
     'contentType', 'content', 'categories', 'count', 'published',
-    'visibility', 'unlisted', 'image', 'image_url','host', 'original_author')
+    'visibility', 'unlisted', 'image', 'image_url','host', 'original_author','original_author_id')
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
