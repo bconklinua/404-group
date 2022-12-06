@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { likeComment } from '../../api/Comments';
 import { toast } from 'react-toastify';
 import { Team13CheckLiked, Team13LikeComment, Team13DeleteLikeComment } from '../../api/Remote13';
+import { Team19Like } from '../../api/Remote19';
 
 const CommentCard = (props) => {
     const [likes, setLikes] = useState(props.comment.count);
@@ -24,6 +25,29 @@ const CommentCard = (props) => {
                 //toast.error("Something Terrible has Happened")
             }
         })
+        if (props.comment.id.includes('https://social-distribution-404.herokuapp.com/')){
+            let authorID = props.comment.author.id.split('/')
+            authorID = authorID[authorID.length - 1]
+    
+            let object = props.comment.id
+            let summary = `${localStorage.getItem('username')} likes your comment '${props.comment.comment}'`
+            Team19Like(summary, object, authorID).then((response)=>{
+                console.log("team19 like comment")
+                console.log(response)
+                if (response.status === 201){
+                    toast.success('comment liked!')
+                }else if (response.response.status === 409){
+                    toast.info('already liked')
+                }else if (response.response.status === 404){
+                    
+                }
+                
+                else{
+                    toast.info('already liked')
+                }
+            })
+        }
+
         Team13CheckLiked(props.comment).then((response)=>{
             if (response.data === false){
                 Team13LikeComment(props.comment).then((response)=>{
@@ -41,10 +65,16 @@ const CommentCard = (props) => {
             console.log("check like")
             console.log(response)
         })
+
     }
     var username = props.comment.author
     if (typeof username != "string"){
-        username = props.comment.author.displayName
+        if (props.comment.author.displayName !== undefined){
+            username = props.comment.author.displayName
+        }else{
+            username = props.comment.author.username
+        }
+        
     }
 
     return (

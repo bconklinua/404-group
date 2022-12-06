@@ -17,6 +17,8 @@ import { Team13DeletePost } from '../../api/Remote13';
 import { useNavigate } from "react-router-dom";
 import { Team13AddLike, Team13DeleteLike } from '../../api/Remote13';
 import ReactMarkdown from 'react-markdown'
+import { Team19DeletePost, Team19Like } from '../../api/Remote19';
+
 
 const PostViewCard = (props) => {
     const navigate = useNavigate();
@@ -142,7 +144,10 @@ const PostViewCard = (props) => {
                 console.log('post deleted')
             }
         }))
-
+        // Team19DeletePost(props.post.id).then((response)=>{
+        //     console.log('team 19 delete post')
+        //     console.log(response)
+        // })
     }
     const handleLike = (e) =>{
         e.preventDefault();
@@ -190,8 +195,14 @@ const PostViewCard = (props) => {
                         console.log(response)
                     })
                 }
-                if (response.data.team19_followers === true){
+                if (response.data.team19_followers === true || response.data.team19_followers === undefined){
                     console.log("send a like to team 19")
+                    let object = `https://social-distribution-404.herokuapp.com/authors/${props.post.author.id}/posts/${props.post.id}`
+                    let summary = `${localStorage.getItem('username')} likes your post titled ${props.post.title}`
+                    Team19Like(summary, object, props.post.author.id).then((response)=>{
+                        console.log("team19 like post")
+                        console.log(response)
+                    })
                 }
                 
             }

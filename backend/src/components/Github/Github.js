@@ -3,6 +3,7 @@ import { CircularProgress, Box } from '@mui/material';
 import GithubCard from './GithubCard';
 import React from 'react'
 import { toast } from 'react-toastify';
+import './github.css'
 
 const Github = () =>{
     const [github, setGithub] = React.useState({
@@ -84,10 +85,10 @@ const Github = () =>{
             moreButton = (
                 <center>    
                     <button
-                        className="btn btn-light btn-block w-50 mx-auto"
+                        className="more"
                         onClick={loadMore}
                         >
-                        Load More Users
+                        Load More
                     </button>
                 </center>
             )

@@ -85,6 +85,12 @@ export function postPost(param = {}){
     form_data.append("unlisted", param.unlisted)
     form_data.append("image_url", param.image_url)
     form_data.append("contentType", param.contentType)
+    if (param.original_author){
+        form_data.append("original_author", param.original_author)
+    }
+    if (param.original_author_id){
+        form_data.append("original_author_id", param.original_author_id)
+    }
 
     return axios.post(url, form_data, {
         headers:{
