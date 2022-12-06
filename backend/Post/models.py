@@ -27,7 +27,8 @@ VISIBILITY_CHOICES = [
 HOST_CHOICES = [
     ("https://cmput404-team13.herokuapp.com", "Team13"),
     ("https://social-distribution-404.herokuapp.com", "Team19"),
-    ("https://true-friends-404.herokuapp.com", "Team12")
+    ("https://true-friends-404.herokuapp.com", "Team12"),
+    ("https://socioecon.herokuapp.com", "Team10")
 ]
 
 class Category(models.Model):
