@@ -10,13 +10,15 @@ export default function CommentCard(props) {
         //navigate(`/post/${props.post.id}`, {state: props.post});
         console.log(props)
     }
+    
+
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={1} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
             <Card sx={{ minWidth:500, maxWidth: 500 }}>
                 <CardActionArea onClick={handleClick}>
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                        {props.comment.author} commented {props.comment.comment}
+                        {props.comment.author.username} commented {props.comment.comment}
                         </Typography>
                         <Typography variant="h7" color="text.secondary">
                             post: {props.comment.post.title}
