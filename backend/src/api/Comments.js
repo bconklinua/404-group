@@ -27,6 +27,9 @@ export function postComment(param = {}){
         contentType: "text/plain"
         
     }
+    if (param.id){
+        body['id'] = param.id
+    }
 
     return axios.post(url, body, {
         headers:{

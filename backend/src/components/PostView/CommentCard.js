@@ -11,16 +11,20 @@ import { Team19Like } from '../../api/Remote19';
 const CommentCard = (props) => {
     const [likes, setLikes] = useState(props.comment.count);
     const handleLike = (e) =>{
-        
+        let commentID = props.comment.id.split('/')
+        commentID = commentID[commentID.length - 1]
+        props.comment['id'] = commentID
         likeComment(props.comment).then((response)=>{
             console.log('liked')
             console.log(response)
             if (response.status === 201){
                 if (props.comment.count !== undefined)
                     setLikes(likes + 1)
+                toast.success('comment liked!')
             }else if (response.status === 202){
                 if (props.comment.count !== undefined)
                     setLikes(likes - 1)
+                toast.info('already liked')
             }else{
                 //toast.error("Something Terrible has Happened")
             }
