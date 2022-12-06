@@ -60,7 +60,7 @@ export function Team10GetPosts(foreign_author_id){
 
 
 export function Team10PostPost(json, foreign_author_id){
-    const url = `https://socioecon.herokuapp.com/author/${foreign_author_id}/inbox`
+    const url = `https://socioecon.herokuapp.com/authors/${foreign_author_id}/inbox`
     var content = json.content
     var contentType = json.contentType
     var authorID = localStorage.getItem('authorID')
@@ -96,7 +96,9 @@ export function Team10PostPost(json, foreign_author_id){
         //     host: 'https://true-friends-404.herokuapp.com',
         // },
         count: 0,
-        id: json.id
+        id: json.id,
+        comments: "[]",
+        url: `https://true-friends-404.herokuapp.com/authors/${authorID}/posts/${json.id}`
     }
     console.log(body)
     return axios.post(url, body, {
