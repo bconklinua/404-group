@@ -180,7 +180,8 @@ export function Team13PostPost(post_id, json){
             host: 'https://true-friends-404.herokuapp.com',
         },
         originalAuthor: originalAuthor,
-        id: post_id
+        id: post_id,
+        unlisted: json.unlisted
     }
     console.log(body)
     return axios.put(url, body, {
@@ -353,7 +354,7 @@ export function Team13GetUser(foreign_author_id){
 
 
 export function Team13CheckLiked(comments){
-    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.post.author.id}/posts/${comments.post.id}/comments/${comments.id}/liked/${localStorage.getItem('authorID')}`
+    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.author.id}/posts/${comments.post.id}/comments/${comments.id}/liked/${localStorage.getItem('authorID')}`
     return axios.get(url, {
         
         headers:{

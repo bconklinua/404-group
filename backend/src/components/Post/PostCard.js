@@ -20,6 +20,7 @@ import { postPost } from '../../api/Post';
 import { getFollowers, getFriends } from '../../api/Friends';
 import { Team19PostPost } from '../../api/Remote19';
 import { Team10PostPost } from '../../api/Remote10';
+import { PropaneTankSharp } from '@mui/icons-material';
 
 const PostCard = (props) => {
     const navigate = useNavigate();
@@ -312,6 +313,13 @@ const PostCard = (props) => {
                     </div>
                 </div>)   
         }
+    let originalAuthor = null
+    if (props.post.original_author){
+        originalAuthor = (                        
+        <Typography variant="body2" color="text.secondary">
+        Original Author: <Box fontWeight='bold' display='inline'>{props.post.original_author}</Box>
+        </Typography>)
+    }
     return (
 
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
@@ -333,6 +341,7 @@ const PostCard = (props) => {
                         <Typography variant="body2" color="text.secondary">
                         Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
                         </Typography>
+                        {originalAuthor}
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}
                         </Typography>

@@ -276,7 +276,13 @@ const PostViewCard = (props) => {
     }
 
 
-
+    let originalAuthor = null
+    if (props.post.original_author){
+        originalAuthor = (                        
+        <Typography variant="body2" color="text.secondary">
+        Original Author: <Box fontWeight='bold' display='inline'>{props.post.original_author}</Box>
+        </Typography>)
+    }
     return (
 
         <Box display="flex" justifyContent="center" alignItems="center" flex={4} p={2} sx={{ flexWrap: 'wrap', margin: 'auto'}} margin='auto'>
@@ -295,6 +301,7 @@ const PostViewCard = (props) => {
                         <Typography variant="body2" color="text.secondary">
                             Author: <Box fontWeight='bold' display='inline'>{displayName}</Box>
                         </Typography>
+                        {originalAuthor}
                         <Typography variant="body2" color="text.secondary">
                             {props.post.published}
                         </Typography>
