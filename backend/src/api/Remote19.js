@@ -230,6 +230,26 @@ export function Team19Comment(comment, foreign_author_id, post_id){
     })
 }
 
+
+export function Team19Unfollow(foreign_author_id){
+    const url = `https://social-distribution-404.herokuapp.com/authors/${foreign_author_id}/followers/${localStorage.getItem('authorID')}`
+    return axios.delete(url, {        
+        auth: {
+            username: 'team12',
+            password: '96%fmA54'
+        },
+        headers:{
+            "Content-Type": "application/json",
+
+        }
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+
+}
+
 // export function Team19DeletePost(post_id){
 //     const url = `https://social-distribution-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/posts/${post_id}`
 //     return axios.delete(url, {        
