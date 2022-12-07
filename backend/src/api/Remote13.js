@@ -164,6 +164,10 @@ export function Team13PostPost(post_id, json){
     if (json.originalAuthor){
         originalAuthor = json.originalAuthor
     }
+    let visibility = json.visibility
+    if (json.unlisted === true){
+        visibility = "UNLISTED"
+    }
     const body = {
         type: "post",
         title: json.title,
@@ -172,7 +176,7 @@ export function Team13PostPost(post_id, json){
         description: json.description,
         contentType: contentType,
         content: content,
-        visibility: json.visibility,
+        visibility: visibility,
         published: json.published,
         author: {
             id: localStorage.getItem('authorID'),

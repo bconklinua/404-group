@@ -97,7 +97,10 @@ const PostPost = () => {
                     const post = response.data
                     console.log('posting a post')
                     console.log(post)
-                    if (response.data.team13_followers === true){
+                    if (post.unlisted === true){
+
+                    }
+                    else if (response.data.team13_followers === true){
                         Team13PostPost(response.data.id, response.data).then((response)=>{
                             if (response.status === 200){
                                 if (typeof response.data === 'object'){
