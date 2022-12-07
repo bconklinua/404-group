@@ -156,6 +156,18 @@ export function Team13PostPost(post_id, json){
         content = json.image_url
         contentType = 'image'
     }
+    var originalAuthor = {
+        id: localStorage.getItem('authorID'),
+        displayName: localStorage.getItem('username'),
+        host: 'https://true-friends-404.herokuapp.com',
+    }
+    if (json.originalAuthor){
+        originalAuthor = json.originalAuthor
+    }
+    let visibility = json.visibility
+    if (json.unlisted === true){
+        visibility = "UNLISTED"
+    }
     const body = {
         type: "post",
         title: json.title,
@@ -164,19 +176,16 @@ export function Team13PostPost(post_id, json){
         description: json.description,
         contentType: contentType,
         content: content,
-        visibility: json.visibility,
+        visibility: visibility,
         published: json.published,
         author: {
             id: localStorage.getItem('authorID'),
             displayName: localStorage.getItem('username'),
             host: 'https://true-friends-404.herokuapp.com',
         },
-        originalAuthor: {
-            id: localStorage.getItem('authorID'),
-            displayName: localStorage.getItem('username'),
-            host: 'https://true-friends-404.herokuapp.com',
-        },
-        id: post_id
+        originalAuthor: originalAuthor,
+        id: post_id,
+        unlisted: json.unlisted
     }
     console.log(body)
     return axios.put(url, body, {
@@ -349,7 +358,7 @@ export function Team13GetUser(foreign_author_id){
 
 
 export function Team13CheckLiked(comments){
-    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.post.author.id}/posts/${comments.post.id}/comments/${comments.id}/liked/${localStorage.getItem('authorID')}`
+    const url = `https://cmput404-team13.herokuapp.com/authors/${comments.author.id}/posts/${comments.post.id}/comments/${comments.id}/liked/${localStorage.getItem('authorID')}`
     return axios.get(url, {
         
         headers:{

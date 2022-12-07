@@ -62,20 +62,20 @@ const InboxView = (props) =>{
         else{
             console.log(posts.data)
             if (props.selection === 'posts'){
-                content = posts.data[0].posts.slice().reverse().map((post, key)=>
+                content = posts.data[0].posts.map((post, key)=>
                 
                 <PostCard post={post}/>
 
                 )
             }
             else if (props.selection === 'likes'){
-                content = posts.data[0].likes.slice().reverse().map((like, key)=>
+                content = posts.data[0].likes.map((like, key)=>
                 <LikesCard like={like}/>
                 )
             }
             else if (props.selection === 'comments'){
                 
-                content = posts.data[0].comments.slice().reverse().map((comment, key)=>
+                content = posts.data[0].comments.map((comment, key)=>
                 <CommentCard comment={comment}/>
                 )
             }

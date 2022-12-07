@@ -97,7 +97,10 @@ const PostPost = () => {
                     const post = response.data
                     console.log('posting a post')
                     console.log(post)
-                    if (response.data.team13_followers === true){
+                    if (post.unlisted === true){
+
+                    }
+                    else if (response.data.team13_followers === true){
                         Team13PostPost(response.data.id, response.data).then((response)=>{
                             if (response.status === 200){
                                 if (typeof response.data === 'object'){
@@ -148,7 +151,7 @@ const PostPost = () => {
                                 if (response.data[i].friend_host === "https://social-distribution-404.herokuapp.com"){
                                     console.log('team 19 friend')
                                     Team19PostPost(post, response.data[i].friend_id).then((response)=>{
-                                        console.log(response.data[i].friend_username)
+                                        console.log('debug: team 19 sent friend post')
                                         console.log(response)
                                     })
                                 }else if (response.data[i].friend_host === "https://socioecon.herokuapp.com"){

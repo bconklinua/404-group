@@ -27,7 +27,8 @@ VISIBILITY_CHOICES = [
 HOST_CHOICES = [
     ("https://cmput404-team13.herokuapp.com", "Team13"),
     ("https://social-distribution-404.herokuapp.com", "Team19"),
-    ("https://true-friends-404.herokuapp.com", "Team12")
+    ("https://true-friends-404.herokuapp.com", "Team12"),
+    ("https://socioecon.herokuapp.com", "Team10")
 ]
 
 class Category(models.Model):
@@ -62,6 +63,7 @@ class Post(models.Model):
     host = models.CharField(choices=HOST_CHOICES, default="https://true-friends-404.herokuapp.com", max_length = 50, blank=True)
     original_author = models.CharField(null=True, blank=True, max_length=200, unique=False)
     original_author_id = models.UUIDField(null=True, blank=True, unique=False, editable=True)
+    original_author_host = models.CharField(choices=HOST_CHOICES, max_length = 50, blank=True, null=True)
         
     def get_categories(self):
         return "\n".join([str(c) for c in self.categories.all()])

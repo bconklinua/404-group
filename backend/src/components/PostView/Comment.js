@@ -105,24 +105,25 @@ const Comments = (props) => {
             json["author"] = localStorage.getItem("username")
             console.log("comment post view")
             console.log(props)
-            if (props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
-                toast.info('called')
-                Team13PostComment(json, "", props.id).then((response)=>{
-                    if (response.status === 200){
-                        toast.info('team 13 sent')
-                        console.log("team13 comment")
-                        console.log(response)
-                        comments.data.push(json)
-                        setComments({
-                        data:comments.data  
-                        })
-                    }
-                    else{
-                        toast.error('Oh no something terrible happened')
-                    }
+            // if (props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
+            //     toast.info('called')
+            //     Team13PostComment(json, "", props.id).then((response)=>{
+            //         if (response.status === 200){
+            //             toast.info('team 13 sent')
+            //             console.log("team13 comment")
+            //             console.log(response)
+            //             comments.data.push(json)
+            //             setComments({
+            //             data:comments.data  
+            //             })
+            //         }
+            //         else{
+            //             toast.error('Oh no something terrible happened')
+            //         }
 
-                })
-            }else if (props.object.host === "https://true-friends-404.herokuapp.com"){
+            //     })
+            // }
+            if (props.object.host === "https://true-friends-404.herokuapp.com" || props.object.host === "https://cmput404-team13.herokuapp.com" || props.object.origin === "https://cmput404-team13.herokuapp.com"){
 
                 postComment(json).then((response)=>{
                     console.log(response.status)
@@ -156,7 +157,7 @@ const Comments = (props) => {
                             }
                         })
                     } else if (response.status === 201) {
-                        if (response.team13_follower === true){
+                        if (response.team13_follower === true || response.team13_follower === undefined){
                             Team13PostComment(response.data, response.data.id, props.id).then((response)=>{
                                 console.log("team13 comment")
                                 console.log(response)
@@ -193,6 +194,12 @@ const Comments = (props) => {
                         comments.data.push(json)
                         setComments({
                             data:comments.data  
+                        })
+                        let commentID = response.data.id.split('/')
+                        json['id'] = commentID[commentID.length - 1]
+                        postComment(json).then((response)=>{
+                            console.log('okay')
+                            console.log(response)
                         })
                     }
                 })

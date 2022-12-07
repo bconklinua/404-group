@@ -99,7 +99,7 @@ const UserView = () =>{
             content = userPost.data.slice().reverse().filter((item)=>{
                 return !item.visibility.toLowerCase().includes('friends')
             }).filter((item)=>{
-                return item.unlisted === false
+                return item.unlisted !== true
             }).map((post, key)=>
 
             <PostCard post={post}/>

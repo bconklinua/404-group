@@ -73,7 +73,7 @@ const MyPosts = () => {
         }
         else{
             console.log(posts.data)
-            content = posts.data[0].posts.slice().reverse().map((post, key)=>
+            content = posts.data[0].posts.map((post, key)=>
             
             <PostCard post={post}/>
 

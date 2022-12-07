@@ -73,23 +73,26 @@ export function getPostByID(post_id) {
 }
 
 
-export function postPost(param = {}){
+export function postPost(post){
     const url = `${BASE_URL}/posts/`
 
     let form_data = new FormData();
-    //if (param.image) form_data.append("image", param.image, param.image.name)
-    form_data.append("title", param.title)
-    form_data.append("description", param.description)
-    form_data.append("content", param.content)
-    form_data.append("visibility", param.visibility)
-    form_data.append("unlisted", param.unlisted)
-    form_data.append("image_url", param.image_url)
-    form_data.append("contentType", param.contentType)
-    if (param.original_author){
-        form_data.append("original_author", param.original_author)
+
+    form_data.append("title", post.title)
+    form_data.append("description", post.description)
+    form_data.append("content", post.content)
+    form_data.append("visibility", post.visibility)
+    form_data.append("unlisted", post.unlisted)
+    form_data.append("image_url", post.image_url)
+    form_data.append("contentType", post.contentType)
+    if (post.original_author){
+        form_data.append("original_author", post.original_author)
     }
-    if (param.original_author_id){
-        form_data.append("original_author_id", param.original_author_id)
+    if (post.original_author_id){
+        form_data.append("original_author_id", post.original_author_id)
+    }
+    if (post.original_author_host){
+        form_data.append("original_author_host", post.original_author_host)
     }
 
     return axios.post(url, form_data, {
@@ -124,16 +127,16 @@ export function getPosts(){
     })
 }
 
-export function editPost(param = {}){
-    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/posts/${param.post_id}/`
+export function editPost(post){
+    const url = `${BASE_URL}/authors/${localStorage.getItem("authorID")}/posts/${post.post_id}/`
 
     let form_data = new FormData();
-    //if (param.image) form_data.append("image", param.image, param.image.name)
-    form_data.append("title", param.title)
-    form_data.append("description", param.description)
-    form_data.append("content", param.content)
-    form_data.append("visibility", param.visibility)
-    form_data.append("unlisted", param.unlisted)
+
+    form_data.append("title", post.title)
+    form_data.append("description", post.description)
+    form_data.append("content", post.content)
+    form_data.append("visibility", post.visibility)
+    form_data.append("unlisted", post.unlisted)
 
     return axios.put(url, form_data, {
         headers:{
