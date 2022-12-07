@@ -191,7 +191,7 @@ const PostCard = (props) => {
 
     const handleShare = (e) =>{
         if (props.post.original_author === null || props.post.original_author === undefined){
-            if (props.post.username)
+            if (props.post.author.username)
                 props.post['original_author'] = props.post.author.username
             else props.post['original_author'] = props.post.author.displayName
         }
