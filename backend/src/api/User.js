@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { BASE_URL } from './api'
-export function authenticate(param = {}){
+export function authenticate(json){
     const url = `${BASE_URL}/api/auth/login/`
     const body = {
-        email: param.email,
-        password: param.password,
+        email: json.email,
+        password: json.password,
         
     }
-    console.log(param)
+    console.log(json)
 
     return axios.post(url, body, {
         headers:{
@@ -27,14 +27,14 @@ export function authenticate(param = {}){
     })
 }
 
-export function postUser(param = {}){
+export function postUser(json){
     const url = `${BASE_URL}/api/auth/register/`
     const body = {
-        email: param.email,
-        username: param.username,
-        password: param.password,
+        email: json.email,
+        username: json.username,
+        password: json.password,
     }
-    console.log(param)
+    console.log(json)
     return axios.post(url, body, {
         headers: {
             "Content-Type": "application/json",
@@ -47,15 +47,15 @@ export function postUser(param = {}){
     })
 }
 
-export function getToken(param = {}){
+export function getToken(json){
     // Gets a token
     const url = `${BASE_URL}/api/token/obtain/`
     const body = {
-        email: param.email,
-        password: param.password,
+        email: json.email,
+        password: json.password,
         
     }
-    console.log(param)
+    console.log(json)
 
     return axios.post(url, body, {
         headers:{

@@ -19,16 +19,16 @@ export function getComments(post_id){
     })
 }
 
-export function postComment(param = {}){
-    const url = `${BASE_URL}/posts/${param.post_id}/comments/`
+export function postComment(comment){
+    const url = `${BASE_URL}/posts/${comment.post_id}/comments/`
 
     const body = {
-        comment: param.comment,
+        comment: comment.comment,
         contentType: "text/plain"
         
     }
-    if (param.id){
-        body['id'] = param.id
+    if (comment.id){
+        body['id'] = comment.id
     }
 
     return axios.post(url, body, {

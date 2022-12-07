@@ -113,6 +113,21 @@ export function Team10PostPost(json, foreign_author_id){
     })
 }
 
-export function Team10Comment(){
-    
+export function Team10Comment(comment, author_id, post_id){
+    const url = `https://socioecon.herokuapp.com/authors/${author_id}/posts/${post_id}/comments`
+    const body = {
+        "comment": comment.comment,
+        "contentType": "text/plain",
+        "actor": `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/`
+    }
+    return axios.post(url, body, {
+        headers: { 
+            'Authorization': 'Basic dGVhbTEyOnRlYW0xMg==', // base64 encoded team12:team12 basic auth for your convenience; maybe just use this token
+            'Content-Type': 'application/json'
+          },
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
 }
