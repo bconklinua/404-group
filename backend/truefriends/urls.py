@@ -90,6 +90,7 @@ urlpatterns = [
     path('authors/<uuid:author_id>/', include(author_like_router.urls)),  # likes-list, likes-detail?
     path('posts/<uuid:post_id>/', include(post_like_router.urls)),  # post-likes-list, post-likes-detail?
     path('comments/<uuid:comment_id>/', include(comment_like_router.urls)),  # comments-likes-list, comments-likes-detail?
+    path('authors/<uuid:author_id>/<str:author_username>/comments/<uuid:comment_id>/', include(comment_like_router.urls)),
     path('authors/<uuid:author_id>/inbox/', include('Inbox.urls')),  # inbox-list, inbox-detail?
     path('followers/', FollowersListView.as_view(), name="followers_list"),
     path('authors/<uuid:author_id>/followers/', FollowersListView.as_view(), name="followers_list"),
