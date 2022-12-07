@@ -131,3 +131,22 @@ export function Team10Comment(comment, author_id, post_id){
         return error
     })
 }
+
+export function Team10Like(foreign_author_id, object){
+    const url = `https://socioecon.herokuapp.com/authors/${foreign_author_id}/inbox`
+    const body = {
+        "type": "like",
+        "object": object,
+        "actor": `https://true-friends-404.herokuapp.com/authors/${localStorage.getItem('authorID')}/`
+    }
+    return axios.post(url, body, {
+        headers: { 
+            'Authorization': 'Basic dGVhbTEyOnRlYW0xMg==', // base64 encoded team12:team12 basic auth for your convenience; maybe just use this token
+            'Content-Type': 'application/json'
+          },
+    }).then((response)=>{
+        return response
+    }).catch((error)=>{
+        return error
+    })
+}

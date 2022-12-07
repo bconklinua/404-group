@@ -199,11 +199,9 @@ const PostCard = (props) => {
             
         }
         if (props.post.contentType === 'UTF-8'){
-            if (props.post.image_url){
-                props.post.contentType = null
-            }else{
-                props.post.contentType = 'text/plain'
-            }
+
+            props.post.contentType = 'text/plain'
+            
         }
         postPost(props.post).then((response)=>{
             if (response.status === 201){
@@ -216,6 +214,7 @@ const PostCard = (props) => {
                 }
 
                 if (response.data.team13_followers === true){
+                    response.data['originalAuthor'] = originalAuthor
                     Team13PostPost(response.data.id, response.data).then((response)=>{
                         if (response.status === 200){
                             if (typeof response.data === 'object'){
