@@ -9,7 +9,7 @@
 
 
 A social media application where users can follow each other, make friends, look at each other's posts and interact in a friendly, connected way! 
-This application has been fully deployed to a Heroku instance, and details on how navigate it can be found below.
+This application has been fully deployed to a Heroku instance, and details on how to navigate it can be found below.
 
 A video demonstration of the functionalities of this web app can be shown [here](https://www.youtube.com/watch?v=N4jzfrdzKk0)
 
@@ -33,7 +33,8 @@ pip install -r requirements.txt
 ```
 Set-ExecutionPolicy Unrestricted -Scope Process
 ```
-
+### Deployment
+The React and Django app is run together on a Heroku basic dyno attached with a mini postgres database
 ### API Documentation 
 - Documentation on our APIs can be found [here](https://true-friends-404.herokuapp.com/swagger/). Ensure you are logged in to view.
 - Feel free to try our any of our endpoints at https://true-friends-404.herokuapp.com/[endpoint_path]
@@ -50,3 +51,15 @@ You can access your account through our [Login](https://true-friends-404.herokua
 ## Changes Made Since Presentation
 
 * Updated tests to be compatible with usage of UUIDs instead of numberical IDs
+
+## True-Friends Features Run-Through
+
+* Ability to send and receive friend requests
+* Post images, markdown, and text based posts
+* Live updating search of other users on the app
+* Ability to like and comment on posts
+* Privacy features for posts to set as public, friends only, and unlisted
+* Edit own posts after posting
+* Connect nd display your Github activity on your profile
+* Explore other users on the app
+* Logout of your account and login to another account
