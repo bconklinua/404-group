@@ -54,7 +54,7 @@ class LikeTestCase(TestCase):
         url=reverse('post-likes-list',kwargs={'post_id':getattr(self.post, 'id')})
         response = self.client.post(path=url, data=None,**{'HTTP_AUTHORIZATION': f'Bearer {self.access}'},format='json')
         self.assertEqual(response.data['summary'], "author1 likes your post")
-        self.assertEqual(response.data['author'], getattr(self.author, 'id'))
+        self.assertEqual(response.data['author']['id'], str(getattr(self.author, 'id')))
         self.assertEqual(response.data['post'], PostSerializer(self.post).data)
         self.assertIsNone(response.data['comment'])
         self.assertIsNotNone(response.data['id'])
@@ -63,7 +63,7 @@ class LikeTestCase(TestCase):
     def test_get_specific_liked_post(self):
         """attempt retrieving a specific like"""
         like=Like.objects.create(author=self.author, post = self.post)
-        url=reverse('post-likes-detail',kwargs={'post_id':getattr(self.post, 'id'), 'pk':getattr(self.post, 'id')})
+        url = reverse('post-likes-detail', kwargs={'post_id': str(self.post.id), 'pk': str(like.id)})
         response = self.client.get(path=url, data=None,**{'HTTP_AUTHORIZATION': f'Bearer {self.access}'},format='json')        
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, LikeSerializer(like).data)
@@ -83,7 +83,7 @@ class LikeTestCase(TestCase):
         like=Like.objects.create(author=self.author, post = self.post)
         response = self.client.post(path=url, data=None,**{'HTTP_AUTHORIZATION': f'Bearer {self.access}'},format='json')
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
-        self.assertEqual("Existing like deleted", response.data)
+        self.assertEqual("Existing like deleted", response.data['message'])
         
     def test_get_author_likes_with_no_likes(self):
         """attempt getting author likes that has none"""
@@ -137,5 +137,5 @@ class LikeTestCase(TestCase):
         response = self.client.post(path=url, data=None,**{'HTTP_AUTHORIZATION': f'Bearer {self.access}'},format='json')
         self.assertTrue("summary" in response.data)
         self.assertFalse("error" in response.data)
-        self.assertEqual(response.data['post']['id'], self.post2.id)
+        self.assertEqual(response.data['post']['id'], str(self.post2.id))
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
