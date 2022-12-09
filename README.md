@@ -55,11 +55,28 @@ You can access your account through our [Login](https://true-friends-404.herokua
 ## True-Friends Features Run-Through
 
 * Ability to send and receive friend requests
-* Post images, markdown, and text based posts
+* Post images, markdown, and text based posts. Image posts can be made by using an uploaded image, or pasting in the url to an existing image.
 * Live updating search of other users on the app
 * Ability to like and comment on posts
+* Ability to like comments. 
+* Ability to share posts.
 * Privacy features for posts to set as public, friends only, and unlisted
 * Edit own posts after posting
 * Connect nd display your Github activity on your profile
 * Explore other users on the app
 * Logout of your account and login to another account
+
+## Connection with Other Teams
+
+Our social media app was able to successfully connect with the following two applications: 
+
+1. [Team 13](https://cmput404-team13.herokuapp.com)
+2. [Team 19](https://social-distribution-404.herokuapp.com)
+
+This connection means that we can search for, follow, and interact with users on the above applications. In our inbox, we can receive their friends-only posts if we are friends with them, and their public posts if we follow them. We can also like and comment on each other's posts, like comments on each other's posts, and share remote posts.
+
+A video detailing how the remote connections work can be found [here](https://www.youtube.com/watch?v=N4jzfrdzKk0)
+
+We also almost fully connected with [Team 10](https://socioecon.herokuapp.com)'s application. 
+
+For the Team 10 connection, we were able to send and accept friend requests, view their profiles and public posts, and send posts to each other's inboxes with the correct visibility. Our application also includes code for liking their posts and comments, but we were unable to test this fully due to those functionalities not being completed fully on their application at the time of the connection. 
