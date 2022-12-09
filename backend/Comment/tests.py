@@ -94,7 +94,7 @@ class PostCommentTestCase(TestCase):
                                     data=comment_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
-        self.assertEqual(response.data['post']['id'], str(self.author1_text_post.id))
+        self.assertEqual(response.data['post']['id'], self.author1_text_post.id)
         self.assertEqual(response.data['comment'], comment_data['comment'])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -107,7 +107,7 @@ class PostCommentTestCase(TestCase):
                                     data=comment_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
-        self.assertEqual(response.data['post']['id'], str(self.author2_text_post.id))
+        self.assertEqual(response.data['post']['id'], self.author2_text_post.id)
         self.assertEqual(response.data['comment'], comment_data['comment'])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -163,7 +163,7 @@ class PostCommentTestCase(TestCase):
                                     data=comment_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
-        self.assertEqual(response.data['post']['id'], str(self.author1_image_post.id))
+        self.assertEqual(response.data['post']['id'], self.author1_image_post.id)
         self.assertEqual(response.data['comment'], comment_data['comment'])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -176,7 +176,7 @@ class PostCommentTestCase(TestCase):
                                     data=comment_data,
                                     **{'HTTP_AUTHORIZATION': f'Bearer {self.access1}'},
                                     format='json')
-        self.assertEqual(response.data['post']['id'], str(self.author2_image_post.id))
+        self.assertEqual(response.data['post']['id'], self.author2_image_post.id)
         self.assertEqual(response.data['comment'], comment_data['comment'])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 

@@ -82,7 +82,7 @@ class PostView(viewsets.ModelViewSet):
         instance = self.get_object()
         if instance.host == "https://cmput404-team13.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
             authenticated = True
-        elif instance.host == "https://social-distribution-404.herokuapp.com" and request.user.host == "https://social-distribution-404.herokuapp.com":
+        elif instance.host == "https://social-distribution-404.herokuapp.com" and request.user.host == "https://cmput404-team13.herokuapp.com":
             authenticated = True
         elif instance.host == "https://socioecon.herokuapp.com" and request.user.host == "https://socioecon.herokuapp.com":
             authenticated = True

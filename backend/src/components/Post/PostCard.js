@@ -213,7 +213,7 @@ const PostCard = (props) => {
                 toast.success("shared")
                 const post = response.data
                 var originalAuthor = {
-                    id: response.data.original_author_id,
+                    id: response.data.original_data,
                     displayName: response.data.original_author,
                     host: response.data.original_author_host,
                 }
