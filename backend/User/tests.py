@@ -1,4 +1,6 @@
 from django.test import TestCase
+from rest_framework.exceptions import ErrorDetail
+
 from User.models import Author
 from rest_framework import status
 from rest_framework.reverse import reverse
@@ -107,17 +109,6 @@ class AuthorsTestCase(TestCase):
         self.client.post(url, post_data1, format='json')
         response = self.client.post(url, post_data2, format='json')
         self.assertEqual(response.data['email'][0].code, "unique")
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_register_author_with_duplicate_username(self):
-        """Reject Registration with Duplicate Username"""
-        post_data1 = self.get_mock_author_data()
-        post_data2 = self.get_alternate_mock_author_data()
-        post_data2['username'] = post_data1['username']
-        url = reverse('register')
-        self.client.post(url, post_data1, format='json')
-        response = self.client.post(url, post_data2, format='json')
-        self.assertEqual(response.data['username'][0].code, "unique")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_check_authentication_with_jwt(self):
