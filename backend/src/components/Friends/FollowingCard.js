@@ -5,7 +5,7 @@ import { unFollow } from '../../api/Friends';
 import { refreshToken } from '../../api/User';
 import { useNavigate } from "react-router-dom";
 import { Team13Unfollow } from '../../api/Remote13';
-
+import { Team19Unfollow } from '../../api/Remote19';
 
 const FollowerCard = (props) => {
     const navigate = useNavigate();
@@ -58,6 +58,10 @@ const FollowerCard = (props) => {
             })
         }else if(props.following.recipient_host === 'https://social-distribution-404.herokuapp.com'){
             console.log('team 19')
+            Team19Unfollow(props.following.recipient_id).then((response)=>{
+                console.log('team 19 unfollow')
+                console.log(response)
+            })
         }   
     }   
 
