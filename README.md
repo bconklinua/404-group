@@ -75,8 +75,9 @@ Our social media app was able to successfully connect with the following two app
 
 This connection means that we can search for, follow, and interact with users on the above applications. In our inbox, we can receive their friends-only posts if we are friends with them, and their public posts if we follow them. We can also like and comment on each other's posts, like comments on each other's posts, and share remote posts.
 
-A video detailing how the remote connections work can be found [here](https://www.youtube.com/watch?v=N4jzfrdzKk0)
-
 We also almost fully connected with [Team 10](https://socioecon.herokuapp.com)'s application. 
 
 For the Team 10 connection, we were able to send and accept friend requests, view their profiles and public posts, and send posts to each other's inboxes with the correct visibility. Our application also includes code for liking their posts and comments, but we were unable to test this fully due to those functionalities not being completed fully on their application at the time of the connection. 
+
+### Video Demonstration
+[![CMPUT 404 Video Team 12 2022](https://img.youtube.com/vi/N4jzfrdzKk0/0.jpg)](https://www.youtube.com/watch?v=N4jzfrdzKk0 "CMPUT 404 Video Team 12 2022")
