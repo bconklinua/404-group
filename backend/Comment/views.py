@@ -87,8 +87,8 @@ class AuthorCommentView(viewsets.ModelViewSet):
                 if follow_obj.exists():
                     return Comment.objects.filter(author_id=user_id)
                 else:
-                    return Comment.objects.none()
-        return Comment.objects.none()
+                    return Comment.objects.filter(author_id=-1)
+        return Comment.objects.filter(author_id=-1)
     
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
